@@ -1,44 +1,44 @@
 name: Lint and Format
 
 on:
-  push:
-    branches:
-      - formatting-workflow
-  pull_request:
-    branches:
-      - formatting-workflow
+    push:
+        branches:
+            - formatting-workflow
+    pull_request:
+        branches:
+            - formatting-workflow
 
 jobs:
-  lint-and-format:
-    runs-on: ubuntu-latest
+    lint-and-format:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-      # Setup Node.js environment
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
+            # Setup Node.js environment
+            - name: Use Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "18"
 
-      # Cache dependencies
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      
-      # Install dependencies
-      - name: Install Dependencies
-        run: npm install
+            # Cache dependencies
+            - name: Cache dependencies
+              uses: actions/cache@v2
+              with:
+                  path: ~/.npm
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-
 
-      # Run ESLint
-      - name: Run ESLint
-        run: npx eslint . --ext .js,.jsx,.ts,.tsx
+            # Install dependencies
+            - name: Install Dependencies
+              run: npm install
 
-      # Run Prettier
-      - name: Run Prettier Check
-        run: npx prettier --check .
+            # Run ESLint
+            - name: Run ESLint
+              run: npx eslint . --ext .js,.jsx,.ts,.tsx
+
+            # Run Prettier
+            - name: Run Prettier Check
+              run: npx prettier --check .
