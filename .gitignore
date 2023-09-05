@@ -1,0 +1,11 @@
+*.swp
+.idea
+.vscode
+
+dist/**/*
+
+*.env
+.env
+
+node_modules
+
