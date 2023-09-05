@@ -3,10 +3,10 @@ name: Lint and Format
 on:
     push:
         branches:
-            - formatting-workflow
+            - main
     pull_request:
         branches:
-            - formatting-workflow
+            - main
 
 jobs:
     lint-and-format:
