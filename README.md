@@ -1,5 +1,7 @@
 # ece461
 
+Faaiz Memon (in README)
+
 Dummy change
 
 Dummy change by Avi
