@@ -6,7 +6,7 @@
 	"type": "commonjs",
 	"scripts": {
 		"build": "tsc",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"No tests yet! Passing for now\" && exit 0"
 	},
 	"keywords": [],
 	"author": "Luke Chigges, Avigdor Roytman, Jungwoo Kwon, Faaiz Memon",
