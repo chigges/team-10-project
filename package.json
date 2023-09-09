@@ -14,7 +14,7 @@
 		"challenges"
 	],
 	"author": "Luke Chigges, Avigdor Roytman, Jungwoo Kwon, Faaiz Memon",
-	"license": "MIT",
+	"license": "",
 	"devDependencies": {
 		"@babel/preset-typescript": "^7.22.15",
 		"@types/jest": "^29.5.4",
