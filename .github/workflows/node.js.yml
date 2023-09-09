@@ -28,7 +28,7 @@ jobs:
             - run: npm run build --if-present
             - run: npm test
 
-            - uses: actions/upload-artefact@v2
+            - uses: actions/upload-artifact@v2
               with:
                   name: dist-artifact-${{ matrix.node-version }}
                   path: dist/
