@@ -28,8 +28,7 @@ jobs:
             - run: npm run build --if-present
             - run: npm test
 
-            - name: Upload the dist directory as an artifact
-              uses: actions/upload-artefact@v2
-              with: 
-              name: dist-artifact-${{ matrix.node-version }}
-              path: dist/
+            - uses: actions/upload-artefact@v2
+              with:
+                  name: dist-artifact-${{ matrix.node-version }}
+                  path: dist/
