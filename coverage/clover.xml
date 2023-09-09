@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1694293711309" clover="3.2.0">
+  <project timestamp="1694293711309" name="All files">
+    <metrics statements="14" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1" elements="18" coveredelements="2" complexity="0" loc="14" ncloc="14" packages="1" files="3" classes="3"/>
+    <file name="cli.ts" path="D:\02_My Classes\09_2023F\ECE 461\Team Project\team-10-project-1\src\cli.ts">
+      <metrics statements="9" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+      <line num="1" count="0" type="stmt"/>
+      <line num="3" count="0" type="stmt"/>
+      <line num="4" count="0" type="stmt"/>
+      <line num="6" count="0" type="stmt"/>
+      <line num="8" count="0" type="stmt"/>
+      <line num="12" count="0" type="stmt"/>
+      <line num="15" count="0" type="stmt"/>
+      <line num="19" count="0" type="stmt"/>
+      <line num="22" count="0" type="stmt"/>
+    </file>
+    <file name="index.ts" path="D:\02_My Classes\09_2023F\ECE 461\Team Project\team-10-project-1\src\index.ts">
+      <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="2" count="0" type="stmt"/>
+      <line num="4" count="0" type="stmt"/>
+      <line num="5" count="0" type="stmt"/>
+      <line num="6" count="0" type="stmt"/>
+    </file>
+    <file name="testing.ts" path="D:\02_My Classes\09_2023F\ECE 461\Team Project\team-10-project-1\src\testing.ts">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <line num="1" count="5" type="stmt"/>
+    </file>
+  </project>
+</coverage>
