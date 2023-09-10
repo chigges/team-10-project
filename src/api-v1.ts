@@ -1,28 +1,31 @@
 import { Octokit, App } from "octokit";
 
-export function tsAPI() {
-var main = async () => {
+export async function getClones(owner_in:string, repo_in:string) {
+
     const octokit = new Octokit({ 
         auth: `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` 
     });
 
-    const login = await octokit.rest.users.getAuthenticated({
+    const me = await octokit.rest.users.getAuthenticated({
         type: "login",
     }); 
 
-    // const repos = await octo.repos.listForOrg({
-    //     org: ORGANIZATION,
-    //   })
-    
-    console.log(login)
-    console.log("F")
-};}
+    const repos = await octokit.rest.repos.getClones({
+        owner: owner_in,
+        repo: repo_in
+    })
+    console.log(repos.data.clones)
+}
 
-// var promise_B = login_promise.then(function(result)) {
+export async function getMe() {
 
-// });
-// console.log(login_promise)
-// const {
-//     data: { login },
-//   } = await octokit.rest.users.getAuthenticated();
-//   console.log("Hello, %s", login);
+    const octokit = new Octokit({ 
+        auth: `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` 
+    });
+
+    const me = await octokit.rest.users.getAuthenticated({
+        type: "login",
+    }); 
+
+    console.log(me)
+}
