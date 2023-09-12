@@ -3,7 +3,8 @@ import "dotenv/config"; // loads .env file into process.env. NOTE: this should b
 import { setupCLI } from "./cli";
 import { Metric, BusFactor, Responsiveness, License, Correctness, RampUp } from "./metrics";
 
-const githubToken = process.env.GITHUB_TOKEN;
+// TODO: make it use environment variable (process.env.GITHUB_TOKEN)
+const githubToken = "my-token";
 const repoUrl = "https://github.com/your-org/your-repo";
 
 const metrics: Metric[] = [
