@@ -15,6 +15,7 @@ const metrics: Metric[] = [
 	new RampUp(repoUrl, githubToken),
 ];
 
+/* TODO: Implement a function like this one to evaluate all metrics
 async function evaluateAllMetrics() {
 	console.log(`{}`);
 	for (const metric of metrics) {
@@ -24,6 +25,7 @@ async function evaluateAllMetrics() {
 		console.log(`Score: ${score}`);
 	}
 }
+*/
 
 // Run the evaluation
 
