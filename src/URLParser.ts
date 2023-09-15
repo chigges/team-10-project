@@ -34,7 +34,7 @@ class URLParser {
 }
 
 	async getGithubRepoFromNpm(npmUrl: string): Promise<string | null> {
-		const packageName = this.extractPackageName(npmUrl);
+		const packageName = this.extractPackageNameFromNpmLink(npmUrl);
 		let githubLink = null;
 		if (packageName != null) {
 			const endpoint = `https://registry.npmjs.org/${packageName}`;
@@ -53,7 +53,7 @@ class URLParser {
 		return match ? match[1] : null;
 	}
 
-	extractPackageName(url: string): string | null {
+	extractPackageNameFromNpmLink(url: string): string | null {
 		const regex = /https:\/\/www\.npmjs\.com\/package\/([^\/]+)/;
 		const match = url.match(regex);
 		return match ? match[1] : null;
