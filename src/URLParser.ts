@@ -15,7 +15,7 @@ class URLParser {
 			.filter((line) => line.length > 0);
 		return urls;
 	}
-	
+
 	async getOnlyGithubUrls(): Promise<string[]> {
 		const allUrls = this.getUrls();
 		const npmUrls = allUrls.filter((url) => url.includes("npmjs.com"));
@@ -31,7 +31,7 @@ class URLParser {
 		}
 
 		return githubUrls.concat(additionalGithubUrls);
-}
+	}
 
 	async getGithubRepoFromNpm(npmUrl: string): Promise<string | null> {
 		const packageName = this.extractPackageNameFromNpmLink(npmUrl);
@@ -40,13 +40,13 @@ class URLParser {
 			const endpoint = `https://registry.npmjs.org/${packageName}`;
 			const res = await fetch(endpoint);
 			let data = await res.json();
-			data = data['repository']['url'];
-			githubLink = 'https://github.com/' + this.extractGithubRepo(data);
+			data = data["repository"]["url"];
+			githubLink = "https://github.com/" + this.extractGithubRepo(data);
 		}
 
 		return githubLink || null;
 	}
-	
+
 	extractGithubRepo(url: string): string | null {
 		const regex = /github\.com\/([^/]+\/[^/]+)/;
 		const match = url.match(regex);
