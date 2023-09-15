@@ -19,7 +19,7 @@ class URLParser {
 	async getOnlyGithubUrls(): Promise<string[]> {
 		const allUrls = this.getUrls();
 		const npmUrls = allUrls.filter((url) => url.includes("npmjs.com"));
-		let githubUrls = allUrls.filter((url) => url.includes("github.com"));
+		const githubUrls = allUrls.filter((url) => url.includes("github.com"));
 
 		const additionalGithubUrls: string[] = [];
 
@@ -48,13 +48,13 @@ class URLParser {
 	}
 	
 	extractGithubRepo(url: string): string | null {
-		const regex = /github\.com\/([^\/]+\/[^\/]+)/;
+		const regex = /github\.com\/([^/]+\/[^/]+)/;
 		const match = url.match(regex);
 		return match ? match[1] : null;
 	}
 
 	extractPackageNameFromNpmLink(url: string): string | null {
-		const regex = /https:\/\/www\.npmjs\.com\/package\/([^\/]+)/;
+		const regex = /https:\/\/www\.npmjs\.com\/package\/([^/]+)/;
 		const match = url.match(regex);
 		return match ? match[1] : null;
 	}
