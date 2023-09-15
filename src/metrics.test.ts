@@ -1,4 +1,4 @@
-import { BusFactor, Responsiveness, Correctness, License, RampUp } from "./metrics";
+import { BusFactor, Responsiveness, Correctness, License, RampUp, Subs } from "./metrics";
 
 describe("BusFactor", () => {
 	it("should return a bus factor", async () => {
@@ -42,5 +42,14 @@ describe("Correctness", () => {
 		const score = await correctnessMetric.evaluate();
 		expect(score).toBeDefined();
 		expect(correctnessMetric.name).toBe("Correctness");
+	});
+});
+
+describe("Subs", () => {
+	it("should return # of subs", async () => {
+		const subsMetric = new Subs("https://github.com/example/repo", "fake-token"); //passing in url accurately pending
+		const score = await subsMetric.evaluate();
+		expect(score).toBeDefined();
+		expect(subsMetric.name).toBe("Subs");
 	});
 });

@@ -1,4 +1,5 @@
 import { Octokit } from "octokit";
+import process from "process";
 
 export interface Metric {
 	name: string;
@@ -73,5 +74,20 @@ export class Correctness extends BaseMetric {
 
 	async evaluate(): Promise<number> {
 		return 0.5; // Just a placeholder. TODO: implement.
+	}
+}
+
+export class Subs extends BaseMetric {
+	name = "Subs";
+	description = "Measures # subs.";
+
+	octokit = new Octokit({ auth: process.env.SECRET_WORD });
+
+	async evaluate(): Promise<number> {
+		const repos = await this.octokit.rest.repos.get({
+			owner: "neovim",
+			repo: "neovim",
+		});
+		return repos.data.subscribers_count;
 	}
 }
