@@ -130,7 +130,7 @@ export class Correctness extends BaseMetric {
                 }
             }
         } catch (error) {
-            console.error("Error counting TODO/FIXME comments:", error);
+           // console.error("Error counting TODO/FIXME comments:", error);
         }
     
         return count;
