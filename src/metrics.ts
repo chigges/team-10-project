@@ -10,17 +10,18 @@ export interface Metric {
 export abstract class BaseMetric implements Metric {
 	// NOTE: Not necessary to implement the interface properties, but I think it's good practice.
 	//       Also, initializing a default value. These will get overwritten by the subclass.
-	name: string = "BaseMetric";
-	description: string = "BaseMetricDescription";
-	repoUrl: string;
-	octokit: Octokit;
+	public name: string = "BaseMetric";
+	public description: string = "BaseMetricDescription";
+	public octokit: Octokit;
+	public owner: string;
+	public repo: string;
 
-	constructor(repoUrl: string, githubToken: string) {
-		this.repoUrl = repoUrl;
-
+	constructor(owner: string, repo: string) {
+		this.owner = owner;
+		this.repo = repo;
 		// NOTE: I'm not sure, but I think we need an Octokit for each metric
 		//       I'll put this here, but feel free to change this.
-		this.octokit = new Octokit({ auth: githubToken });
+		this.octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 	}
 
 	abstract evaluate(): Promise<number>;
@@ -51,8 +52,50 @@ export class License extends BaseMetric {
 	name = "License";
 	description = "Determines if the license is compatable with LGPLv2.1.";
 
+	async getReadmeLicence(owner: string, repo: string): Promise<boolean | null> {
+		try {
+			// Fetch the README file from GitHub API
+			const readmeResponse = await this.octokit.rest.repos.getReadme({
+				owner,
+				repo,
+				mediaType: {
+					format: "raw",
+				},
+			});
+
+			const readmeContent =
+				typeof readmeResponse.data === "string" ? readmeResponse.data : "";
+
+			// Using a regex to find the license section of the README
+			const licenseRegex = /(#+\s*License\s*|\bLicense\b\s*\n-+)([\s\S]*?)(#+|$)/i;
+			const match = readmeContent.match(licenseRegex);
+			if (match === null) {
+				return null;
+			}
+
+			// Using a regex to find if the license is GPL
+			const gplShortRegex = /gpl/i;
+			const gplLongRegex = /GNU General Public License/i;
+			const gplShortMatch = match[2].trim().match(gplShortRegex);
+			const gplLongMatch = match[2].trim().match(gplLongRegex);
+			if (gplShortMatch || gplLongMatch) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (error) {
+			// console.error("Error fetching README: ", error);
+			return null;
+		}
+	}
+
 	async evaluate(): Promise<number> {
-		return 0.5; // Just a placeholder. TODO: implement.
+		const isGpl = await this.getReadmeLicence(this.repo, this.owner);
+		if (isGpl === true) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 }
 
