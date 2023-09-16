@@ -39,17 +39,16 @@ describe("RampUp", () => {
 
 describe("Correctness", () => {
 	it("should return a correctness score", async () => {
-		//const correctnessMetric = new Correctness("https://github.com/example/repo", "fake-token");
 		const correctnessMetric = new Correctness("neovim", "neovim");
 		const score = await correctnessMetric.evaluate();
 		expect(score).toBeDefined();
 
-        // Check if the score is a number
-        expect(typeof score).toBe('number');
+		// Check if the score is a number
+		expect(typeof score).toBe("number");
 
-        // Check if the score is between 0 and 1 (assuming your metrics return values in this range)
-        expect(score).toBeGreaterThanOrEqual(0);
-        expect(score).toBeLessThanOrEqual(1);
+		// Check if the score is between 0 and 1 (assuming your metrics return values in this range)
+		expect(score).toBeGreaterThanOrEqual(0);
+		expect(score).toBeLessThanOrEqual(1);
 		expect(correctnessMetric.name).toBe("Correctness");
 	});
 });
