@@ -1,5 +1,5 @@
 import { Octokit } from "octokit";
-import fetch from "node-fetch";
+
 
 export interface Metric {
 	name: string;
