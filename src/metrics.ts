@@ -66,6 +66,7 @@ export class License extends BaseMetric {
 			const readmeContent =
 				typeof readmeResponse.data === "string" ? readmeResponse.data : "";
 
+			console.log(readmeContent);
 			// Using a regex to find the license section of the README
 			const licenseRegex = /(#+\s*License\s*|\bLicense\b\s*\n-+)([\s\S]*?)(#+|$)/i;
 			const match = readmeContent.match(licenseRegex);
