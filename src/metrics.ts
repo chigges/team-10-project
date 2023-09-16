@@ -1,5 +1,5 @@
 import { Octokit } from "octokit";
-import fetch from "node-fetch";
+//import fetch from "node-fetch";
 
 export interface Metric {
 	name: string;
@@ -72,29 +72,32 @@ export class Correctness extends BaseMetric {
     name = "Correctness";
     description = "Measures how many bugs are in the module.";
 
+
     async evaluate(): Promise<number> {
         // 1. Check for GitHub workflow actions presence
         const hasWorkflowActions = await this.hasWorkflowActions();
 
+
         // 2. Count TODO or FIXME comments
         const todoFixmeCount = await this.countTodoFixmeComments();
-      
+     
         // 3. Get test coverage percentage (assumed to be a method that fetches this info)
         const testCoverage = await this.getTestCoverage();
-      
+     
         // 4. Calculate the ratio of closed issues to total issues
         const { openIssues, closedIssues } = await this.getIssueCounts();
         const issueRatio = closedIssues / (openIssues + closedIssues);
-      
+     
         // Combine all factors to calculate the metric
-        const score = 
+        const score =
             (hasWorkflowActions ? 0.3 : 0) +
             (1 / todoFixmeCount * 0.2) +
             (testCoverage * 0.3) +
             (issueRatio * 0.2);
-      
+     
         return score;
     }
+
 
     private async hasWorkflowActions(): Promise<boolean> {
         try {
@@ -109,17 +112,17 @@ export class Correctness extends BaseMetric {
             return false;
         }
     }
-    
+   
     private async countTodoFixmeComments(): Promise<number> {
         let count = 0;
-    
+   
         try {
             const files = await this.octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
                 owner: this.owner,
                 repo: this.repo,
                 path: ''  // Root directory
             });
-    
+   
             if (Array.isArray(files.data)) {
                 for (const file of files.data) {
                     if (file.type === 'file' && file.content) {
@@ -130,19 +133,22 @@ export class Correctness extends BaseMetric {
                 }
             }
         } catch (error) {
-           // console.error("Error counting TODO/FIXME comments:", error);
+            console.error("Error evaluating Correctness metric:", error);
+            throw new Error("Failed to evaluate Correctness metric");
         }
-    
+   
         return count;
     }
+
+
 
 
     private async getTestCoverage(): Promise<number> {
         // Placeholder method. You need to decide how to get test coverage and implement here.
         // For now, returning a dummy value.
-        return 0.5; 
+        return 0.5;
     }
-    
+   
     private async getIssueCounts(): Promise<{ openIssues: number, closedIssues: number }> {
         const openIssuesCount = await this.octokit.request('GET /repos/{owner}/{repo}/issues', {
             owner: this.owner,
@@ -151,12 +157,14 @@ export class Correctness extends BaseMetric {
             per_page: 1
         }).then((response: any) => response.data.total_count);
 
+
         const closedIssuesCount = await this.octokit.request('GET /repos/{owner}/{repo}/issues', {
             owner: this.owner,
             repo: this.repo,
             state: 'closed',
             per_page: 1
         }).then((response: any) => response.data.total_count);
+
 
         return { openIssues: openIssuesCount, closedIssues: closedIssuesCount };
     }
