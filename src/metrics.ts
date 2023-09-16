@@ -1,4 +1,5 @@
 import { Octokit } from "octokit";
+import fetch from "node-fetch";
 
 export interface Metric {
 	name: string;
@@ -21,7 +22,7 @@ export abstract class BaseMetric implements Metric {
 		this.repo = repo;
 		// NOTE: I'm not sure, but I think we need an Octokit for each metric
 		//       I'll put this here, but feel free to change this.
-		this.octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+		this.octokit = new Octokit({ auth: process.env.GITHUB_TOKEN, request: { fetch } });
 	}
 
 	abstract evaluate(): Promise<number>;
@@ -66,8 +67,6 @@ export class License extends BaseMetric {
 			const readmeContent =
 				typeof readmeResponse.data === "string" ? readmeResponse.data : "";
 
-			console.log("here");
-			console.log(readmeContent);
 			// Using a regex to find the license section of the README
 			const licenseRegex = /(#+\s*License\s*|\bLicense\b\s*\n-+)([\s\S]*?)(#+|$)/i;
 			const match = readmeContent.match(licenseRegex);
@@ -86,7 +85,7 @@ export class License extends BaseMetric {
 				return false;
 			}
 		} catch (error) {
-			// console.error("Error fetching README: ", error);
+			console.error("Error fetching README: ", error);
 			return null;
 		}
 	}
