@@ -1,5 +1,5 @@
 import { Octokit } from "octokit";
-
+import fetch from "node-fetch";
 
 export interface Metric {
 	name: string;
@@ -20,7 +20,7 @@ export abstract class BaseMetric implements Metric {
 	constructor(owner: string, repo: string) {
 		this.owner = owner;
 		this.repo = repo;
-        this.octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+        this.octokit = new Octokit({ auth: process.env.GITHUB_TOKEN, request: { fetch } });
 	}
 	
 
