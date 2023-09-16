@@ -155,17 +155,15 @@ export class Correctness extends BaseMetric {
             repo: this.repo,
             state: 'open',
             per_page: 1
-        }).then((response: any) => response.data.total_count);
-
-
+        }).then(response => ((response as unknown) as { data: { total_count: number } }).data.total_count);
+    
         const closedIssuesCount = await this.octokit.request('GET /repos/{owner}/{repo}/issues', {
             owner: this.owner,
             repo: this.repo,
             state: 'closed',
             per_page: 1
-        }).then((response: any) => response.data.total_count);
-
-
+        }).then(response => ((response as unknown) as { data: { total_count: number } }).data.total_count);
+    
         return { openIssues: openIssuesCount, closedIssues: closedIssuesCount };
     }
 }
