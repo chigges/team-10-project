@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { BusFactor, Responsiveness, Correctness, License, RampUp } from "./metrics";
 
 describe("BusFactor", () => {
@@ -38,7 +39,8 @@ describe("RampUp", () => {
 
 describe("Correctness", () => {
 	it("should return a correctness score", async () => {
-		const correctnessMetric = new Correctness("https://github.com/example/repo", "fake-token");
+		//const correctnessMetric = new Correctness("https://github.com/example/repo", "fake-token");
+		const correctnessMetric = new Correctness("neovim", "neovim");
 		const score = await correctnessMetric.evaluate();
 		expect(score).toBeDefined();
 		expect(correctnessMetric.name).toBe("Correctness");
