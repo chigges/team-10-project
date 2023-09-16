@@ -30,14 +30,14 @@ describe("License", () => {
 		const score = await licenseMetric.evaluate();
 		expect(score).toBeDefined();
 		expect(licenseMetric.name).toBe("License");
-		expect(score).toBe(0);
+		expect(score).toEqual(0);
 	});
 	it("should indicate if a license is GPL", async () => {
 		const licenseMetric = new License("gwpy", "gwpy");
 		const score = await licenseMetric.evaluate();
 		expect(score).toBeDefined();
 		expect(licenseMetric.name).toBe("License");
-		expect(score).toBe(1);
+		expect(score).toEqual(1);
 	});
 });
 
