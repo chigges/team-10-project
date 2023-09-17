@@ -1,6 +1,11 @@
 import { readFileSync } from "fs";
 import axios from "axios";
 
+export type GithubRepoInfo = {
+	owner: string;
+	repo: string;
+};
+
 class URLParser {
 	private filePath: string;
 
@@ -15,6 +20,21 @@ class URLParser {
 			.map((line) => line.trim())
 			.filter((line) => line.length > 0);
 		return urls;
+	}
+
+	async getGithubRepoInfo(): Promise<GithubRepoInfo[]> {
+		const githubUrls = await this.getOnlyGithubUrls();
+		const githubRepoInfo: GithubRepoInfo[] = [];
+		githubUrls.forEach((url) => {
+			const regex = /github\.com\/([^/]+\/[^/]+)/;
+			const match = url.match(regex);
+			if (match != null) {
+				const owner = match[1].split("/")[0];
+				const repo = match[1].split("/")[1];
+				githubRepoInfo.push({ owner, repo });
+			}
+		});
+		return githubRepoInfo;
 	}
 
 	async getOnlyGithubUrls(): Promise<string[]> {
@@ -41,7 +61,6 @@ class URLParser {
 			const endpoint = `https://registry.npmjs.org/${packageName}`;
 			await axios.get(endpoint).then((res) => {
 				const data = res.data;
-				console.log(data["repository"]["url"]);
 				const linkEnding = data["repository"]["url"];
 				githubLink = "https://github.com/" + this.extractGithubRepo(linkEnding);
 			});
@@ -50,7 +69,7 @@ class URLParser {
 	}
 
 	extractGithubRepo(url: string): string | null {
-		const regex = /github\.com\/([^/]+\/[^/]+)/;
+		const regex = /github\.com\/([^/]+\/[^/]+)\.git/;
 		const match = url.match(regex);
 		return match ? match[1] : null;
 	}
