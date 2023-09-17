@@ -1,4 +1,5 @@
 import { readFileSync } from "fs";
+import axios from "axios";
 
 export type GithubRepoInfo = {
 	owner: string;
