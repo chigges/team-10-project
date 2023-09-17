@@ -116,6 +116,35 @@ export class Correctness extends BaseMetric {
 		return score;
 	}
 
+	async getIssueCounts(): Promise<{ openIssues: number; closedIssues: number }> {
+		let openIssuesCount = 0;
+		let closedIssuesCount = 0;
+
+		try {
+			const openIssuesResponse = await this.octokit.rest.issues.listForRepo({
+				owner: this.owner,
+				repo: this.repo,
+				state: "open",
+				per_page: 1,
+			});
+
+			openIssuesCount = openIssuesResponse.data.length; // Assuming the length gives the count
+
+			const closedIssuesResponse = await this.octokit.rest.issues.listForRepo({
+				owner: this.owner,
+				repo: this.repo,
+				state: "closed",
+				per_page: 1,
+			});
+
+			closedIssuesCount = closedIssuesResponse.data.length; // Assuming the length gives the count
+		} catch (error) {
+			console.error("Error fetching issue counts:", error);
+		}
+
+		return { openIssues: openIssuesCount, closedIssues: closedIssuesCount };
+	}
+
 	private async hasWorkflowActions(): Promise<boolean> {
 		try {
 			// Try to get the workflows directory. If it exists, return true.
@@ -163,31 +192,31 @@ export class Correctness extends BaseMetric {
 		return 0.5;
 	}
 
-	private async getIssueCounts(): Promise<{ openIssues: number; closedIssues: number }> {
-		const openIssuesCount = await this.octokit
-			.request("GET /repos/{owner}/{repo}/issues", {
-				owner: this.owner,
-				repo: this.repo,
-				state: "open",
-				per_page: 1,
-			})
-			.then(
-				(response) =>
-					(response as unknown as { data: { total_count: number } }).data.total_count,
-			);
+	// private async getIssueCounts(): Promise<{ openIssues: number; closedIssues: number }> {
+	// 	const openIssuesCount = await this.octokit
+	// 		.request("GET /repos/{owner}/{repo}/issues", {
+	// 			owner: this.owner,
+	// 			repo: this.repo,
+	// 			state: "open",
+	// 			per_page: 1,
+	// 		})
+	// 		.then(
+	// 			(response) =>
+	// 				(response as unknown as { data: { total_count: number } }).data.total_count,
+	// 		);
 
-		const closedIssuesCount = await this.octokit
-			.request("GET /repos/{owner}/{repo}/issues", {
-				owner: this.owner,
-				repo: this.repo,
-				state: "closed",
-				per_page: 1,
-			})
-			.then(
-				(response) =>
-					(response as unknown as { data: { total_count: number } }).data.total_count,
-			);
+	// 	const closedIssuesCount = await this.octokit
+	// 		.request("GET /repos/{owner}/{repo}/issues", {
+	// 			owner: this.owner,
+	// 			repo: this.repo,
+	// 			state: "closed",
+	// 			per_page: 1,
+	// 		})
+	// 		.then(
+	// 			(response) =>
+	// 				(response as unknown as { data: { total_count: number } }).data.total_count,
+	// 		);
 
-		return { openIssues: openIssuesCount, closedIssues: closedIssuesCount };
-	}
+	// 	return { openIssues: openIssuesCount, closedIssues: closedIssuesCount };
+	// }
 }
