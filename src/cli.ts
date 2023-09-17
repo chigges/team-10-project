@@ -27,6 +27,10 @@ export function setupCLI() {
 			const urlParser = new URLParser("./Sample Url File.txt");
 			const urls = urlParser.getUrls();
 			console.log(urls);
+
+			urlParser.getOnlyGithubUrls().then((urls) => {
+				console.log(urls);
+			});
 		});
 
 	program.parse();
