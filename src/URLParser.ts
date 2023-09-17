@@ -1,4 +1,5 @@
 import { readFileSync } from "fs";
+import axios from "axios";
 
 class URLParser {
 	private filePath: string;
@@ -38,12 +39,13 @@ class URLParser {
 		let githubLink = null;
 		if (packageName != null) {
 			const endpoint = `https://registry.npmjs.org/${packageName}`;
-			const res = await fetch(endpoint);
-			let data = await res.json();
-			data = data["repository"]["url"];
-			githubLink = "https://github.com/" + this.extractGithubRepo(data);
+			await axios.get(endpoint).then((res) => {
+				const data = res.data;
+				console.log(data["repository"]["url"]);
+				const linkEnding = data["repository"]["url"];
+				githubLink = "https://github.com/" + this.extractGithubRepo(linkEnding);
+			});
 		}
-
 		return githubLink || null;
 	}
 
