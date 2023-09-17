@@ -31,6 +31,10 @@ export function setupCLI() {
 			urlParser.getOnlyGithubUrls().then((urls) => {
 				console.log(urls);
 			});
+
+			urlParser.getGithubRepoInfo().then((info) => {
+				console.log(info);
+			});
 		});
 
 	program.parse();
