@@ -55,48 +55,46 @@ export class BusFactor extends BaseMetric {
 				}
 				`,
 				{
-				headers: {
-					authorization: `token ${process.env.GITHUB_TOKEN}`,
-				},
+					headers: {
+						authorization: `token ${process.env.GITHUB_TOKEN}`,
+					},
 				},
 			);
-			const halfTotalCommits:number = Math.floor(repository.defaultBranchRef.target.history.totalCount / 2);
+			const halfTotalCommits: number = Math.floor(
+				repository.defaultBranchRef.target.history.totalCount / 2,
+			);
 
 			const contributors = await this.octokit.rest.repos.listContributors({
-				per_page:rawBusFactorMax,
-				owner:this.owner,
-				repo:this.repo,
-			})
+				per_page: rawBusFactorMax,
+				owner: this.owner,
+				repo: this.repo,
+			});
 
-			var rawBusFactor:number = 0;
-			var topContributorCommitNum:number = 0			
+			var rawBusFactor: number = 0;
+			var topContributorCommitNum: number = 0;
 			for (const contributor of contributors.data) {
 				rawBusFactor += 1;
 				topContributorCommitNum += contributor.contributions;
-				console.log(contributor)
 				if (topContributorCommitNum > halfTotalCommits) {
 					break;
 				}
 			}
 
 			return Math.min(Math.floor(rawBusFactor / rawBusFactorMax), 1);
-
-		}  catch (error) {
+		} catch (error) {
 			// Octokit errors always have a `error.status` property which is the http response code nad it's instance of RequestError
 			if (error instanceof RequestError) {
-			  console.error("Octokit error: ", error);
+				console.error("Octokit error: ", error);
 			} else {
-			  // handle all other errors
-			   console.error("non-Octokit error: ", error);
+				// handle all other errors
+				console.error("non-Octokit error: ", error);
 			}
 
 			return -1;
 		}
-		
+
 		// return 0.5; // Just a placeholder. TODO: implement.
 	}
-
-	
 }
 
 // A subclass of BaseMetric.
