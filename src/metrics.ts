@@ -70,8 +70,8 @@ export class BusFactor extends BaseMetric {
 				repo: this.repo,
 			});
 
-			var rawBusFactor: number = 0;
-			var topContributorCommitNum: number = 0;
+			let rawBusFactor: number = 0;
+			let topContributorCommitNum: number = 0;
 			for (const contributor of contributors.data) {
 				rawBusFactor += 1;
 				topContributorCommitNum += contributor.contributions;
