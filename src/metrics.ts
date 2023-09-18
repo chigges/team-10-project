@@ -1,5 +1,6 @@
-import { Octokit } from "octokit";
+import { Octokit, RequestError } from "octokit";
 import fetch from "node-fetch";
+const { graphql } = require("@octokit/graphql");
 
 export interface Metric {
 	name: string;
@@ -34,7 +35,65 @@ export class BusFactor extends BaseMetric {
 	description = "Measures how many developers are essential for the project.";
 
 	async evaluate(): Promise<number> {
-		return 0.5; // Just a placeholder. TODO: implement.
+		const rawBusFactorMax = 10; //implicitly set by our formula taking min(rawBusFactor//10, 1)
+
+		try {
+			const { repository } = await graphql(
+				`
+				query {
+					repository(owner:"${this.owner}", name:"${this.repo}") {
+					defaultBranchRef {
+						target {
+						... on Commit {
+							history {
+							totalCount
+							}
+						}
+						}
+					}
+					}
+				}
+				`,
+				{
+					headers: {
+						authorization: `token ${process.env.GITHUB_TOKEN}`,
+					},
+				},
+			);
+			const halfTotalCommits: number = Math.floor(
+				repository.defaultBranchRef.target.history.totalCount / 2,
+			);
+
+			const contributors = await this.octokit.rest.repos.listContributors({
+				per_page: rawBusFactorMax,
+				owner: this.owner,
+				repo: this.repo,
+			});
+
+			var rawBusFactor: number = 0;
+			var topContributorCommitNum: number = 0;
+			for (const contributor of contributors.data) {
+				rawBusFactor += 1;
+				topContributorCommitNum += contributor.contributions;
+				if (topContributorCommitNum > halfTotalCommits) {
+					break;
+				}
+			}
+
+			return Math.min(rawBusFactor / rawBusFactorMax, 1);
+		} catch (error) {
+			// Octokit errors always have a `error.status` property which is the http response code nad it's instance of RequestError
+			if (error instanceof RequestError) {
+				console.error("Octokit error: ", error);
+			} else {
+				// handle all other errors
+				console.error("non-Octokit error: ", error);
+			}
+
+			return -1;
+		}
+
+		// return 0.5; // Just a placeholder. TODO: implement.
 	}
 }
 
