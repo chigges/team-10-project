@@ -1,5 +1,6 @@
 import { Command } from "commander";
 import URLParser from "./URLParser";
+import { exec } from "child_process";
 
 export function setupCLI() {
 	const program = new Command();
@@ -10,7 +11,22 @@ export function setupCLI() {
 		.command("install")
 		.description("Installs dependencies")
 		.action(() => {
-			console.log("installing dependencies (but not really)");
+			exec("npm ci", (error, stdout, stderr) => {
+				if (error) {
+					console.error(`Error during installation: ${error}`);
+					return;
+				}
+
+				// Extract the number of packages installed
+				const regex = /added (\d+) packages/i;
+				const match = stdout.match(regex);
+				if (match && match[1]) {
+					console.log(`${match[1]} dependencies installed...`);
+				} else {
+					// could not determine amount of dependencies installed
+					console.log("Installed dependencies...");
+				}
+			});
 		});
 
 	program
