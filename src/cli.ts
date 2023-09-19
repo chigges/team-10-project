@@ -48,6 +48,9 @@ export function setupCLI() {
 				silent: true,
 				verbose: false,
 			};
+
+			// Been working at this for a long time. I'm not sure how to get the types to work here.
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const { results } = await runCLI(config as any, [process.cwd()]);
 
 			// Restore stdout and stderr
