@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import URLParser from "./URLParser";
 import { exec } from "child_process";
+import { runCLI } from "jest";
 
 export function setupCLI() {
 	const program = new Command();
@@ -32,8 +33,40 @@ export function setupCLI() {
 	program
 		.command("test")
 		.description("Runs tests")
-		.action(() => {
-			console.log("running tests (but not really)");
+		.action(async () => {
+			// Mute stdout and stderr
+			const originalStdoutWrite = process.stdout.write.bind(process.stdout);
+			process.stdout.write = () => true;
+			const originalStderrWrite = process.stderr.write.bind(process.stderr);
+			process.stderr.write = () => true;
+
+			// Setup and run jest tests
+			const config = {
+				collectCoverage: true,
+				collectCoverageFrom: ["src/**/*.{js,ts}", "!**/node_modules/**"],
+				reporters: ["default"],
+				silent: true,
+				verbose: false,
+			};
+			const { results } = await runCLI(config as any, [process.cwd()]);
+
+			// Restore stdout and stderr
+			process.stdout.write = originalStdoutWrite;
+			process.stderr.write = originalStderrWrite;
+
+			// Get test results and print them
+			const totalTests = results.numTotalTests;
+			const passedTests = results.numPassedTests;
+			const coverage = results.coverageMap
+				? results.coverageMap.getCoverageSummary().toJSON().lines.pct
+				: 0;
+
+			console.log(`Total: ${totalTests}`);
+			console.log(`Passed: ${passedTests}`);
+			console.log(`Coverage: ${coverage}%`);
+			console.log(
+				`${passedTests}/${totalTests} test cases passed. ${coverage}% line coverage achieved.`,
+			);
 		});
 
 	program
