@@ -11,7 +11,7 @@ export function setupCLI() {
 		.command("install")
 		.description("Installs dependencies")
 		.action(() => {
-			exec("npm ci", (error, stdout, stderr) => {
+			exec("npm ci", (error, stdout) => {
 				if (error) {
 					console.error(`Error during installation: ${error}`);
 					return;
