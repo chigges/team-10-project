@@ -3,7 +3,8 @@
 .git
 .vscode
 
-node_modules/*
+node_modules/**/*
+dist/**/*
 
 .eslintrc.json
 .prettierrc.json
