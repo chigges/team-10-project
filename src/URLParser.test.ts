@@ -46,4 +46,21 @@ describe("URLParser", () => {
 			expect(info.repo).toBeDefined();
 		}
 	});
+
+	it("should have null when the link is invalid", async () => {
+		const githubRepo = await parser.getGithubRepoFromNpm("fake link doesn't work");
+		expect(githubRepo).toBeNull();
+	});
+
+	it("should be null when the link is invalid for github", async () => {
+		const githubRepo = await parser.getGithubRepoFromNpm(
+			"https://www.npmjs.com/package/fakepackagenoexistofake",
+		);
+		expect(githubRepo).toBeNull();
+	});
+
+	it("should be null when trying to extract github repo from bad link", async () => {
+		const githubRepo = parser.extractGithubRepo("fake link doesn't work");
+		expect(githubRepo).toBeNull();
+	});
 });
