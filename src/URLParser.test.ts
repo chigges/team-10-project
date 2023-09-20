@@ -53,7 +53,9 @@ describe("URLParser", () => {
 	});
 
 	it("should be null when the link is invalid for github", async () => {
-		const githubRepo = await parser.getGithubRepoFromNpm("https://www.npmjs.com/package/fakepackagenoexistofake");
+		const githubRepo = await parser.getGithubRepoFromNpm(
+			"https://www.npmjs.com/package/fakepackagenoexistofake",
+		);
 		expect(githubRepo).toBeNull();
 	});
 
