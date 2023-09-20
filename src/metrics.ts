@@ -84,13 +84,13 @@ export class BusFactor extends BaseMetric {
 		} catch (error) {
 			// Octokit errors always have a `error.status` property which is the http response code nad it's instance of RequestError
 			if (error instanceof RequestError) {
-				console.error("Octokit error: ", error);
+				console.error("Octokit error evaluating BusFactor: ", error);
 			} else {
 				// handle all other errors
-				console.error("non-Octokit error: ", error);
+				console.error("non-Octokit error evaluating BusFactor: ", error);
 			}
 
-			return -1;
+			return 0;
 		}
 
 		// return 0.5; // Just a placeholder. TODO: implement.
