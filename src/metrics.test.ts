@@ -2,6 +2,10 @@ import "dotenv/config"; // loads .env file into process.env. NOTE: this should b
 import { BusFactor, Responsiveness, Correctness, License, RampUp } from "./metrics";
 
 describe("BusFactor", () => {
+	beforeEach((): void => {
+		jest.setTimeout(20000);
+	});
+
 	it("should return a bus factor", async () => {
 		const busFactorMetric = new BusFactor("neovim", "neovim");
 		const score = await busFactorMetric.evaluate();
