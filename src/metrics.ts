@@ -60,6 +60,7 @@ export class BusFactor extends BaseMetric {
 					},
 				},
 			);
+			// https://stackoverflow.com/questions/49442317/github-graphql-repository-query-commits-totalcount
 			const halfTotalCommits: number = Math.floor(
 				repository.defaultBranchRef.target.history.totalCount / 2,
 			);
