@@ -3,6 +3,7 @@
 .vscode
 
 dist/**/*
+coverage/**/*
 
 *.env
 .env
