@@ -4,6 +4,8 @@
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": { "project": ["./tsconfig.json"] },
 	"plugins": ["@typescript-eslint"],
-	"rules": {},
+	"rules": {
+		"@typescript-eslint/no-var-requires": "off"
+	},
 	"ignorePatterns": ["src/**/*.test.ts", "src/frontend/generated/*"]
 }

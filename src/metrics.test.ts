@@ -7,6 +7,15 @@ describe("BusFactor", () => {
 		const score = await busFactorMetric.evaluate();
 		expect(score).toBeDefined();
 		expect(busFactorMetric.name).toBe("BusFactor");
+		expect(score).toBeGreaterThan(0);
+	});
+
+	it("should not find a repo to return a bus factor", async () => {
+		const busFactorMetric = new BusFactor("neovm", "neovim");
+		const score = await busFactorMetric.evaluate();
+		expect(score).toBeDefined();
+		expect(busFactorMetric.name).toBe("BusFactor");
+		expect(score).toEqual(0);
 	});
 });
 
