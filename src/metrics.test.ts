@@ -24,6 +24,10 @@ describe("BusFactor", () => {
 });
 
 describe("Responsiveness", () => {
+	beforeEach((): void => {
+		jest.setTimeout(20000);
+	});
+
 	it("should return a responsiveness score", async () => {
 		const respMetric = new Responsiveness("neovim", "neovim");
 		const score = await respMetric.evaluate();
@@ -33,6 +37,10 @@ describe("Responsiveness", () => {
 });
 
 describe("License", () => {
+	beforeEach((): void => {
+		jest.setTimeout(20000);
+	});
+
 	it("should return a license score", async () => {
 		const licenseMetric = new License("neovim", "neovim");
 		const score = await licenseMetric.evaluate();
@@ -56,6 +64,10 @@ describe("License", () => {
 });
 
 describe("RampUp", () => {
+	beforeEach((): void => {
+		jest.setTimeout(20000);
+	});
+
 	it("should return a rampup score", async () => {
 		const rampUpMetric = new RampUp("neovim", "neovim");
 		const score = await rampUpMetric.evaluate();
@@ -65,6 +77,10 @@ describe("RampUp", () => {
 });
 
 describe("Correctness", () => {
+	beforeEach((): void => {
+		jest.setTimeout(20000);
+	});
+
 	it("should return a correctness score", async () => {
 		const correctnessMetric = new Correctness("neovim", "neovim");
 		const score = await correctnessMetric.evaluate();
