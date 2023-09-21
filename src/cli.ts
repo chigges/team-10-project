@@ -90,8 +90,6 @@ export function setupCLI() {
 			const repoInfoList = await urlParser.getGithubRepoInfo();
 			const RepoMetricInfoList: RepoMetricInfo[] = [];
 			for (const repoInfo of repoInfoList) {
-				//Net Score
-				let netScore = 0;
 				//Ramp Up Score
 				const rampupMetric = new RampUp(repoInfo.owner, repoInfo.repo);
 				const rampupMetricScore = await rampupMetric.evaluate();
@@ -108,12 +106,20 @@ export function setupCLI() {
 				const licenseMetric = new License(repoInfo.owner, repoInfo.repo);
 				const licenseMetricScore = await licenseMetric.evaluate();
 
-				netScore =
-					rampupMetricScore +
-					correctnessMetricScore +
-					busFactorMetricScore +
-					responsivenessMetricScore +
+				console.log("Ramp Up Score: " + rampupMetricScore);
+				console.log("Correctness Score: " + correctnessMetricScore);
+				console.log("Bus Factor Score: " + busFactorMetricScore);
+				console.log("Responsiveness Score: " + responsivenessMetricScore);
+				console.log("License Score: " + licenseMetricScore);
+
+				const netScore =
+					(rampupMetricScore * 0.2 +
+						correctnessMetricScore * 0.1 +
+						busFactorMetricScore * 0.4 +
+						responsivenessMetricScore * 0.3) *
 					licenseMetricScore;
+
+				console.log("Net Score: " + netScore);
 
 				const currentRepoInfoScores: RepoMetricInfo = {
 					URL: repoInfo.url,
