@@ -6,6 +6,7 @@ import http from "isomorphic-git/http/node";
 import { clone } from "isomorphic-git";
 import path from "path";
 import { dirSync } from "tmp";
+import { log } from "./logger";
 
 export interface Metric {
 	name: string;
@@ -150,7 +151,7 @@ export class License extends BaseMetric {
 				return false;
 			}
 		} catch (error) {
-			console.error("Error fetching README: ", error);
+			log.debug("Error fetching README for license: ", error);
 			return null;
 		}
 	}
@@ -185,7 +186,7 @@ export class RampUp extends BaseMetric {
 			}
 			return false;
 		} catch (err) {
-			console.error(`Error reading directory: ${err}`);
+			log.error(`Error reading directory: ${err}`);
 			return false;
 		}
 	}
@@ -204,7 +205,7 @@ export class RampUp extends BaseMetric {
 				sloc += subResult.sloc;
 				comments += subResult.comments;
 			} else if (file.name.endsWith(".js") || file.name.endsWith(".ts")) {
-				console.error(`Reading file: ${filePath}`);
+				log.debug(`Reading file for sloc to comment ratio: ${filePath}`);
 				const fileContent = fs.readFileSync(filePath, "utf-8");
 				const lines = fileContent.split("\n");
 				let inCommentBlock = false;
@@ -233,6 +234,10 @@ export class RampUp extends BaseMetric {
 	}
 
 	async evaluate(): Promise<number> {
+		log.info(`Evaluating RampUp for ${this.owner}/${this.repo}`);
+		log.info(`Cloning ${this.owner}/${this.repo}`);
+
+		// Create a temp directory and clone the repo into it
 		const tmpdir = dirSync({ unsafeCleanup: true });
 		await clone({
 			fs,
@@ -245,16 +250,20 @@ export class RampUp extends BaseMetric {
 		});
 
 		// See if there is a README.md
+		log.info(`Finding ${this.owner}/${this.repo} README.md`);
 		const doesReadmeExist: boolean = this.doesFileExist(tmpdir.name, "README.md");
 		const readmeScore = doesReadmeExist ? 0.3 : 0;
 
 		// See if there is a CONTRIBUTING.md
+		log.info(`Finding ${this.owner}/${this.repo} CONTRIBUTING.md`);
 		const doesContributingExist: boolean = this.doesFileExist(tmpdir.name, "CONTRIBUTING.md");
 		const contributingScore = doesContributingExist ? 0.3 : 0;
 
 		// Find the sloc to comment ratio
+		log.info(`Finding ${this.owner}/${this.repo} comment to sloc ratio`);
 		const { sloc, comments } = this.calculateSlocToCommentRatio(tmpdir.name);
 		const commentToSlocRatio = comments / (sloc || 1); // Avoid division by zero
+		log.debug(`sloc: ${sloc}, comments: ${comments}, ratio: ${commentToSlocRatio}`);
 
 		// scale that ratio to a number between 0 and 1
 		const commentToSlocRatioScaled = Math.min(commentToSlocRatio, 1);
@@ -262,9 +271,7 @@ export class RampUp extends BaseMetric {
 
 		tmpdir.removeCallback(); // Cleanup the temp directory
 
-		// Calculate the score
-
-		console.error(`sloc: ${sloc}, comments: ${comments}, ratio: ${commentToSlocRatio}`);
+		// Calculate the score and return it
 		return readmeScore + contributingScore + slocCommentRatioScore;
 	}
 }
