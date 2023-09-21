@@ -1,5 +1,8 @@
 import { Command } from "commander";
 import URLParser from "./URLParser";
+import { exec } from "child_process";
+import { runCLI } from "jest";
+import { BusFactor, Responsiveness, Correctness, License, RampUp } from "./metrics";
 
 export function setupCLI() {
 	const program = new Command();
@@ -10,14 +13,130 @@ export function setupCLI() {
 		.command("install")
 		.description("Installs dependencies")
 		.action(() => {
-			console.log("installing dependencies (but not really)");
+			exec("npm ci", (error, stdout) => {
+				if (error) {
+					console.error(`Error during installation: ${error}`);
+					return;
+				}
+
+				// Extract the number of packages installed
+				const regex = /added (\d+) packages/i;
+				const match = stdout.match(regex);
+				if (match && match[1]) {
+					console.log(`${match[1]} dependencies installed...`);
+				} else {
+					// could not determine amount of dependencies installed
+					console.log("Installed dependencies...");
+				}
+			});
 		});
 
 	program
 		.command("test")
 		.description("Runs tests")
-		.action(() => {
-			console.log("running tests (but not really)");
+		.action(async () => {
+			// Mute stdout and stderr
+			const originalStdoutWrite = process.stdout.write.bind(process.stdout);
+			process.stdout.write = () => true;
+			const originalStderrWrite = process.stderr.write.bind(process.stderr);
+			process.stderr.write = () => true;
+
+			// Setup and run jest tests
+			const config = {
+				collectCoverage: true,
+				collectCoverageFrom: ["src/**/*.{js,ts}", "!**/node_modules/**"],
+				reporters: ["default"],
+				silent: true,
+				verbose: false,
+			};
+
+			// Been working at this for a long time. I'm not sure how to get the types to work here.
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const { results } = await runCLI(config as any, [process.cwd()]);
+
+			// Restore stdout and stderr
+			process.stdout.write = originalStdoutWrite;
+			process.stderr.write = originalStderrWrite;
+
+			// Get test results and print them
+			const totalTests = results.numTotalTests;
+			const passedTests = results.numPassedTests;
+			const coverage = results.coverageMap
+				? results.coverageMap.getCoverageSummary().toJSON().lines.pct
+				: 0;
+
+			console.log(`Total: ${totalTests}`);
+			console.log(`Passed: ${passedTests}`);
+			console.log(`Coverage: ${coverage}%`);
+			console.log(
+				`${passedTests}/${totalTests} test cases passed. ${coverage}% line coverage achieved.`,
+			);
+		});
+
+	program
+		.arguments("<file>")
+		.description("Takes in a file of URLs and outputs the score of each repo")
+		.action(async (file) => {
+			type RepoMetricInfo = {
+				URL: string;
+				NET_SCORE: number;
+				RAMP_UP_SCORE: number;
+				CORRECTNESS_SCORE: number;
+				BUS_FACTOR_SCORE: number;
+				RESPONSIVE_MAINTAINER_SCORE: number;
+				LICENSE_SCORE: number;
+			};
+			const urlParser = new URLParser(file);
+			const repoInfoList = await urlParser.getGithubRepoInfo();
+			const RepoMetricInfoList: RepoMetricInfo[] = [];
+			for (const repoInfo of repoInfoList) {
+				//Ramp Up Score
+				const rampupMetric = new RampUp(repoInfo.owner, repoInfo.repo);
+				const rampupMetricScore = await rampupMetric.evaluate();
+				//Correctness Score
+				const correctnessMetric = new Correctness(repoInfo.owner, repoInfo.repo);
+				const correctnessMetricScore = await correctnessMetric.evaluate();
+				//Bus Factor Score
+				const busFactorMetric = new BusFactor(repoInfo.owner, repoInfo.repo);
+				const busFactorMetricScore = await busFactorMetric.evaluate();
+				//Responsiveness Score
+				const responsivenessMetric = new Responsiveness(repoInfo.owner, repoInfo.repo);
+				const responsivenessMetricScore = await responsivenessMetric.evaluate();
+				//License Score
+				const licenseMetric = new License(repoInfo.owner, repoInfo.repo);
+				const licenseMetricScore = await licenseMetric.evaluate();
+
+				console.log("Ramp Up Score: " + rampupMetricScore);
+				console.log("Correctness Score: " + correctnessMetricScore);
+				console.log("Bus Factor Score: " + busFactorMetricScore);
+				console.log("Responsiveness Score: " + responsivenessMetricScore);
+				console.log("License Score: " + licenseMetricScore);
+
+				const netScore =
+					(rampupMetricScore * 0.2 +
+						correctnessMetricScore * 0.1 +
+						busFactorMetricScore * 0.4 +
+						responsivenessMetricScore * 0.3) *
+					licenseMetricScore;
+
+				console.log("Net Score: " + netScore);
+
+				const currentRepoInfoScores: RepoMetricInfo = {
+					URL: repoInfo.url,
+					NET_SCORE: netScore,
+					RAMP_UP_SCORE: rampupMetricScore,
+					CORRECTNESS_SCORE: correctnessMetricScore,
+					BUS_FACTOR_SCORE: busFactorMetricScore,
+					RESPONSIVE_MAINTAINER_SCORE: responsivenessMetricScore,
+					LICENSE_SCORE: licenseMetricScore,
+				};
+
+				RepoMetricInfoList.push(currentRepoInfoScores);
+			}
+
+			for (const repoInfo of RepoMetricInfoList) {
+				console.log(JSON.stringify(repoInfo));
+			}
 		});
 
 	program

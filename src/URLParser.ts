@@ -2,6 +2,7 @@ import { readFileSync } from "fs";
 import axios from "axios";
 
 export type GithubRepoInfo = {
+	url: string;
 	owner: string;
 	repo: string;
 };
@@ -31,7 +32,7 @@ class URLParser {
 			if (match != null) {
 				const owner = match[1].split("/")[0];
 				const repo = match[1].split("/")[1];
-				githubRepoInfo.push({ owner, repo });
+				githubRepoInfo.push({ url, owner, repo });
 			}
 		});
 		return githubRepoInfo;
@@ -59,11 +60,20 @@ class URLParser {
 		let githubLink = null;
 		if (packageName != null) {
 			const endpoint = `https://registry.npmjs.org/${packageName}`;
-			await axios.get(endpoint).then((res) => {
-				const data = res.data;
-				const linkEnding = data["repository"]["url"];
-				githubLink = "https://github.com/" + this.extractGithubRepo(linkEnding);
-			});
+			await axios
+				.get(endpoint)
+				.then((res) => {
+					const data = res.data;
+					// console.log(data);
+					let linkEnding = data["repository"]["url"];
+					linkEnding = this.extractGithubRepo(linkEnding);
+					if (linkEnding != null) {
+						githubLink = "https://github.com/" + linkEnding;
+					}
+				})
+				.catch(() => {
+					console.log("Error getting github repo from npm link for " + packageName + ".");
+				});
 		}
 		return githubLink || null;
 	}

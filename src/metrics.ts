@@ -1,5 +1,6 @@
-import { Octokit } from "octokit";
+import { Octokit, RequestError } from "octokit";
 import fetch from "node-fetch";
+const { graphql } = require("@octokit/graphql");
 
 export interface Metric {
 	name: string;
@@ -20,7 +21,8 @@ export abstract class BaseMetric implements Metric {
 	constructor(owner: string, repo: string) {
 		this.owner = owner;
 		this.repo = repo;
-
+		// NOTE: I'm not sure, but I think we need an Octokit for each metric
+		//       I'll put this here, but feel free to change this.
 		this.octokit = new Octokit({ auth: process.env.GITHUB_TOKEN, request: { fetch } });
 	}
 
@@ -33,7 +35,66 @@ export class BusFactor extends BaseMetric {
 	description = "Measures how many developers are essential for the project.";
 
 	async evaluate(): Promise<number> {
-		return 0.5; // Just a placeholder. TODO: implement.
+		const rawBusFactorMax = 10; //implicitly set by our formula taking min(rawBusFactor//10, 1)
+
+		try {
+			const { repository } = await graphql(
+				`
+				query {
+					repository(owner:"${this.owner}", name:"${this.repo}") {
+					defaultBranchRef {
+						target {
+						... on Commit {
+							history {
+							totalCount
+							}
+						}
+						}
+					}
+					}
+				}
+				`,
+				{
+					headers: {
+						authorization: `token ${process.env.GITHUB_TOKEN}`,
+					},
+				},
+			);
+			// https://stackoverflow.com/questions/49442317/github-graphql-repository-query-commits-totalcount
+			const halfTotalCommits: number = Math.floor(
+				repository.defaultBranchRef.target.history.totalCount / 2,
+			);
+
+			const contributors = await this.octokit.rest.repos.listContributors({
+				per_page: rawBusFactorMax,
+				owner: this.owner,
+				repo: this.repo,
+			});
+
+			let rawBusFactor: number = 0;
+			let topContributorCommitNum: number = 0;
+			for (const contributor of contributors.data) {
+				rawBusFactor += 1;
+				topContributorCommitNum += contributor.contributions;
+				if (topContributorCommitNum > halfTotalCommits) {
+					break;
+				}
+			}
+
+			return Math.min(rawBusFactor / rawBusFactorMax, 1);
+		} catch (error) {
+			// Octokit errors always have a `error.status` property which is the http response code nad it's instance of RequestError
+			if (error instanceof RequestError) {
+				console.error("Octokit error evaluating BusFactor: ", error);
+			} else {
+				// handle all other errors
+				console.error("non-Octokit error evaluating BusFactor: ", error);
+			}
+
+			return 0;
+		}
+
+		// return 0.5; // Just a placeholder. TODO: implement.
 	}
 }
 
@@ -52,8 +113,50 @@ export class License extends BaseMetric {
 	name = "License";
 	description = "Determines if the license is compatable with LGPLv2.1.";
 
+	async getReadmeLicence(owner: string, repo: string): Promise<boolean | null> {
+		try {
+			// Fetch the README file from GitHub API
+			const readmeResponse = await this.octokit.rest.repos.getReadme({
+				owner,
+				repo,
+				mediaType: {
+					format: "raw",
+				},
+			});
+
+			const readmeContent =
+				typeof readmeResponse.data === "string" ? readmeResponse.data : "";
+
+			// Using a regex to find the license section of the README
+			const licenseRegex = /(#+\s*License\s*|\bLicense\b\s*\n-+)([\s\S]*?)(#+|$)/i;
+			const match = readmeContent.match(licenseRegex);
+			if (match === null) {
+				return null;
+			}
+
+			// Using a regex to find if the license is GPL
+			const gplShortRegex = /gpl/i;
+			const gplLongRegex = /GNU General Public License/i;
+			const gplShortMatch = match[2].trim().match(gplShortRegex);
+			const gplLongMatch = match[2].trim().match(gplLongRegex);
+			if (gplShortMatch || gplLongMatch) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (error) {
+			console.error("Error fetching README: ", error);
+			return null;
+		}
+	}
+
 	async evaluate(): Promise<number> {
-		return 0.5; // Just a placeholder. TODO: implement.
+		const isGpl = await this.getReadmeLicence(this.owner, this.repo);
+		if (isGpl === true) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 }
 
