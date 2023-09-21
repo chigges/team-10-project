@@ -190,6 +190,48 @@ export class RampUp extends BaseMetric {
 		}
 	}
 
+	private calculateSlocToCommentRatio(dir: string): { sloc: number; comments: number } {
+		let sloc = 0;
+		let comments = 0;
+
+		const files = fs.readdirSync(dir, { withFileTypes: true });
+
+		for (const file of files) {
+			const filePath = path.join(dir, file.name);
+
+			if (file.isDirectory()) {
+				const subResult = this.calculateSlocToCommentRatio(filePath);
+				sloc += subResult.sloc;
+				comments += subResult.comments;
+			} else if (file.name.endsWith(".js") || file.name.endsWith(".ts")) {
+				console.error(`Reading file: ${filePath}`);
+				const fileContent = fs.readFileSync(filePath, "utf-8");
+				const lines = fileContent.split("\n");
+				let inCommentBlock = false;
+
+				for (const line of lines) {
+					const trimmedLine = line.trim();
+
+					if (inCommentBlock) {
+						comments++;
+						if (trimmedLine.endsWith("*/")) {
+							inCommentBlock = false;
+						}
+					} else if (trimmedLine.startsWith("/*")) {
+						inCommentBlock = true;
+						comments++;
+					} else if (trimmedLine.startsWith("//")) {
+						comments++;
+					} else if (trimmedLine.length > 0) {
+						sloc++;
+					}
+				}
+			}
+		}
+
+		return { sloc, comments };
+	}
+
 	async evaluate(): Promise<number> {
 		const tmpdir = dirSync({ unsafeCleanup: true });
 		await clone({
@@ -204,19 +246,26 @@ export class RampUp extends BaseMetric {
 
 		// See if there is a README.md
 		const doesReadmeExist: boolean = this.doesFileExist(tmpdir.name, "README.md");
+		const readmeScore = doesReadmeExist ? 0.3 : 0;
 
 		// See if there is a CONTRIBUTING.md
 		const doesContributingExist: boolean = this.doesFileExist(tmpdir.name, "CONTRIBUTING.md");
+		const contributingScore = doesContributingExist ? 0.3 : 0;
 
-		// TODO: Find the sloc to comment ratio
+		// Find the sloc to comment ratio
+		const { sloc, comments } = this.calculateSlocToCommentRatio(tmpdir.name);
+		const commentToSlocRatio = comments / (sloc || 1); // Avoid division by zero
+
+		// scale that ratio to a number between 0 and 1
+		const commentToSlocRatioScaled = Math.min(commentToSlocRatio, 1);
+		const slocCommentRatioScore = commentToSlocRatioScaled * 0.4; // ratio of 50% is max score
 
 		tmpdir.removeCallback(); // Cleanup the temp directory
 
 		// Calculate the score
-		const readmeScore = doesReadmeExist ? 0.3 : 0;
-		const contributingScore = doesContributingExist ? 0.3 : 0;
-		// TODO: Create a score for the sloc to comment ratio
-		return readmeScore + contributingScore;
+
+		console.error(`sloc: ${sloc}, comments: ${comments}, ratio: ${commentToSlocRatio}`);
+		return readmeScore + contributingScore + slocCommentRatioScore;
 	}
 }
 
