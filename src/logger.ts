@@ -1,6 +1,6 @@
 import "dotenv/config"; // loads .env file into process.env. NOTE: this should be the first line
 import { Logger } from "tslog";
-import { createWriteStream, appendFileSync } from "fs";
+import { appendFileSync } from "fs";
 
 export const log = new Logger({
 	name: "Logger",
