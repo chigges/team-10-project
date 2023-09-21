@@ -183,7 +183,7 @@ export class Correctness extends BaseMetric {
 		const todoFixmeCount = await this.countTodoFixmeComments();
 
 		// Get test coverage percentage
-		const testCoverage = await this.getTestCoverage();
+		//const testCoverage = await this.getTestCoverage();
 
 		// Calculate the ratio of closed issues to total issues
 		const { openIssues, closedIssues } = await this.getIssueCounts();
@@ -201,15 +201,16 @@ export class Correctness extends BaseMetric {
 		// Logging the components
 		console.log("hasWorkflowActions:", hasWorkflowActions);
 		console.log("todoFixmeCount:", todoFixmeCount);
-		console.log("testCoverage:", testCoverage);
+		// console.log("testCoverage:", testCoverage);
 		console.log("issueRatio:", issueRatio);
 
 		// Combine all factors to calculate the metric
 		const score =
 			(hasWorkflowActions ? 0.3 : 0) +
 			(todoFixmeCount !== 0 ? (1 / todoFixmeCount) * 0.2 : 0) +
-			testCoverage * 0.3 +
 			issueRatio * 0.2;
+			// testCoverage * 0.3 +
+			
 
 		if (isNaN(score)) {
 			console.error("Error: Score computed is NaN. Check the evaluation parameters.");
@@ -289,9 +290,9 @@ export class Correctness extends BaseMetric {
 		return count;
 	}
 
-	private async getTestCoverage(): Promise<number> {
-		// Placeholder method. You need to decide how to get test coverage and implement here.
-		// For now, returning a dummy value.
-		return 0.5;
-	}
+	// private async getTestCoverage(): Promise<number> {
+	// 	// Placeholder method. You need to decide how to get test coverage and implement here.
+	// 	// For now, returning a dummy value.
+	// 	return 0.5;
+	// }
 }
