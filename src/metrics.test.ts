@@ -73,6 +73,9 @@ describe("RampUp", () => {
 		const score = await rampUpMetric.evaluate();
 		expect(score).toBeDefined();
 		expect(rampUpMetric.name).toBe("RampUp");
+
+		// I know neovim/neovim has a contributing.md and readme.md
+		expect(score).toBeGreaterThanOrEqual(0.6);
 	});
 });
 
