@@ -1,6 +1,10 @@
 import { Octokit, RequestError } from "octokit";
 import fetch from "node-fetch";
 const { graphql } = require("@octokit/graphql");
+import fs from "fs";
+import http from "isomorphic-git/http/node";
+import { clone } from "isomorphic-git";
+import { dirSync, fileSync } from "tmp";
 
 export interface Metric {
 	name: string;
@@ -166,7 +170,23 @@ export class RampUp extends BaseMetric {
 	description = "Measures how quickly a developer can get up to speed with the module.";
 
 	async evaluate(): Promise<number> {
-		return 0.5; // Just a placeholder. TODO: implement.
+		const tmpdir = dirSync();
+		await clone({
+			fs,
+			http,
+			dir: tmpdir.name,
+			corsProxy: "https://cors.isomorphic-git.org",
+			url: `https://github.com/${this.owner}/${this.repo}`,
+			singleBranch: true,
+			depth: 1,
+		});
+
+		// TODO: See if there is a README.md
+		// TODO: See if there is a CONTRIBUTING.md
+		// TODO: Find the sloc to comment ratio
+
+		tmpdir.removeCallback(); // Cleanup the temp directory
+		return 0.5;
 	}
 }
 
