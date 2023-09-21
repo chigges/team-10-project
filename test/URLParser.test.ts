@@ -1,5 +1,4 @@
-import URLParser from "./URLParser";
-import { GithubRepoInfo } from "./URLParser";
+import URLParser from "../src/URLParser";
 
 describe("URLParser", () => {
 	beforeEach((): void => {

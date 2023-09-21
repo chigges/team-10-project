@@ -1,5 +1,5 @@
 import "dotenv/config"; // loads .env file into process.env. NOTE: this should be the first line
-import { BusFactor, Responsiveness, Correctness, License, RampUp } from "./metrics";
+import { BusFactor, Responsiveness, Correctness, License, RampUp } from "../src/metrics";
 
 describe("BusFactor", () => {
 	beforeEach((): void => {
