@@ -2,6 +2,7 @@ import { Command } from "commander";
 import URLParser from "./URLParser";
 import { exec } from "child_process";
 import { runCLI } from "jest";
+import { BusFactor, Responsiveness, Correctness, License, RampUp } from "./metrics";
 
 export function setupCLI() {
 	const program = new Command();
@@ -70,6 +71,61 @@ export function setupCLI() {
 			console.log(
 				`${passedTests}/${totalTests} test cases passed. ${coverage}% line coverage achieved.`,
 			);
+		});
+
+	program
+		.arguments("<file>")
+		.description("Takes in a file of URLs and outputs the score of each repo")
+		.action(async (file) => {
+			type RepoMetricInfo = {
+				URL: string,
+				NET_SCORE: number,
+				RAMP_UP_SCORE: number,
+				CORRECTNESS_SCORE: number,
+				BUS_FACTOR_SCORE: number,
+				RESPONSIVE_MAINTAINER_SCORE: number,
+				LICENSE_SCORE: number,
+			}
+			const urlParser = new URLParser(file);
+			const repoInfoList = await urlParser.getGithubRepoInfo();
+			const RepoMetricInfoList: RepoMetricInfo[] = [];
+			for (const repoInfo of repoInfoList) {
+				//Net Score
+				let netScore = 0;
+				//Ramp Up Score
+				const rampupMetric = new RampUp(repoInfo.owner, repoInfo.repo);
+				const rampupMetricScore = await rampupMetric.evaluate();
+				//Correctness Score
+				const correctnessMetric = new Correctness(repoInfo.owner, repoInfo.repo);
+				const correctnessMetricScore = await correctnessMetric.evaluate();
+				//Bus Factor Score
+				const busFactorMetric = new BusFactor(repoInfo.owner, repoInfo.repo);
+				const busFactorMetricScore = await busFactorMetric.evaluate();
+				//Responsiveness Score
+				const responsivenessMetric = new Responsiveness(repoInfo.owner, repoInfo.repo);
+				const responsivenessMetricScore = await responsivenessMetric.evaluate();
+				//License Score
+				const licenseMetric = new License(repoInfo.owner, repoInfo.repo);
+				const licenseMetricScore = await licenseMetric.evaluate();
+
+				netScore = rampupMetricScore + correctnessMetricScore + busFactorMetricScore + responsivenessMetricScore + licenseMetricScore;
+
+				const currentRepoInfoScores: RepoMetricInfo = {
+					URL: repoInfo.url,
+					NET_SCORE: netScore,
+					RAMP_UP_SCORE: rampupMetricScore,
+					CORRECTNESS_SCORE: correctnessMetricScore,
+					BUS_FACTOR_SCORE: busFactorMetricScore,
+					RESPONSIVE_MAINTAINER_SCORE: responsivenessMetricScore,
+					LICENSE_SCORE: licenseMetricScore,
+				}
+
+				RepoMetricInfoList.push(currentRepoInfoScores);
+			}
+
+			for (const repoInfo of RepoMetricInfoList) {
+				console.log(JSON.stringify(repoInfo));
+			}
 		});
 
 	program
