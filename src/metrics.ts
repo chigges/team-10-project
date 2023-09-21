@@ -1,7 +1,7 @@
 import { Octokit, RequestError } from "octokit";
 import fetch from "node-fetch";
 const { graphql } = require("@octokit/graphql");
-
+import { OctokitResponse } from "@octokit/types";
 export interface Metric {
 	name: string;
 	description: string;
@@ -102,7 +102,73 @@ export class Responsiveness extends BaseMetric {
 	name = "Responsiveness";
 	description = "Measures how quickly the developers react to changes in the module.";
 
+	async getAverageDaysPR(parsed_owner: string, parsed_repo: string): Promise<number | null> {
+		const numCloseTimes = 30; //get the last numCloseTimes
+		try {
+		  // Get the last {numCloseTimes} closed issues
+		  const { data: closedPRs } = await this.octokit.rest.pulls.list({
+			owner: parsed_owner,
+			repo: parsed_repo,
+			state: 'closed',
+			per_page: numCloseTimes,
+			last: numCloseTimes,
+		  });
+	  
+		  if (closedPRs.length === 0) {
+			console.log('No closed PRs found in the repository.');
+			return null;
+		  }
+	  
+		  // Calculate the average time to close
+		  const averageTimeToClose = closedPRs.reduce((total, issue) => {
+			if (issue.closed_at == null) {
+				console.error("A closed issue does not have a closed date: ", issue.title);
+				return 0;
+			} else {
+				const closedAt = new Date(issue.closed_at).getTime();
+				const createdAt = new Date(issue.created_at).getTime();
+				return total + (closedAt - createdAt);
+		    }
+		  }, 0) / closedPRs.length;
+	  
+		  // Convert milliseconds to days
+		  const averageDaysToClose = averageTimeToClose / (1000 * 60 * 60 * 24);
+	  
+		  return averageDaysToClose;
+		} catch (error) {
+			if(error instanceof RequestError) {
+				console.error('Error fetching data from GitHub:', error.message);
+			} else {
+				console.error('Unknown error ', error);
+			}
+		  return null;
+		}
+	  }
+
+	async sixMonthCloseRatio(): Promise<number | null> {
+		const todaysDate: string = "hi"
+		return 0;
+	}
+
 	async evaluate(): Promise<number> {
+		const numCloseTimes = 30; // the number of Merged/Closed PRs to check timestamps
+		//this cannot exceed 100
+		try {
+			const averageDaysPR = await this.getAverageDaysPR(this.owner, this.repo);
+			// TODO: the closed issues / total issues
+			
+		} catch (error) {
+			// Octokit errors always have a `error.status` property which is the http response code nad it's instance of RequestError
+			if (error instanceof RequestError) {
+				console.error("Octokit error evaluating Responsiveness: ", error);
+			} else {
+				// handle all other errors
+				console.error("non-Octokit error evaluating Responsiveness: ", error);
+			}
+
+			return 0;
+		}
+
 		return 0.5; // Just a placeholder. TODO: implement.
 	}
 }
