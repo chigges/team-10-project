@@ -4,7 +4,8 @@ const { graphql } = require("@octokit/graphql");
 import fs from "fs";
 import http from "isomorphic-git/http/node";
 import { clone } from "isomorphic-git";
-import { dirSync, fileSync } from "tmp";
+import path from "path";
+import { dirSync } from "tmp";
 
 export interface Metric {
 	name: string;
@@ -169,8 +170,28 @@ export class RampUp extends BaseMetric {
 	name = "RampUp";
 	description = "Measures how quickly a developer can get up to speed with the module.";
 
+	private doesFileExist(dir: string, targetFile: string): boolean {
+		try {
+			const files = fs.readdirSync(dir, { withFileTypes: true });
+			for (const file of files) {
+				const filePath: string = path.join(dir, file.name);
+				if (file.isDirectory()) {
+					if (this.doesFileExist(filePath, targetFile)) {
+						return true;
+					}
+				} else if (file.name === targetFile) {
+					return true;
+				}
+			}
+			return false;
+		} catch (err) {
+			console.error(`Error reading directory: ${err}`);
+			return false;
+		}
+	}
+
 	async evaluate(): Promise<number> {
-		const tmpdir = dirSync();
+		const tmpdir = dirSync({ unsafeCleanup: true });
 		await clone({
 			fs,
 			http,
@@ -181,12 +202,21 @@ export class RampUp extends BaseMetric {
 			depth: 1,
 		});
 
-		// TODO: See if there is a README.md
-		// TODO: See if there is a CONTRIBUTING.md
+		// See if there is a README.md
+		const doesReadmeExist: boolean = this.doesFileExist(tmpdir.name, "README.md");
+
+		// See if there is a CONTRIBUTING.md
+		const doesContributingExist: boolean = this.doesFileExist(tmpdir.name, "CONTRIBUTING.md");
+
 		// TODO: Find the sloc to comment ratio
 
 		tmpdir.removeCallback(); // Cleanup the temp directory
-		return 0.5;
+
+		// Calculate the score
+		const readmeScore = doesReadmeExist ? 0.3 : 0;
+		const contributingScore = doesContributingExist ? 0.3 : 0;
+		// TODO: Create a score for the sloc to comment ratio
+		return readmeScore + contributingScore;
 	}
 }
 
