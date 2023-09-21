@@ -78,14 +78,14 @@ export function setupCLI() {
 		.description("Takes in a file of URLs and outputs the score of each repo")
 		.action(async (file) => {
 			type RepoMetricInfo = {
-				URL: string,
-				NET_SCORE: number,
-				RAMP_UP_SCORE: number,
-				CORRECTNESS_SCORE: number,
-				BUS_FACTOR_SCORE: number,
-				RESPONSIVE_MAINTAINER_SCORE: number,
-				LICENSE_SCORE: number,
-			}
+				URL: string;
+				NET_SCORE: number;
+				RAMP_UP_SCORE: number;
+				CORRECTNESS_SCORE: number;
+				BUS_FACTOR_SCORE: number;
+				RESPONSIVE_MAINTAINER_SCORE: number;
+				LICENSE_SCORE: number;
+			};
 			const urlParser = new URLParser(file);
 			const repoInfoList = await urlParser.getGithubRepoInfo();
 			const RepoMetricInfoList: RepoMetricInfo[] = [];
@@ -108,7 +108,12 @@ export function setupCLI() {
 				const licenseMetric = new License(repoInfo.owner, repoInfo.repo);
 				const licenseMetricScore = await licenseMetric.evaluate();
 
-				netScore = rampupMetricScore + correctnessMetricScore + busFactorMetricScore + responsivenessMetricScore + licenseMetricScore;
+				netScore =
+					rampupMetricScore +
+					correctnessMetricScore +
+					busFactorMetricScore +
+					responsivenessMetricScore +
+					licenseMetricScore;
 
 				const currentRepoInfoScores: RepoMetricInfo = {
 					URL: repoInfo.url,
@@ -118,7 +123,7 @@ export function setupCLI() {
 					BUS_FACTOR_SCORE: busFactorMetricScore,
 					RESPONSIVE_MAINTAINER_SCORE: responsivenessMetricScore,
 					LICENSE_SCORE: licenseMetricScore,
-				}
+				};
 
 				RepoMetricInfoList.push(currentRepoInfoScores);
 			}
