@@ -209,8 +209,7 @@ export class Correctness extends BaseMetric {
 			(hasWorkflowActions ? 0.3 : 0) +
 			(todoFixmeCount !== 0 ? (1 / todoFixmeCount) * 0.2 : 0) +
 			issueRatio * 0.2;
-			// testCoverage * 0.3 +
-			
+		// testCoverage * 0.3 +
 
 		if (isNaN(score)) {
 			console.error("Error: Score computed is NaN. Check the evaluation parameters.");
