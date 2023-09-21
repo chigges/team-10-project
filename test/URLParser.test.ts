@@ -1,10 +1,6 @@
 import URLParser from "../src/URLParser";
 
 describe("URLParser", () => {
-	beforeEach((): void => {
-		jest.setTimeout(20000);
-	});
-
 	const parser = new URLParser("Sample Url File.txt");
 
 	it("should extract a list of URLs", async () => {
