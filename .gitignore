@@ -4,6 +4,7 @@
 
 dist/**/*
 coverage/**/*
+log.txt
 
 *.env
 .env

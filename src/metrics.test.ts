@@ -68,11 +68,25 @@ describe("RampUp", () => {
 		jest.setTimeout(20000);
 	});
 
-	it("should return a rampup score", async () => {
+	it("should find the readme.md and contributing.md", async () => {
 		const rampUpMetric = new RampUp("neovim", "neovim");
 		const score = await rampUpMetric.evaluate();
 		expect(score).toBeDefined();
 		expect(rampUpMetric.name).toBe("RampUp");
+
+		// I know neovim/neovim has a contributing.md and readme.md
+		expect(score).toBeGreaterThanOrEqual(0.6);
+	});
+
+	it("should find the readme.md and no contributing.md", async () => {
+		const rampUpMetric = new RampUp("jonschlinkert", "is-odd");
+		const score = await rampUpMetric.evaluate();
+		expect(score).toBeDefined();
+		expect(rampUpMetric.name).toBe("RampUp");
+
+		// I know jonschlinkert/is-odd has a readme.md but no contributing.md
+		expect(score).toBeGreaterThanOrEqual(0.3);
+		expect(score).toBeLessThanOrEqual(0.7);
 	});
 });
 
