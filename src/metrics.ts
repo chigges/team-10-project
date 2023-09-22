@@ -125,7 +125,7 @@ export class Responsiveness extends BaseMetric {
 			});
 
 			if (closedPRs.length === 0) {
-				console.log("No closed PRs found in the repository.");
+				log.debug("No closed PRs found in the repository.");
 				return null;
 			}
 
@@ -410,8 +410,8 @@ export class Correctness extends BaseMetric {
 		// Calculate the ratio of closed issues to total issues
 		const { openIssues, closedIssues } = await this.getIssueCounts();
 
-		console.log("openIssues:", openIssues);
-		console.log("closedIssues:", closedIssues);
+		log.debug("openIssues:", openIssues);
+		log.debug("closedIssues:", closedIssues);
 
 		let issueRatio = 0;
 		if (openIssues + closedIssues !== 0) {
@@ -421,10 +421,10 @@ export class Correctness extends BaseMetric {
 		}
 
 		// Logging the components
-		console.log("hasWorkflowActions:", hasWorkflowActions);
-		console.log("todoFixmeCount:", todoFixmeCount);
-		// console.log("testCoverage:", testCoverage);
-		console.log("issueRatio:", issueRatio);
+		log.debug("hasWorkflowActions:", hasWorkflowActions);
+		log.debug("todoFixmeCount:", todoFixmeCount);
+		// log.debug("testCoverage:", testCoverage);
+		log.debug("issueRatio:", issueRatio);
 
 		// Combine all factors to calculate the metric
 		const score =

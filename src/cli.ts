@@ -122,7 +122,7 @@ export function setupCLI() {
 						responsivenessMetricScore * 0.3) *
 					licenseMetricScore;
 
-				console.log("Net Score: " + netScore);
+				log.debug("Net Score: " + netScore);
 
 				const currentRepoInfoScores: RepoMetricInfo = {
 					URL: repoInfo.url,
