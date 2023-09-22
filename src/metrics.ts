@@ -1,16 +1,13 @@
 import { Octokit, RequestError } from "octokit";
 import fetch from "node-fetch";
 const { graphql } = require("@octokit/graphql");
-<<<<<<< HEAD
-=======
-import { OctokitResponse } from "@octokit/types";
+
 import fs from "fs";
 import http from "isomorphic-git/http/node";
 import { clone } from "isomorphic-git";
 import path from "path";
 import { dirSync } from "tmp";
 import { log } from "./logger";
->>>>>>> 09de4b2102af43ba63bd0553ca69d6105a53df8b
 
 export interface Metric {
 	name: string;
