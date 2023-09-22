@@ -9,7 +9,7 @@ def main():
         sys.exit(1)
     
     argument = sys.argv[1]
-    command = ["node", "./dist/index.js", argument]
+    command = ["node", "./dist/src/index.js", argument]
     
     try:
         subprocess.run(command, check=True)
