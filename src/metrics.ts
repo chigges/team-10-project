@@ -102,13 +102,15 @@ export class Responsiveness extends BaseMetric {
 	name = "Responsiveness";
 	description = "Measures how quickly the developers react to changes in the module.";
 
-	async getAverageDaysPR(parsed_owner: string, parsed_repo: string): Promise<number | null> {
-		const numCloseTimes = 30; //get the last numCloseTimes
+	async getAverageDaysPR(): Promise<number | null> {
+		const numCloseTimes = 70; //get the last {numCloseTimes}  
+		//values greater than 100 have the same effect as 100 (effectively min(val, 100))
+		//greater values give a clearer picture but may reach back undesirably far / cause slower runtime
 		try {
 		  // Get the last {numCloseTimes} closed issues
 		  const { data: closedPRs } = await this.octokit.rest.pulls.list({
-			owner: parsed_owner,
-			repo: parsed_repo,
+			owner: this.owner,
+			repo: this.repo,
 			state: 'closed',
 			per_page: numCloseTimes,
 			last: numCloseTimes,
@@ -122,7 +124,7 @@ export class Responsiveness extends BaseMetric {
 		  // Calculate the average time to close
 		  const averageTimeToClose = closedPRs.reduce((total, issue) => {
 			if (issue.closed_at == null) {
-				console.error("A closed issue does not have a closed date: ", issue.title);
+				console.error("A closed PR does not have a closed date: ", issue.title);
 				return 0;
 			} else {
 				const closedAt = new Date(issue.closed_at).getTime();
@@ -139,37 +141,72 @@ export class Responsiveness extends BaseMetric {
 			if(error instanceof RequestError) {
 				console.error('Error fetching data from GitHub:', error.message);
 			} else {
-				console.error('Unknown error ', error);
+				console.error('Non-Github error ', error);
 			}
 		  return null;
 		}
 	  }
 
-	async sixMonthCloseRatio(): Promise<number | null> {
-		const todaysDate: string = "hi"
-		return 0;
+	async getCloseRatio(): Promise<number | null> {
+		//returns the ratio of (closed issues/all issues) last updated within the last 6 months 
+		//if this project has no issues updated within last 6 months, returns 0
+		const today = new Date();
+		today.setMonth(today.getMonth() - 6);
+		const sixMonthsAgoISO = today.toISOString();
+		try {
+			const { repository } = await graphql(
+				`
+				query {
+					repository(owner: "${this.owner}", name: "${this.repo}") {
+						closed: issues(
+						states: [CLOSED]
+						filterBy: { since: "${sixMonthsAgoISO}" } 
+						) {
+							totalCount
+						}
+						all: issues(
+							filterBy: {since: "${sixMonthsAgoISO}" }
+						) {
+							totalCount
+						}
+					}
+				}
+				`,
+				{
+					headers: {
+						authorization: `token ${process.env.GITHUB_TOKEN}`,
+					},
+				},
+			);
+			
+			return (repository.all.totalCount && (repository.closed.totalCount / repository.all.totalCount))
+			//if no issues, return 0 (indicates lower responsiveness) else return ratio
+		} catch (error) {
+			if(error instanceof RequestError) {
+				console.error('Error fetching data from GitHub:', error.message);
+			} else {
+				console.error('Non-Github error ', error);
+			}
+		  return null;
+		}
 	}
 
 	async evaluate(): Promise<number> {
-		const numCloseTimes = 30; // the number of Merged/Closed PRs to check timestamps
-		//this cannot exceed 100
-		try {
-			const averageDaysPR = await this.getAverageDaysPR(this.owner, this.repo);
-			// TODO: the closed issues / total issues
-			
-		} catch (error) {
-			// Octokit errors always have a `error.status` property which is the http response code nad it's instance of RequestError
-			if (error instanceof RequestError) {
-				console.error("Octokit error evaluating Responsiveness: ", error);
-			} else {
-				// handle all other errors
-				console.error("non-Octokit error evaluating Responsiveness: ", error);
-			}
-
-			return 0;
+		let rawAverageDaysPR = await this.getAverageDaysPR(); //value >  0 | null
+		let rawCloseRatio = await this.getCloseRatio(); // 1 >= value >= 0 | null
+		if (rawAverageDaysPR == null || rawCloseRatio == null) {
+			//handle error'd values as desired
+			return 0
 		}
+		
+		const weightDaysPR = 0.8; //tune balance by changing this value
+		const weightCloseRatio = 1 - weightDaysPR; 		
 
-		return 0.5; // Just a placeholder. TODO: implement.
+		const falloffHarshness = 0.3; 
+		//value within (0, 1), higher values punish more severely 
+		const scaledDaysPR = Math.exp((-falloffHarshness) * rawAverageDaysPR) 
+
+		return (scaledDaysPR * weightDaysPR) + (rawCloseRatio * weightCloseRatio)
 	}
 }
 
