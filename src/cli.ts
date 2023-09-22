@@ -3,6 +3,7 @@ import URLParser from "./URLParser";
 import { exec } from "child_process";
 import { runCLI } from "jest";
 import { BusFactor, Responsiveness, Correctness, License, RampUp } from "./metrics";
+import { log } from "./logger";
 
 export function setupCLI() {
 	const program = new Command();
@@ -44,7 +45,7 @@ export function setupCLI() {
 			// Setup and run jest tests
 			const config = {
 				collectCoverage: true,
-				collectCoverageFrom: ["src/**/*.{js,ts}", "!**/node_modules/**"],
+				collectCoverageFrom: ["src/**/*.{ts,js}", "!**/node_modules/**"],
 				reporters: ["default"],
 				silent: true,
 				verbose: false,
@@ -65,11 +66,11 @@ export function setupCLI() {
 				? results.coverageMap.getCoverageSummary().toJSON().lines.pct
 				: 0;
 
-			console.log(`Total: ${totalTests}`);
-			console.log(`Passed: ${passedTests}`);
-			console.log(`Coverage: ${coverage}%`);
+			log.info("coverage", coverage);
 			console.log(
-				`${passedTests}/${totalTests} test cases passed. ${coverage}% line coverage achieved.`,
+				`${passedTests}/${totalTests} test cases passed. ${Math.ceil(
+					coverage,
+				)}% line coverage achieved.`,
 			);
 		});
 
@@ -106,11 +107,13 @@ export function setupCLI() {
 				const licenseMetric = new License(repoInfo.owner, repoInfo.repo);
 				const licenseMetricScore = await licenseMetric.evaluate();
 
+				/*
 				console.log("Ramp Up Score: " + rampupMetricScore);
 				console.log("Correctness Score: " + correctnessMetricScore);
 				console.log("Bus Factor Score: " + busFactorMetricScore);
 				console.log("Responsiveness Score: " + responsivenessMetricScore);
 				console.log("License Score: " + licenseMetricScore);
+				*/
 
 				const netScore =
 					(rampupMetricScore * 0.2 +
