@@ -2,6 +2,13 @@ import { Octokit, RequestError } from "octokit";
 import fetch from "node-fetch";
 const { graphql } = require("@octokit/graphql");
 import { OctokitResponse } from "@octokit/types";
+import fs from "fs";
+import http from "isomorphic-git/http/node";
+import { clone } from "isomorphic-git";
+import path from "path";
+import { dirSync } from "tmp";
+import { log } from "./logger";
+
 export interface Metric {
 	name: string;
 	description: string;
@@ -60,6 +67,7 @@ export class BusFactor extends BaseMetric {
 					},
 				},
 			);
+			// https://stackoverflow.com/questions/49442317/github-graphql-repository-query-commits-totalcount
 			const halfTotalCommits: number = Math.floor(
 				repository.defaultBranchRef.target.history.totalCount / 2,
 			);
@@ -257,7 +265,7 @@ export class License extends BaseMetric {
 	}
 
 	async evaluate(): Promise<number> {
-		const isGpl = await this.getReadmeLicence(this.repo, this.owner);
+		const isGpl = await this.getReadmeLicence(this.owner, this.repo);
 		if (isGpl === true) {
 			return 1;
 		} else {
@@ -271,8 +279,116 @@ export class RampUp extends BaseMetric {
 	name = "RampUp";
 	description = "Measures how quickly a developer can get up to speed with the module.";
 
+	private doesFileExist(dir: string, targetFile: string): boolean {
+		try {
+			const files = fs.readdirSync(dir, { withFileTypes: true });
+			for (const file of files) {
+				const filePath: string = path.join(dir, file.name);
+				if (file.isDirectory()) {
+					if (this.doesFileExist(filePath, targetFile)) {
+						return true;
+					}
+				} else if (file.name === targetFile) {
+					return true;
+				}
+			}
+			return false;
+		} catch (err) {
+			log.error(`Error reading directory: ${err}`);
+			return false;
+		}
+	}
+
+	private calculateSlocToCommentRatio(dir: string): { sloc: number; comments: number } {
+		// NOTE: Only finds comments in .js and .ts files
+		// NOTE: Will only look at 10 files at maximum. This is to prevent the metric from taking too long.
+		let sloc = 0;
+		let comments = 0;
+
+		const files = fs.readdirSync(dir, { withFileTypes: true });
+		let numFilesParsed: number = 0;
+
+		for (const file of files) {
+			if (numFilesParsed >= 10) {
+				break;
+			}
+			const filePath = path.join(dir, file.name);
+
+			if (file.isDirectory()) {
+				const subResult = this.calculateSlocToCommentRatio(filePath);
+				sloc += subResult.sloc;
+				comments += subResult.comments;
+			} else if (file.name.endsWith(".js") || file.name.endsWith(".ts")) {
+				log.debug(`Reading file for sloc to comment ratio: ${filePath}`);
+				const fileContent = fs.readFileSync(filePath, "utf-8");
+				const lines = fileContent.split("\n");
+				let inCommentBlock = false;
+
+				for (const line of lines) {
+					const trimmedLine = line.trim();
+
+					if (inCommentBlock) {
+						comments++;
+						if (trimmedLine.endsWith("*/")) {
+							inCommentBlock = false;
+						}
+					} else if (trimmedLine.startsWith("/*")) {
+						inCommentBlock = true;
+						comments++;
+					} else if (trimmedLine.startsWith("//")) {
+						comments++;
+					} else if (trimmedLine.length > 0) {
+						sloc++;
+					}
+				}
+			}
+			numFilesParsed += 1; // We have parsed a file
+		}
+
+		return { sloc, comments };
+	}
+
 	async evaluate(): Promise<number> {
-		return 0.5; // Just a placeholder. TODO: implement.
+		log.info(`Evaluating RampUp for ${this.owner}/${this.repo}`);
+		log.info(`Cloning ${this.owner}/${this.repo}`);
+
+		// Create a temp directory and clone the repo into it
+		const tmpdir = dirSync({ unsafeCleanup: true });
+		log.info(`Created temp directory: ${tmpdir.name}`);
+		log.info(`https://github.com/${this.owner}/${this.repo}.git`);
+		await clone({
+			fs,
+			http,
+			dir: tmpdir.name,
+			url: `https://github.com/${this.owner}/${this.repo}.git`,
+			singleBranch: true,
+			depth: 1,
+		});
+
+		// See if there is a README.md
+		log.info(`Finding ${this.owner}/${this.repo} README.md`);
+		const doesReadmeExist: boolean = this.doesFileExist(tmpdir.name, "README.md");
+		const readmeScore = doesReadmeExist ? 0.3 : 0;
+
+		// See if there is a CONTRIBUTING.md
+		log.info(`Finding ${this.owner}/${this.repo} CONTRIBUTING.md`);
+		const doesContributingExist: boolean = this.doesFileExist(tmpdir.name, "CONTRIBUTING.md");
+		const contributingScore = doesContributingExist ? 0.3 : 0;
+
+		// Find the sloc to comment ratio
+		log.info(`Finding ${this.owner}/${this.repo} comment to sloc ratio`);
+		const { sloc, comments } = this.calculateSlocToCommentRatio(tmpdir.name);
+		const commentToSlocRatio = comments / (sloc || 1); // Avoid division by zero
+		log.debug(`sloc: ${sloc}, comments: ${comments}, ratio: ${commentToSlocRatio}`);
+
+		// scale that ratio to a number between 0 and 1
+		const commentToSlocRatioScaled = Math.min(commentToSlocRatio, 1);
+		const slocCommentRatioScore = commentToSlocRatioScaled * 0.4; // ratio of 50% is max score
+
+		tmpdir.removeCallback(); // Cleanup the temp directory
+
+		// Calculate the score and return it
+		return readmeScore + contributingScore + slocCommentRatioScore;
 	}
 }
 
@@ -282,6 +398,122 @@ export class Correctness extends BaseMetric {
 	description = "Measures how many bugs are in the module.";
 
 	async evaluate(): Promise<number> {
-		return 0.5; // Just a placeholder. TODO: implement.
+		// Check for GitHub workflow actions presence
+		const hasWorkflowActions = await this.hasWorkflowActions();
+
+		// Count TODO or FIXME comments
+		const todoFixmeCount = await this.countTodoFixmeComments();
+
+		// Get test coverage percentage
+		//const testCoverage = await this.getTestCoverage();
+
+		// Calculate the ratio of closed issues to total issues
+		const { openIssues, closedIssues } = await this.getIssueCounts();
+
+		console.log("openIssues:", openIssues);
+		console.log("closedIssues:", closedIssues);
+
+		let issueRatio = 0;
+		if (openIssues + closedIssues !== 0) {
+			issueRatio = closedIssues / (openIssues + closedIssues);
+		} else {
+			console.warn("Both open and closed issues count are zero.");
+		}
+
+		// Logging the components
+		console.log("hasWorkflowActions:", hasWorkflowActions);
+		console.log("todoFixmeCount:", todoFixmeCount);
+		// console.log("testCoverage:", testCoverage);
+		console.log("issueRatio:", issueRatio);
+
+		// Combine all factors to calculate the metric
+		const score =
+			(hasWorkflowActions ? 0.3 : 0) +
+			(todoFixmeCount !== 0 ? (1 / todoFixmeCount) * 0.2 : 0) +
+			issueRatio * 0.2;
+		// testCoverage * 0.3 +
+
+		if (isNaN(score)) {
+			console.error("Error: Score computed is NaN. Check the evaluation parameters.");
+			throw new Error("Score computation failed.");
+		}
+
+		return score;
 	}
+
+	async getIssueCounts(): Promise<{ openIssues: number; closedIssues: number }> {
+		let openIssuesCount = 0;
+		let closedIssuesCount = 0;
+
+		try {
+			const openIssuesResponse = await this.octokit.rest.issues.listForRepo({
+				owner: this.owner,
+				repo: this.repo,
+				state: "open",
+				per_page: 1,
+			});
+
+			openIssuesCount = openIssuesResponse.data.length; // Assuming the length gives the count
+
+			const closedIssuesResponse = await this.octokit.rest.issues.listForRepo({
+				owner: this.owner,
+				repo: this.repo,
+				state: "closed",
+				per_page: 1,
+			});
+
+			closedIssuesCount = closedIssuesResponse.data.length; // Assuming the length gives the count
+		} catch (error) {
+			console.error("Error fetching issue counts:", error);
+		}
+
+		return { openIssues: openIssuesCount, closedIssues: closedIssuesCount };
+	}
+
+	private async hasWorkflowActions(): Promise<boolean> {
+		try {
+			// Try to get the workflows directory. If it exists, return true.
+			await this.octokit.request("GET /repos/{owner}/{repo}/contents/{path}", {
+				owner: this.owner,
+				repo: this.repo,
+				path: ".github/workflows",
+			});
+			return true;
+		} catch (error) {
+			return false;
+		}
+	}
+
+	private async countTodoFixmeComments(): Promise<number> {
+		let count = 0;
+
+		try {
+			const files = await this.octokit.request("GET /repos/{owner}/{repo}/contents/{path}", {
+				owner: this.owner,
+				repo: this.repo,
+				path: "", // Root directory
+			});
+
+			if (Array.isArray(files.data)) {
+				for (const file of files.data) {
+					if (file.type === "file" && file.content) {
+						const decodedContent = Buffer.from(file.content, "base64").toString("utf8");
+						count += (decodedContent.match(/TODO/g) || []).length;
+						count += (decodedContent.match(/FIXME/g) || []).length;
+					}
+				}
+			}
+		} catch (error) {
+			console.error("Error evaluating Correctness metric:", error);
+			throw new Error("Failed to evaluate Correctness metric");
+		}
+
+		return count;
+	}
+
+	// private async getTestCoverage(): Promise<number> {
+	// 	// Placeholder method. You need to decide how to get test coverage and implement here.
+	// 	// For now, returning a dummy value.
+	// 	return 0.5;
+	// }
 }
