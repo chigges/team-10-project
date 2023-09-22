@@ -12,10 +12,12 @@ def main():
     command = ["node", "./dist/src/index.js", argument]
     
     try:
-        subprocess.run(command, check=True)
+        completedProcess = subprocess.run(command, check=True)
+        sys.exit(completedProcess.returncode)
     except subprocess.CalledProcessError as e:
         print(f"An error occurred: {e}")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

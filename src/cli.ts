@@ -78,6 +78,16 @@ export function setupCLI() {
 		.arguments("<file>")
 		.description("Takes in a file of URLs and outputs the score of each repo")
 		.action(async (file) => {
+			// You need a LOG_FILE and GITHUB_TOKEN env variable to run this command
+
+			const isNoLogFileEnv =
+				process.env.LOG_FILE === undefined || process.env.LOG_FILE === "";
+			const isNoGithubTokenEnv =
+				process.env.GITHUB_TOKEN === undefined || process.env.GITHUB_TOKEN === "";
+			if (isNoLogFileEnv || isNoGithubTokenEnv) {
+				process.exit(1);
+			}
+
 			type RepoMetricInfo = {
 				URL: string;
 				NET_SCORE: number;

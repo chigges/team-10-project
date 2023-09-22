@@ -18,7 +18,7 @@ if (process.env.LOG_LEVEL === "1") {
 // Set output file
 log.attachTransport((logObj) => {
 	// Must have a LOG_FILE environment variable set
-	if (process.env.LOG_FILE == undefined) {
+	if (process.env.LOG_FILE === undefined) {
 		console.error("LOG_FILE environment variable not set");
 		process.exit(1);
 	}
