@@ -1,7 +1,7 @@
 import { Octokit, RequestError } from "octokit";
 import fetch from "node-fetch";
 const { graphql } = require("@octokit/graphql");
-import { OctokitResponse } from "@octokit/types";
+
 export interface Metric {
 	name: string;
 	description: string;
@@ -196,8 +196,8 @@ export class Responsiveness extends BaseMetric {
 	}
 
 	async evaluate(): Promise<number> {
-		let rawAverageDaysPR = await this.getAverageDaysPR(); //value >  0 | null
-		let rawCloseRatio = await this.getCloseRatio(); // 1 >= value >= 0 | null
+		const rawAverageDaysPR = await this.getAverageDaysPR(); //value >  0 | null
+		const rawCloseRatio = await this.getCloseRatio(); // 1 >= value >= 0 | null
 		if (rawAverageDaysPR == null || rawCloseRatio == null) {
 			//handle error'd values as desired
 			return 0;
