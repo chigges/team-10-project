@@ -227,6 +227,79 @@ export class License extends BaseMetric {
 	name = "License";
 	description = "Determines if the license is compatable with LGPLv2.1.";
 
+	private isCompatibleWithLGPL(readme: string): boolean {
+		// Define Regular Expressions to match different licenses
+		// https://www.gnu.org/licenses/license-list.html#GPLCompatibleLicenses
+		// Used above link as a reference
+		const licensesRegex = [
+			/gpl/i,
+			/gnu lesser general public license/i,
+			/gnu general public license/i,
+			/gnu affero public license/i,
+			/gnu all-permissive license/i,
+			/mit/i,
+			/apache2/i, // NOTE: apache1 is not compatible with LGPLv2.1
+			/apache 2/i,
+			/apache-2/i,
+			/apache license, version 2/i,
+			/artistic/i,
+			/bsd/i,
+			/ldap/i,
+			/cecill/i,
+			/cryptix/i,
+			/ecos/i,
+			/ecl/i,
+			/educational community license/i,
+			/eiffel/i,
+			/eu datagrid/i,
+			/eudatagrid/i,
+			/expat/i,
+			/freetype/i,
+			/hpnd/i,
+			/historical permission notice and disclaimer/i,
+			/imatrix/i,
+			/imlib/i,
+			/ijg/i,
+			/independent jpeg/i,
+			/informal license/i,
+			/intel open source/i,
+			/isc/,
+			/mpl/i,
+			/mozilla/i,
+			/ncsa/i,
+			/netscape/i,
+			/perl/i,
+			/python/i,
+			/public domain/i,
+			/license of ruby/i,
+			/sgi free software/i,
+			/ml of new jersey/i,
+			/unicode/i,
+			/upl/i,
+			/universal permissive license/i,
+			/unlicense/i,
+			/vim/i,
+			/w3c/i,
+			/webm/i,
+			/wtfpl/i,
+			/wx/i,
+			/x11/i,
+			/xfree86/i,
+			/zlib/i,
+			/zope/i,
+		];
+
+		// Check if any of the license regex matches the README content
+		for (const regex of licensesRegex) {
+			if (readme.match(regex)) {
+				return true;
+			}
+		}
+
+		// Return false if no compatible license is found
+		return false;
+	}
+
 	async getReadmeLicence(owner: string, repo: string): Promise<boolean | null> {
 		try {
 			// Fetch the README file from GitHub API
@@ -248,19 +321,15 @@ export class License extends BaseMetric {
 				return null;
 			}
 
-			// Using a regex to find if the license is GPL
-			const gplShortRegex = /gpl/i;
-			const gplLongRegex = /GNU General Public License/i;
-			const gplShortMatch = match[2].trim().match(gplShortRegex);
-			const gplLongMatch = match[2].trim().match(gplLongRegex);
-			if (gplShortMatch || gplLongMatch) {
+			// Find if the license is compatible with LGPLv2.1
+			if (this.isCompatibleWithLGPL(readmeContent)) {
 				return true;
 			} else {
 				return false;
 			}
 		} catch (error) {
 			console.error("Error fetching README: ", error);
-			return null;
+			return null; // Will be read as 0 by evaluate()
 		}
 	}
 
