@@ -10,27 +10,7 @@ export function setupCLI() {
 
 	program.version("0.0.1").description("A CLI for trustworthy module reuse");
 
-	program
-		.command("install")
-		.description("Installs dependencies")
-		.action(() => {
-			exec("npm ci", (error, stdout) => {
-				if (error) {
-					console.error(`Error during installation: ${error}`);
-					return;
-				}
-
-				// Extract the number of packages installed
-				const regex = /added (\d+) packages/i;
-				const match = stdout.match(regex);
-				if (match && match[1]) {
-					console.log(`${match[1]} dependencies installed...`);
-				} else {
-					// could not determine amount of dependencies installed
-					console.log("Installed dependencies...");
-				}
-			});
-		});
+	// NOTE:  ./run install is handled completely within the ./run file.
 
 	program
 		.command("test")
