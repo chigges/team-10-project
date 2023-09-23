@@ -2,6 +2,7 @@
 
 import subprocess
 import sys
+import re
 
 def main():
     if len(sys.argv) < 2:
@@ -10,12 +11,32 @@ def main():
     
     argument = sys.argv[1]
     command = ["node", "./dist/src/index.js", argument]
+
+    if(argument == "install"):
+        try:
+            # install dependencies...
+            stdout = subprocess.check_output("npm ci", shell=True, stderr=subprocess.STDOUT, text=True)
+            regex = re.compile(r"added (\d+) packages", re.I)
+            match = regex.search(stdout)
+            if match:
+                print(f"{match.group(1)} dependencies installed...")
+            else:
+                # Could not determine the amount of packages
+                print("Installed dependencies")
+            # Now we must compile our typescript
+            stdout = subprocess.run(["npm", "run", "build"], stdout=subprocess.PIPE)
+        except subprocess.CalledProcessError as error:
+            print(f"Error during install: {error.output}")
+            sys.exit(1)
+        sys.exit(0)
     
     try:
-        subprocess.run(command, check=True)
+        completedProcess = subprocess.run(command, check=True)
+        sys.exit(completedProcess.returncode)
     except subprocess.CalledProcessError as e:
         print(f"An error occurred: {e}")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

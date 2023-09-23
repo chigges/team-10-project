@@ -1,35 +1,15 @@
 import { Command } from "commander";
 import URLParser from "./URLParser";
-import { exec } from "child_process";
 import { runCLI } from "jest";
 import { BusFactor, Responsiveness, Correctness, License, RampUp } from "./metrics";
+import { log } from "./logger";
 
 export function setupCLI() {
 	const program = new Command();
 
 	program.version("0.0.1").description("A CLI for trustworthy module reuse");
 
-	program
-		.command("install")
-		.description("Installs dependencies")
-		.action(() => {
-			exec("npm ci", (error, stdout) => {
-				if (error) {
-					console.error(`Error during installation: ${error}`);
-					return;
-				}
-
-				// Extract the number of packages installed
-				const regex = /added (\d+) packages/i;
-				const match = stdout.match(regex);
-				if (match && match[1]) {
-					console.log(`${match[1]} dependencies installed...`);
-				} else {
-					// could not determine amount of dependencies installed
-					console.log("Installed dependencies...");
-				}
-			});
-		});
+	// NOTE:  ./run install is handled completely within the ./run file.
 
 	program
 		.command("test")
@@ -44,15 +24,18 @@ export function setupCLI() {
 			// Setup and run jest tests
 			const config = {
 				collectCoverage: true,
-				collectCoverageFrom: ["src/**/*.{js,ts}", "!**/node_modules/**"],
 				reporters: ["default"],
 				silent: true,
 				verbose: false,
+				preset: "ts-jest",
+				testEnvironment: "node",
+				setupFiles: ["dotenv/config"],
+				testTimeout: 20000,
 			};
 
 			// Been working at this for a long time. I'm not sure how to get the types to work here.
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const { results } = await runCLI(config as any, [process.cwd()]);
+			const { results } = await runCLI(config as any, [process.cwd() + "/jest.config.js"]);
 
 			// Restore stdout and stderr
 			process.stdout.write = originalStdoutWrite;
@@ -65,11 +48,10 @@ export function setupCLI() {
 				? results.coverageMap.getCoverageSummary().toJSON().lines.pct
 				: 0;
 
-			console.log(`Total: ${totalTests}`);
-			console.log(`Passed: ${passedTests}`);
-			console.log(`Coverage: ${coverage}%`);
 			console.log(
-				`${passedTests}/${totalTests} test cases passed. ${coverage}% line coverage achieved.`,
+				`${passedTests}/${totalTests} test cases passed. ${Math.ceil(
+					coverage,
+				)}% line coverage achieved.`,
 			);
 		});
 
@@ -77,6 +59,16 @@ export function setupCLI() {
 		.arguments("<file>")
 		.description("Takes in a file of URLs and outputs the score of each repo")
 		.action(async (file) => {
+			// You need a LOG_FILE and GITHUB_TOKEN env variable to run this command
+
+			const isNoLogFileEnv =
+				process.env.LOG_FILE === undefined || process.env.LOG_FILE === "";
+			const isNoGithubTokenEnv =
+				process.env.GITHUB_TOKEN === undefined || process.env.GITHUB_TOKEN === "";
+			if (isNoLogFileEnv || isNoGithubTokenEnv) {
+				process.exit(1);
+			}
+
 			type RepoMetricInfo = {
 				URL: string;
 				NET_SCORE: number;
@@ -106,11 +98,13 @@ export function setupCLI() {
 				const licenseMetric = new License(repoInfo.owner, repoInfo.repo);
 				const licenseMetricScore = await licenseMetric.evaluate();
 
+				/*
 				console.log("Ramp Up Score: " + rampupMetricScore);
 				console.log("Correctness Score: " + correctnessMetricScore);
 				console.log("Bus Factor Score: " + busFactorMetricScore);
 				console.log("Responsiveness Score: " + responsivenessMetricScore);
 				console.log("License Score: " + licenseMetricScore);
+				*/
 
 				const netScore =
 					(rampupMetricScore * 0.2 +
@@ -119,7 +113,7 @@ export function setupCLI() {
 						responsivenessMetricScore * 0.3) *
 					licenseMetricScore;
 
-				console.log("Net Score: " + netScore);
+				log.debug("Net Score: " + netScore);
 
 				const currentRepoInfoScores: RepoMetricInfo = {
 					URL: repoInfo.url,

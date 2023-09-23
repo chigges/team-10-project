@@ -25,6 +25,8 @@ describe("Responsiveness", () => {
 		const score = await respMetric.evaluate();
 		expect(score).toBeDefined();
 		expect(respMetric.name).toBe("Responsiveness");
+		expect(score).toBeGreaterThan(0);
+		expect(score).toBeLessThanOrEqual(1);
 	});
 });
 
@@ -36,7 +38,7 @@ describe("License", () => {
 		expect(licenseMetric.name).toBe("License");
 	});
 	it("should indicate if a license is *NOT* GPL", async () => {
-		const licenseMetric = new License("neovim", "neovim");
+		const licenseMetric = new License("CtrlAltDelight", "test-repo");
 		const score = await licenseMetric.evaluate();
 		expect(score).toBeDefined();
 		expect(licenseMetric.name).toBe("License");
@@ -80,5 +82,7 @@ describe("Correctness", () => {
 		const score = await correctnessMetric.evaluate();
 		expect(score).toBeDefined();
 		expect(correctnessMetric.name).toBe("Correctness");
+		expect(score).toBeGreaterThan(0);
+		expect(score).toBeLessThanOrEqual(1);
 	});
 });
