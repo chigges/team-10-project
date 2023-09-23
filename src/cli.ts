@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import URLParser from "./URLParser";
 import { exec } from "child_process";
-import { run, runCLI } from "jest";
+import { runCLI } from "jest";
 import { BusFactor, Responsiveness, Correctness, License, RampUp } from "./metrics";
 import { log } from "./logger";
 
@@ -56,7 +56,6 @@ export function setupCLI() {
 
 			// Been working at this for a long time. I'm not sure how to get the types to work here.
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			//const { results } = await runCLI(config as any, ["../jest.config.js"]);
 			const { results } = await runCLI(config as any, [process.cwd() + "/jest.config.js"]);
 
 			// Restore stdout and stderr
