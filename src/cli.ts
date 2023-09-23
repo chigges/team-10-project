@@ -1,6 +1,5 @@
 import { Command } from "commander";
 import URLParser from "./URLParser";
-import { exec } from "child_process";
 import { runCLI } from "jest";
 import { BusFactor, Responsiveness, Correctness, License, RampUp } from "./metrics";
 import { log } from "./logger";
