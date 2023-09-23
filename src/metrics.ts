@@ -334,6 +334,7 @@ export class License extends BaseMetric {
 	}
 
 	async evaluate(): Promise<number> {
+		log.info("Evaluating License for", this.owner, this.repo);
 		const isGpl = await this.getReadmeLicence(this.owner, this.repo);
 		if (isGpl === true) {
 			return 1;
