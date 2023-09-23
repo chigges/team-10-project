@@ -38,7 +38,7 @@ describe("License", () => {
 		expect(licenseMetric.name).toBe("License");
 	});
 	it("should indicate if a license is *NOT* GPL", async () => {
-		const licenseMetric = new License("neovim", "neovim");
+		const licenseMetric = new License("CtrlAltDelight", "test-repo");
 		const score = await licenseMetric.evaluate();
 		expect(score).toBeDefined();
 		expect(licenseMetric.name).toBe("License");
