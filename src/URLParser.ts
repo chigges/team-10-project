@@ -72,7 +72,9 @@ class URLParser {
 					}
 				})
 				.catch(() => {
-					console.error("Error getting github repo from npm link for " + packageName + ".");
+					console.error(
+						"Error getting github repo from npm link for " + packageName + ".",
+					);
 				});
 		}
 		return githubLink || null;
