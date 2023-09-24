@@ -475,48 +475,47 @@ export class Correctness extends BaseMetric {
 
 	async evaluate(): Promise<number> {
 		// Check for GitHub workflow actions presence
-		const hasWorkflowActions = await this.hasWorkflowActions();
+		try {
+			const hasWorkflowActions = await this.hasWorkflowActions();
 
-		// Count TODO or FIXME comments
-		const todoFixmeCount = await this.countTodoFixmeComments();
+			// Count TODO or FIXME comments
+			const todoFixmeCount = await this.countTodoFixmeComments();
 
-		// Get test coverage percentage
-		//const testCoverage = await this.getTestCoverage();
+			// Get test coverage percentage
+			//const testCoverage = await this.getTestCoverage();
 
-		// Calculate the ratio of closed issues to total issues
-		const { openIssues, closedIssues } = await this.getIssueCounts();
+			// Calculate the ratio of closed issues to total issues
+			const { openIssues, closedIssues } = await this.getIssueCounts();
 
-		log.debug("openIssues:", openIssues);
-		log.debug("closedIssues:", closedIssues);
+			log.debug("openIssues:", openIssues);
+			log.debug("closedIssues:", closedIssues);
 
-		let issueRatio = 0;
-		if (openIssues + closedIssues !== 0) {
-			issueRatio = closedIssues / (openIssues + closedIssues);
-		} else {
-			console.warn("Both open and closed issues count are zero.");
+			let issueRatio = 0;
+			if (openIssues + closedIssues !== 0) {
+				issueRatio = closedIssues / (openIssues + closedIssues);
+			} else {
+				console.warn("Both open and closed issues count are zero.");
+			}
+
+			// Logging the components
+			log.debug("hasWorkflowActions:", hasWorkflowActions);
+			log.debug("todoFixmeCount:", todoFixmeCount);
+			// log.debug("testCoverage:", testCoverage);
+			log.debug("issueRatio:", issueRatio);
+
+			// Combine all factors to calculate the metric
+			const score =
+				(hasWorkflowActions ? 0.3 : 0) +
+				(todoFixmeCount !== 0 ? (1 / todoFixmeCount) * 0.2 : 0) +
+				issueRatio * 0.2;
+			// testCoverage * 0.3 +
+			return score;
+
+		} catch {
+			console.error("Error: Score computed is NaN. See earlier error trace for more details.");
+			return 0
 		}
-
-		// Logging the components
-		log.debug("hasWorkflowActions:", hasWorkflowActions);
-		log.debug("todoFixmeCount:", todoFixmeCount);
-		// log.debug("testCoverage:", testCoverage);
-		log.debug("issueRatio:", issueRatio);
-
-		// Combine all factors to calculate the metric
-		const score =
-			(hasWorkflowActions ? 0.3 : 0) +
-			(todoFixmeCount !== 0 ? (1 / todoFixmeCount) * 0.2 : 0) +
-			issueRatio * 0.2;
-		// testCoverage * 0.3 +
-
-		if (isNaN(score)) {
-			console.error("Error: Score computed is NaN. Check the evaluation parameters.");
-			throw new Error("Score computation failed.");
-		}
-
-		return score;
 	}
-
 	async getIssueCounts(): Promise<{ openIssues: number; closedIssues: number }> {
 		let openIssuesCount = 0;
 		let closedIssuesCount = 0;
