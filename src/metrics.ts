@@ -1,6 +1,7 @@
 import { Octokit, RequestError } from "octokit";
 import fetch from "node-fetch";
 const { graphql } = require("@octokit/graphql");
+import { GraphqlResponseError } from "@octokit/graphql"
 
 import fs from "fs";
 import http from "isomorphic-git/http/node";
@@ -90,8 +91,8 @@ export class BusFactor extends BaseMetric {
 
 			return Math.min(rawBusFactor / rawBusFactorMax, 1);
 		} catch (error) {
-			// Octokit errors always have a `error.status` property which is the http response code nad it's instance of RequestError
-			if (error instanceof RequestError) {
+			// Octokit errors always have a `error.status` property which is the http response code
+			if (error instanceof RequestError || error instanceof GraphqlResponseError) {
 				console.error("Octokit error evaluating BusFactor: ", error);
 			} else {
 				// handle all other errors
@@ -125,7 +126,7 @@ export class Responsiveness extends BaseMetric {
 			});
 
 			if (closedPRs.length === 0) {
-				console.log("No closed PRs found in the repository.");
+				log.info("No closed PRs found in the repository.");
 				return null;
 			}
 
@@ -147,7 +148,7 @@ export class Responsiveness extends BaseMetric {
 
 			return averageDaysToClose;
 		} catch (error) {
-			if (error instanceof RequestError) {
+			if (error instanceof RequestError || error instanceof GraphqlResponseError) {
 				console.error("Error fetching data from GitHub:", error.message);
 			} else {
 				console.error("Non-Github error ", error);
@@ -194,7 +195,7 @@ export class Responsiveness extends BaseMetric {
 			);
 			//if no issues, return 0 (indicates lower responsiveness) else return ratio
 		} catch (error) {
-			if (error instanceof RequestError) {
+			if (error instanceof RequestError || error instanceof GraphqlResponseError) {
 				console.error("Error fetching data from GitHub:", error.message);
 			} else {
 				console.error("Non-Github error ", error);
@@ -410,8 +411,8 @@ export class Correctness extends BaseMetric {
 		// Calculate the ratio of closed issues to total issues
 		const { openIssues, closedIssues } = await this.getIssueCounts();
 
-		console.log("openIssues:", openIssues);
-		console.log("closedIssues:", closedIssues);
+		log.info("openIssues:", openIssues);
+		log.info("closedIssues:", closedIssues);
 
 		let issueRatio = 0;
 		if (openIssues + closedIssues !== 0) {
@@ -421,10 +422,10 @@ export class Correctness extends BaseMetric {
 		}
 
 		// Logging the components
-		console.log("hasWorkflowActions:", hasWorkflowActions);
-		console.log("todoFixmeCount:", todoFixmeCount);
+		log.info("hasWorkflowActions:", hasWorkflowActions);
+		log.info("todoFixmeCount:", todoFixmeCount);
 		// console.log("testCoverage:", testCoverage);
-		console.log("issueRatio:", issueRatio);
+		log.info("issueRatio:", issueRatio);
 
 		// Combine all factors to calculate the metric
 		const score =

@@ -26,6 +26,13 @@ describe("Responsiveness", () => {
 		expect(score).toBeDefined();
 		expect(respMetric.name).toBe("Responsiveness");
 	});
+
+	it("should trigger the no PRs edge case", async () => {
+		const respMetric = new Responsiveness("FaaizMemonPurdue", "exampleRepoNoPRs");
+		const score = await respMetric.evaluate();
+		expect(score).toBeDefined();
+		expect(respMetric.name).toBe("Responsiveness");
+	});
 });
 
 describe("License", () => {
