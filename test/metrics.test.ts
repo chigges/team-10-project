@@ -33,6 +33,14 @@ describe("Responsiveness", () => {
 		expect(score).toBeDefined();
 		expect(respMetric.name).toBe("Responsiveness");
 	});
+
+	it("should not find a repo to return responsiveness", async () => {
+		const respMetric = new Responsiveness("neovm", "neovim");
+		const score = await respMetric.evaluate();
+		expect(score).toBeDefined();
+		expect(respMetric.name).toBe("Responsiveness");
+		expect(score).toEqual(0);
+	});
 });
 
 describe("License", () => {
@@ -56,6 +64,14 @@ describe("License", () => {
 		expect(licenseMetric.name).toBe("License");
 		expect(score).toEqual(1);
 	});
+
+	it("should not find a repo to return license", async () => {
+		const licenseMetric = new License("neovm", "neovim");
+		const score = await licenseMetric.evaluate();
+		expect(score).toBeDefined();
+		expect(licenseMetric.name).toBe("License");
+		expect(score).toEqual(0);
+	});
 });
 
 describe("RampUp", () => {
@@ -78,6 +94,14 @@ describe("RampUp", () => {
 		// I know jonschlinkert/is-odd has a readme.md but no contributing.md
 		expect(score).toBeGreaterThanOrEqual(0.3);
 		expect(score).toBeLessThanOrEqual(0.7);
+	});
+
+	it("should not find a repo to return rampup", async () => {
+		const rampUpMetric = new RampUp("neovm", "neovim");
+		const score = await rampUpMetric.evaluate();
+		expect(score).toBeDefined();
+		expect(rampUpMetric.name).toBe("RampUp");
+		expect(score).toEqual(0);
 	});
 });
 
