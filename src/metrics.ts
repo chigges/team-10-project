@@ -1,6 +1,7 @@
 import { Octokit, RequestError } from "octokit";
 import fetch from "node-fetch";
 const { graphql } = require("@octokit/graphql");
+import { GraphqlResponseError } from "@octokit/graphql";
 
 import fs from "fs";
 import http from "isomorphic-git/http/node";
@@ -90,8 +91,8 @@ export class BusFactor extends BaseMetric {
 
 			return Math.min(rawBusFactor / rawBusFactorMax, 1);
 		} catch (error) {
-			// Octokit errors always have a `error.status` property which is the http response code nad it's instance of RequestError
-			if (error instanceof RequestError) {
+			// Octokit errors always have a `error.status` property which is the http response code
+			if (error instanceof RequestError || error instanceof GraphqlResponseError) {
 				console.error("Octokit error evaluating BusFactor: ", error);
 			} else {
 				// handle all other errors
@@ -133,7 +134,7 @@ export class Responsiveness extends BaseMetric {
 			const averageTimeToClose =
 				closedPRs.reduce((total, issue) => {
 					if (issue.closed_at == null) {
-						console.error("A closed PR does not have a closed date: ", issue.title);
+						log.error("A closed PR does not have a closed date: ", issue.title);
 						return 0;
 					} else {
 						const closedAt = new Date(issue.closed_at).getTime();
@@ -147,7 +148,7 @@ export class Responsiveness extends BaseMetric {
 
 			return averageDaysToClose;
 		} catch (error) {
-			if (error instanceof RequestError) {
+			if (error instanceof RequestError || error instanceof GraphqlResponseError) {
 				console.error("Error fetching data from GitHub:", error.message);
 			} else {
 				console.error("Non-Github error ", error);
@@ -194,7 +195,7 @@ export class Responsiveness extends BaseMetric {
 			);
 			//if no issues, return 0 (indicates lower responsiveness) else return ratio
 		} catch (error) {
-			if (error instanceof RequestError) {
+			if (error instanceof RequestError || error instanceof GraphqlResponseError) {
 				console.error("Error fetching data from GitHub:", error.message);
 			} else {
 				console.error("Non-Github error ", error);
@@ -426,39 +427,47 @@ export class RampUp extends BaseMetric {
 		const tmpdir = dirSync({ unsafeCleanup: true });
 		log.info(`Created temp directory: ${tmpdir.name}`);
 		log.info(`https://github.com/${this.owner}/${this.repo}.git`);
-		await clone({
-			fs,
-			http,
-			dir: tmpdir.name,
-			url: `https://github.com/${this.owner}/${this.repo}.git`,
-			singleBranch: true,
-			depth: 1,
-		});
+		try {
+			await clone({
+				fs,
+				http,
+				dir: tmpdir.name,
+				url: `https://github.com/${this.owner}/${this.repo}.git`,
+				singleBranch: true,
+				depth: 1,
+			});
 
-		// See if there is a README.md
-		log.info(`Finding ${this.owner}/${this.repo} README.md`);
-		const doesReadmeExist: boolean = this.doesFileExist(tmpdir.name, "README.md");
-		const readmeScore = doesReadmeExist ? 0.3 : 0;
+			// See if there is a README.md
+			log.info(`Finding ${this.owner}/${this.repo} README.md`);
+			const doesReadmeExist: boolean = this.doesFileExist(tmpdir.name, "README.md");
+			const readmeScore = doesReadmeExist ? 0.3 : 0;
 
-		// See if there is a CONTRIBUTING.md
-		log.info(`Finding ${this.owner}/${this.repo} CONTRIBUTING.md`);
-		const doesContributingExist: boolean = this.doesFileExist(tmpdir.name, "CONTRIBUTING.md");
-		const contributingScore = doesContributingExist ? 0.3 : 0;
+			// See if there is a CONTRIBUTING.md
+			log.info(`Finding ${this.owner}/${this.repo} CONTRIBUTING.md`);
+			const doesContributingExist: boolean = this.doesFileExist(
+				tmpdir.name,
+				"CONTRIBUTING.md",
+			);
+			const contributingScore = doesContributingExist ? 0.3 : 0;
 
-		// Find the sloc to comment ratio
-		log.info(`Finding ${this.owner}/${this.repo} comment to sloc ratio`);
-		const { sloc, comments } = this.calculateSlocToCommentRatio(tmpdir.name);
-		const commentToSlocRatio = comments / (sloc || 1); // Avoid division by zero
-		log.debug(`sloc: ${sloc}, comments: ${comments}, ratio: ${commentToSlocRatio}`);
+			// Find the sloc to comment ratio
+			log.info(`Finding ${this.owner}/${this.repo} comment to sloc ratio`);
+			const { sloc, comments } = this.calculateSlocToCommentRatio(tmpdir.name);
+			const commentToSlocRatio = comments / (sloc || 1); // Avoid division by zero
+			log.debug(`sloc: ${sloc}, comments: ${comments}, ratio: ${commentToSlocRatio}`);
 
-		// scale that ratio to a number between 0 and 1
-		const commentToSlocRatioScaled = Math.min(commentToSlocRatio, 1);
-		const slocCommentRatioScore = commentToSlocRatioScaled * 0.4; // ratio of 50% is max score
+			// scale that ratio to a number between 0 and 1
+			const commentToSlocRatioScaled = Math.min(commentToSlocRatio, 1);
+			const slocCommentRatioScore = commentToSlocRatioScaled * 0.4; // ratio of 50% is max score
 
-		tmpdir.removeCallback(); // Cleanup the temp directory
+			tmpdir.removeCallback(); // Cleanup the temp directory
 
-		// Calculate the score and return it
-		return readmeScore + contributingScore + slocCommentRatioScore;
+			// Calculate the score and return it
+			return readmeScore + contributingScore + slocCommentRatioScore;
+		} catch (error) {
+			console.error("Failure cloning");
+			return 0;
+		}
 	}
 }
 
@@ -469,48 +478,48 @@ export class Correctness extends BaseMetric {
 
 	async evaluate(): Promise<number> {
 		// Check for GitHub workflow actions presence
-		const hasWorkflowActions = await this.hasWorkflowActions();
+		try {
+			const hasWorkflowActions = await this.hasWorkflowActions();
 
-		// Count TODO or FIXME comments
-		const todoFixmeCount = await this.countTodoFixmeComments();
+			// Count TODO or FIXME comments
+			const todoFixmeCount = await this.countTodoFixmeComments();
 
-		// Get test coverage percentage
-		//const testCoverage = await this.getTestCoverage();
+			// Get test coverage percentage
+			//const testCoverage = await this.getTestCoverage();
 
-		// Calculate the ratio of closed issues to total issues
-		const { openIssues, closedIssues } = await this.getIssueCounts();
+			// Calculate the ratio of closed issues to total issues
+			const { openIssues, closedIssues } = await this.getIssueCounts();
 
-		log.debug("openIssues:", openIssues);
-		log.debug("closedIssues:", closedIssues);
+			log.debug("openIssues:", openIssues);
+			log.debug("closedIssues:", closedIssues);
 
-		let issueRatio = 0;
-		if (openIssues + closedIssues !== 0) {
-			issueRatio = closedIssues / (openIssues + closedIssues);
-		} else {
-			console.warn("Both open and closed issues count are zero.");
+			let issueRatio = 0;
+			if (openIssues + closedIssues !== 0) {
+				issueRatio = closedIssues / (openIssues + closedIssues);
+			} else {
+				console.warn("Both open and closed issues count are zero.");
+			}
+
+			// Logging the components
+			log.debug("hasWorkflowActions:", hasWorkflowActions);
+			log.debug("todoFixmeCount:", todoFixmeCount);
+			// log.debug("testCoverage:", testCoverage);
+			log.debug("issueRatio:", issueRatio);
+
+			// Combine all factors to calculate the metric
+			const score =
+				(hasWorkflowActions ? 0.3 : 0) +
+				(todoFixmeCount !== 0 ? (1 / todoFixmeCount) * 0.2 : 0) +
+				issueRatio * 0.2;
+			// testCoverage * 0.3 +
+			return score;
+		} catch {
+			console.error(
+				"Error: Score computed is NaN. See earlier error trace for more details.",
+			);
+			return 0;
 		}
-
-		// Logging the components
-		log.debug("hasWorkflowActions:", hasWorkflowActions);
-		log.debug("todoFixmeCount:", todoFixmeCount);
-		// log.debug("testCoverage:", testCoverage);
-		log.debug("issueRatio:", issueRatio);
-
-		// Combine all factors to calculate the metric
-		const score =
-			(hasWorkflowActions ? 0.3 : 0) +
-			(todoFixmeCount !== 0 ? (1 / todoFixmeCount) * 0.2 : 0) +
-			issueRatio * 0.2;
-		// testCoverage * 0.3 +
-
-		if (isNaN(score)) {
-			console.error("Error: Score computed is NaN. Check the evaluation parameters.");
-			throw new Error("Score computation failed.");
-		}
-
-		return score;
 	}
-
 	async getIssueCounts(): Promise<{ openIssues: number; closedIssues: number }> {
 		let openIssuesCount = 0;
 		let closedIssuesCount = 0;
