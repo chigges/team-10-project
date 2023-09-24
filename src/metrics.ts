@@ -1,7 +1,7 @@
 import { Octokit, RequestError } from "octokit";
 import fetch from "node-fetch";
 const { graphql } = require("@octokit/graphql");
-import { GraphqlResponseError } from "@octokit/graphql"
+import { GraphqlResponseError } from "@octokit/graphql";
 
 import fs from "fs";
 import http from "isomorphic-git/http/node";
@@ -444,7 +444,10 @@ export class RampUp extends BaseMetric {
 
 			// See if there is a CONTRIBUTING.md
 			log.info(`Finding ${this.owner}/${this.repo} CONTRIBUTING.md`);
-			const doesContributingExist: boolean = this.doesFileExist(tmpdir.name, "CONTRIBUTING.md");
+			const doesContributingExist: boolean = this.doesFileExist(
+				tmpdir.name,
+				"CONTRIBUTING.md",
+			);
 			const contributingScore = doesContributingExist ? 0.3 : 0;
 
 			// Find the sloc to comment ratio
@@ -462,8 +465,8 @@ export class RampUp extends BaseMetric {
 			// Calculate the score and return it
 			return readmeScore + contributingScore + slocCommentRatioScore;
 		} catch (error) {
-			console.error("Failure cloning")
-			return 0
+			console.error("Failure cloning");
+			return 0;
 		}
 	}
 }
@@ -510,10 +513,11 @@ export class Correctness extends BaseMetric {
 				issueRatio * 0.2;
 			// testCoverage * 0.3 +
 			return score;
-
 		} catch {
-			console.error("Error: Score computed is NaN. See earlier error trace for more details.");
-			return 0
+			console.error(
+				"Error: Score computed is NaN. See earlier error trace for more details.",
+			);
+			return 0;
 		}
 	}
 	async getIssueCounts(): Promise<{ openIssues: number; closedIssues: number }> {

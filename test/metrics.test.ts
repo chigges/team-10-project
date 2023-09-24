@@ -116,4 +116,12 @@ describe("Correctness", () => {
 		expect(score).toBeGreaterThan(0);
 		expect(score).toBeLessThanOrEqual(1);
 	});
+
+	it("should not find a repo to return correctness", async () => {
+		const correctnessMetric = new Correctness("neovm", "neovim");
+		const score = await correctnessMetric.evaluate();
+		expect(score).toBeDefined();
+		expect(correctnessMetric.name).toBe("Correctness");
+		expect(score).toEqual(0);
+	});
 });
