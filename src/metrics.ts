@@ -427,39 +427,44 @@ export class RampUp extends BaseMetric {
 		const tmpdir = dirSync({ unsafeCleanup: true });
 		log.info(`Created temp directory: ${tmpdir.name}`);
 		log.info(`https://github.com/${this.owner}/${this.repo}.git`);
-		await clone({
-			fs,
-			http,
-			dir: tmpdir.name,
-			url: `https://github.com/${this.owner}/${this.repo}.git`,
-			singleBranch: true,
-			depth: 1,
-		});
+		try {
+			await clone({
+				fs,
+				http,
+				dir: tmpdir.name,
+				url: `https://github.com/${this.owner}/${this.repo}.git`,
+				singleBranch: true,
+				depth: 1,
+			});
 
-		// See if there is a README.md
-		log.info(`Finding ${this.owner}/${this.repo} README.md`);
-		const doesReadmeExist: boolean = this.doesFileExist(tmpdir.name, "README.md");
-		const readmeScore = doesReadmeExist ? 0.3 : 0;
+			// See if there is a README.md
+			log.info(`Finding ${this.owner}/${this.repo} README.md`);
+			const doesReadmeExist: boolean = this.doesFileExist(tmpdir.name, "README.md");
+			const readmeScore = doesReadmeExist ? 0.3 : 0;
 
-		// See if there is a CONTRIBUTING.md
-		log.info(`Finding ${this.owner}/${this.repo} CONTRIBUTING.md`);
-		const doesContributingExist: boolean = this.doesFileExist(tmpdir.name, "CONTRIBUTING.md");
-		const contributingScore = doesContributingExist ? 0.3 : 0;
+			// See if there is a CONTRIBUTING.md
+			log.info(`Finding ${this.owner}/${this.repo} CONTRIBUTING.md`);
+			const doesContributingExist: boolean = this.doesFileExist(tmpdir.name, "CONTRIBUTING.md");
+			const contributingScore = doesContributingExist ? 0.3 : 0;
 
-		// Find the sloc to comment ratio
-		log.info(`Finding ${this.owner}/${this.repo} comment to sloc ratio`);
-		const { sloc, comments } = this.calculateSlocToCommentRatio(tmpdir.name);
-		const commentToSlocRatio = comments / (sloc || 1); // Avoid division by zero
-		log.debug(`sloc: ${sloc}, comments: ${comments}, ratio: ${commentToSlocRatio}`);
+			// Find the sloc to comment ratio
+			log.info(`Finding ${this.owner}/${this.repo} comment to sloc ratio`);
+			const { sloc, comments } = this.calculateSlocToCommentRatio(tmpdir.name);
+			const commentToSlocRatio = comments / (sloc || 1); // Avoid division by zero
+			log.debug(`sloc: ${sloc}, comments: ${comments}, ratio: ${commentToSlocRatio}`);
 
-		// scale that ratio to a number between 0 and 1
-		const commentToSlocRatioScaled = Math.min(commentToSlocRatio, 1);
-		const slocCommentRatioScore = commentToSlocRatioScaled * 0.4; // ratio of 50% is max score
+			// scale that ratio to a number between 0 and 1
+			const commentToSlocRatioScaled = Math.min(commentToSlocRatio, 1);
+			const slocCommentRatioScore = commentToSlocRatioScaled * 0.4; // ratio of 50% is max score
 
-		tmpdir.removeCallback(); // Cleanup the temp directory
+			tmpdir.removeCallback(); // Cleanup the temp directory
 
-		// Calculate the score and return it
-		return readmeScore + contributingScore + slocCommentRatioScore;
+			// Calculate the score and return it
+			return readmeScore + contributingScore + slocCommentRatioScore;
+		} catch (error) {
+			console.error("Failure cloning")
+			return 0
+		}
 	}
 }
 
