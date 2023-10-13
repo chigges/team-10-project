@@ -596,3 +596,98 @@ export class Correctness extends BaseMetric {
 	// 	return 0.5;
 	// }
 }
+
+export class PullRequests extends BaseMetric {
+	name = "PullRequestsCodeReviewMetric";
+	description = "Measures the fraction of code introduced through pull requests with code reviews.";
+
+	async evaluate(): Promise<number> {
+		try {
+			//Fetch information about pull requests and code reviews using GitHub API
+
+			//Replace these with actual API calls and data processing 
+			const totalCodeChanges = await this.getTotalCodeChanges(); //Total lines of code changes in the repository
+			const codeIntroducedThroughPRs = await this.getPullRequestsWithCodeReviews(); //Lines of code introduced through Pull Requests with code reviews
+
+			let codeReviewFraction = 0; 
+			//Calculate the fraction of code introduced through PRs with code reviews
+			if(totalCodeChanges >= codeIntroducedThroughPRs) {
+				codeReviewFraction = codeIntroducedThroughPRs / totalCodeChanges; 
+			} 
+			else {
+				codeReviewFraction = 1; 
+			}
+
+			return codeReviewFraction; 
+		} catch (error) {
+			console.error("Error calculating PullRequestsCodeReviewMetric:", error);
+			throw new Error("Failed to evaluate Pull Request metric");
+		}
+	}
+
+	async getTotalCodeChanges(): Promise<number> {
+		try {
+			const pullRequests = await this.octokit.rest.pulls.list({
+				owner: this.owner, 
+				repo: this.repo, 
+				state: 'all',  
+			}); 
+			
+			let totalChanges = 0;
+
+			for (const pr of pullRequests.data) {
+			  // Fetch the PR's commits
+			  const stats = await this.octokit.rest.pulls.get({
+				owner: this.owner,
+				repo: this.repo,
+				pull_number: pr.number,
+			  });
+		
+				totalChanges += stats.data.additions + stats.data.deletions;
+			}
+		
+			return totalChanges;
+		} catch (error) {
+			console.error("Error fetching code change statistics:", error); 
+			return 0; 
+		}
+	}
+	
+	async getPullRequestsWithCodeReviews(): Promise<number> { //this code currently considers Pull Request with review comments as having a code review
+		try{
+			const pullRequests = await this.octokit.rest.pulls.list({
+				owner: this.owner, 
+				repo: this.repo, 
+				state: 'all', 
+			}); 
+
+			let totalChanges = 0;
+
+			for (const pr of pullRequests.data) {
+				// Fetch the PR's review comments
+				const reviewComments = await this.octokit.rest.pulls.listReviewComments({
+				owner: this.owner,
+				repo: this.repo,
+				pull_number: pr.number,
+				});
+		
+				if (reviewComments.data.length > 0) {
+					// If there are review comments, consider it a code review
+					// Fetch the PR's statistics
+					const stats = await this.octokit.rest.pulls.get({
+						owner: this.owner,
+						repo: this.repo,
+						pull_number: pr.number,
+					});
+			
+					totalChanges += stats.data.additions + stats.data.deletions;
+				}
+			}
+
+			return totalChanges;
+		} catch (error) {
+			console.error('Error fetching data from GitHub:', error);
+			return 0; // Handle errors as needed
+		}
+    }
+}
