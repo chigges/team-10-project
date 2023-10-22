@@ -77,7 +77,8 @@ export function setupCLI() {
 				BUS_FACTOR_SCORE: number;
 				RESPONSIVE_MAINTAINER_SCORE: number;
 				LICENSE_SCORE: number;
-				PULL_REQUESTS_SCORE: number; 
+				PULL_REQUESTS_SCORE: number;
+				PINNED_DEPENDENCIES_SCORE: number;
 			};
 			const urlParser = new URLParser(file);
 			const repoInfoList = await urlParser.getGithubRepoInfo();
@@ -112,7 +113,7 @@ export function setupCLI() {
 				console.log("Responsiveness Score: " + responsivenessMetricScore);
 				console.log("License Score: " + licenseMetricScore);
 				*/
-				console.log("Pull Request Score:" + pullrequestsMetricScore); 
+				// console.log("Pull Request Score:" + pullrequestsMetricScore);
 
 				const netScore =
 					(rampupMetricScore * 0.2 +
@@ -133,7 +134,8 @@ export function setupCLI() {
 					BUS_FACTOR_SCORE: busFactorMetricScore,
 					RESPONSIVE_MAINTAINER_SCORE: responsivenessMetricScore,
 					LICENSE_SCORE: licenseMetricScore,
-					PULL_REQUESTS_SCORE: pullrequestsMetricScore, 
+					PULL_REQUESTS_SCORE: pullrequestsMetricScore,
+					PINNED_DEPENDENCIES_SCORE: pinnedDependenciesMetricScore,
 				};
 
 				RepoMetricInfoList.push(currentRepoInfoScores);

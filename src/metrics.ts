@@ -707,19 +707,28 @@ export class DependencyPins extends BaseMetric {
 			});
 
 			// Parse the JSON
-			// const packageJsonContent = Buffer.from(packageJson.data.content, "base64").toString(
-			// 	"utf8",
-			// );
-			const packageJsonContent = JSON.stringify(packageJson.data);
+			if (packageJson.data.content === undefined) {
+				return 1;
+			}
+			// Note: packageJson.data has attribute content?: string | undefined
+			const packageJsonContent = Buffer.from(packageJson.data.content, "base64").toString(
+				"utf8",
+			);
 			const packageJsonParsed = JSON.parse(packageJsonContent);
+
+			// Get total number of dependencies and check for 0/undefined
+			const numDependencies = (packageJsonParsed.dependencies) ? Object.keys(packageJsonParsed.dependencies)?.length : undefined;
+			if (numDependencies === undefined || numDependencies === 0) {  // return 0 on undefined?
+				return 1;
+			}
 
 			// Calculate the number of dependencies that are pinned
 			const pinnedDependencies = this.numPinnedDeps(packageJsonParsed.dependencies);
 
 			// Calculate the fraction of dependencies that are pinned
-			const fractionPinned = pinnedDependencies / packageJsonParsed.dependencies.length;
+			const fractionPinned = pinnedDependencies / numDependencies;
 
-			return fractionPinned;
+			return 1 - fractionPinned;
 		} catch (error) {
 			console.error("Error calculating DependencyPins:", error);
 			throw new Error("Failed to evaluate DependencyPins metric");
