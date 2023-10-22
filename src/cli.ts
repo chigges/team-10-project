@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import URLParser from "./URLParser";
 import { runCLI } from "jest";
-import { BusFactor, Responsiveness, Correctness, License, RampUp, PullRequests } from "./metrics";
+import { BusFactor, Responsiveness, Correctness, License, RampUp, PullRequests, DependencyPins } from "./metrics";
 import { log } from "./logger";
 
 export function setupCLI() {
@@ -100,7 +100,10 @@ export function setupCLI() {
 				const licenseMetricScore = await licenseMetric.evaluate();
 
 				const pullrequestsMetric = new PullRequests(repoInfo.owner, repoInfo.repo);
-				const pullrequestsMetricScore = await pullrequestsMetric.evaluate();  
+				const pullrequestsMetricScore = await pullrequestsMetric.evaluate(); 
+				
+				const pinnedDependenciesMetric = new DependencyPins(repoInfo.owner, repoInfo.repo);
+				const pinnedDependenciesMetricScore = await pinnedDependenciesMetric.evaluate();
 
 				/*
 				console.log("Ramp Up Score: " + rampupMetricScore);
@@ -114,9 +117,10 @@ export function setupCLI() {
 				const netScore =
 					(rampupMetricScore * 0.2 +
 						correctnessMetricScore * 0.1 +
-						busFactorMetricScore * 0.3 +
-						responsivenessMetricScore * 0.3 +
-						pullrequestsMetricScore * 0.1 ) *
+						busFactorMetricScore * 0.25 +
+						responsivenessMetricScore * 0.25 +
+						pullrequestsMetricScore * 0.1 + 
+						pinnedDependenciesMetricScore * 0.1) *
 					licenseMetricScore;
 
 				log.debug("Net Score: " + netScore);

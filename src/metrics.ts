@@ -636,12 +636,12 @@ export class PullRequests extends BaseMetric {
 			let totalChanges = 0;
 
 			for (const pr of pullRequests.data) {
-			  // Fetch the PR's commits
-			  const stats = await this.octokit.rest.pulls.get({
-				owner: this.owner,
-				repo: this.repo,
-				pull_number: pr.number,
-			  });
+				// Fetch the PR's commits
+				const stats = await this.octokit.rest.pulls.get({
+					owner: this.owner,
+					repo: this.repo,
+					pull_number: pr.number,
+				});
 		
 				totalChanges += stats.data.additions + stats.data.deletions;
 			}
@@ -690,4 +690,52 @@ export class PullRequests extends BaseMetric {
 			return 0; // Handle errors as needed
 		}
     }
+}
+
+// A subclass of BaseMetric.
+export class DependencyPins extends BaseMetric {
+	name = "DependencyPins";
+	description = "Measures the fraction of dependencies that are pinned to a specific version.";
+
+	async evaluate(): Promise<number> {
+		try {
+			// Fetch the package.json file
+			const packageJson = await this.octokit.rest.repos.getContent({
+				owner: this.owner,
+				repo: this.repo,
+				path: "package.json",
+			});
+
+			// Parse the JSON
+			// const packageJsonContent = Buffer.from(packageJson.data.content, "base64").toString(
+			// 	"utf8",
+			// );
+			const packageJsonContent = JSON.stringify(packageJson.data);
+			const packageJsonParsed = JSON.parse(packageJsonContent);
+
+			// Calculate the number of dependencies that are pinned
+			const pinnedDependencies = this.numPinnedDeps(packageJsonParsed.dependencies);
+
+			// Calculate the fraction of dependencies that are pinned
+			const fractionPinned = pinnedDependencies / packageJsonParsed.dependencies.length;
+
+			return fractionPinned;
+		} catch (error) {
+			console.error("Error calculating DependencyPins:", error);
+			throw new Error("Failed to evaluate DependencyPins metric");
+		}
+	}
+
+	private numPinnedDeps(dependencies: string[]): number {
+		let pinnedDeps = 0;
+
+		for (const dependency in dependencies) {
+			const version = dependencies[dependency];
+			if (version.startsWith("^") || version.startsWith("~")) {
+				pinnedDeps++;
+			}
+		}
+
+		return pinnedDeps;
+	}
 }
