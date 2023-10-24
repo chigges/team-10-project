@@ -1,0 +1,1707 @@
+{
+  "404": {
+    "00bb54e0-f2ca-42b0-9e7e-fffd722c2210": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/N",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "0449d0c1-969b-45c3-a052-673f2e3c10ef": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/7043.042925053334",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "04d0e810-f5cb-4c6e-95e3-b5bef4317e47": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/505764",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "04fc2eb5-4064-42d8-b0c5-4e24019a9657": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/93045754727855074",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "067b88bf-6823-4406-a8a4-7be6baf8680f": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/iWcYa",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "0a9d3b51-ded3-4618-860d-66be36f8c43d": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/18032974399",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "13624dff-6875-4c51-99d1-bd74f3085152": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/fbJhA",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "13637090-908d-40cc-b58a-e14d7fe495d3": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/1970.9459986483707",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "15729fa7-e59e-47dd-bd2d-b66f6754d43c": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/-8",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "1b7cba7a-3014-4e88-84cd-824486789094": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/RNA2J",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "1ee84ccd-0f09-4f3e-b547-2398a7db904a": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/-4429.11986549605",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "214ec99c-775a-4ba7-b924-018bbdac99a9": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/H",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "28713023-0d12-47d9-86c9-bc5df0ab6fdd": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/g",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "289f96f3-6c71-40ba-aaed-6668b2eea6ca": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/396199398645",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "2d0108cf-0984-4bde-abb7-39a8d80de2f9": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/9270.989117656893",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "2db42eae-68d7-4809-894d-ce2242d6e887": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/D",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "2f192dc8-6bc6-4bbb-b4db-4b6d525e8a08": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/-10",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "31220945-184c-4d49-9e3b-9318d4d780a2": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/79365262329813061369",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "31bdaddd-18ff-44f7-8551-072361ac85cd": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/X3Iwo",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "365b84c0-6fe1-40bc-8827-e50605c3e9c3": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/5CF8K",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "43bcd69d-a790-4365-85f7-ac8db45cc37e": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/N3QpV",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "43c4e8fa-bb91-404d-b6a0-4f1487451c00": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/1047.9500685068015",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "4593cfd3-79e9-418e-b28f-caa16038ea46": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/aDOOF",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "463fb720-4929-44f6-89fd-a0f55d60a6ea": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/-7458.566699113305",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "49abb6d8-4ef8-4419-9703-c4952659c4ed": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/vCpH3",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "4a6dbd8d-3df6-4cb4-aa90-2893f997245c": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/r",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "4ce1ebeb-8db0-4445-805a-18256661745b": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/5131.254266401496",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "4dc160e2-940b-476b-b2d3-a0a034ff0b39": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/ejIQV",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "514283f1-6b73-4afe-aa15-8b32804f1238": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/3028.72226784763",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "53f1082d-fb35-4576-823d-ed77fbb94e80": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/e",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "547f83a3-9fbe-47a6-83c2-71e8e1551fe5": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/k",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "5b3e2db9-89e4-4a83-bcb3-f462c6a685d5": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/9567.018433526606",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "5c5cff41-d7a1-499a-925b-3831976467c2": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/822963",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "5d072b83-d5a4-4a33-b13b-415fa64e077d": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/0963012895303452",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "6882ef35-776e-458b-9948-0c0675ae2489": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/3215.4462575105354",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "69230a22-fc01-4248-9229-ebfc460612cc": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/4910.349843083051",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "6be42550-7a9e-4898-beef-b4646a2056b3": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/H",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "6e472315-145e-4c4b-852c-4b7c68b1977f": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/19869072799238032",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "6f2e1dee-3868-40f3-b1fe-114aa7983dfc": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/l",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "71f28ab7-4f4c-4e72-9dd1-ba33ed7d58ac": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/N",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "7463dc28-1713-4358-a5d3-38f6ff38c8d6": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/963523541",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "74f006e6-5eb3-4230-98a9-c466eea7065a": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/f",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "87c52419-d533-412b-b2b9-e2b9b4fbdf60": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/-243.99844518946702",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "8b94ebc4-65dc-45a8-967c-5606d43efd21": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/{}",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "910a26be-c728-4527-9d9a-bb7b04372e21": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/-1530.5582941769517",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "93fc0634-cc9d-41e9-831c-472a32fc5854": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/-10",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "9521b049-58c2-4aef-9558-3f605daadf5a": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/UMjW3",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "969dd9cd-3282-4128-8da6-d62eb1ac0a37": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/3eusT",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "9bce1f39-2b7b-4f84-83ac-f405aed94b65": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/v",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "9f698935-23ed-423b-9bc9-1039700a6ca4": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/zzcxT",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "a082e8fc-d3d9-4433-996b-6e8f6d1b83a8": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/xM6GS",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "a45dbcbb-68be-4278-afbf-39b6f41f802f": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/0",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "a6b2fc9b-9a8c-4649-afde-b0162d759201": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/-5",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "af523b5c-f20a-46ab-a5bf-a938f227f1d4": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/cR4iM",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "b6dce26d-7752-45da-8f84-51a3527325cd": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/7308341037009178271",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "bf21dd0f-744b-492e-9cc8-5ab1b04d2fe0": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/-10",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "c10d2568-35ae-4110-a8f6-c861f191c94d": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/-6",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "c5435eb0-6288-41f7-a1ef-e7a0cd1e4caf": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/633185598",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "cd575214-9d43-4011-9a3c-4bbfc34857bf": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/1dbDG",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "cdd45151-ef82-4ebe-8385-2af9f94845e1": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/925.4963191864535",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "cedb5967-ec7b-4e29-a8f8-750ab4f5307c": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/x54cs",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "cf1c4530-6752-4aba-961e-5a50e9df7242": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/p",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "d03c5d59-9a47-42b6-91b4-3cb000e4f7ba": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/d",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "d1c1cb41-b73c-4553-9cd8-57fda194862d": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/6Ji17",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "d3e40a56-96d8-4c31-b005-441dba039b1c": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/[]",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "d403e0d3-c042-4a05-8f99-6cb012f3f31a": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/8ALGq",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "d615e6dd-d018-4ff7-b562-187b2cc77170": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/-4034.0217673687985",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "d739c673-a9b1-4bc7-b143-c9dd65b2a093": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/PHsEb",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "da2eb9d3-e18d-4d08-92bc-31aa0b38b1d1": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/5757.497349013296",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "dcc41289-de09-4a62-a83b-33813c6ba2e7": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/L",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "df7c799b-8707-4577-bf1c-d81f0a9f47b3": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/0",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "e1adfd64-9e74-4897-a3e3-032b2560c669": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/7514560",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "ecc5a7d3-74f6-4cd5-983f-680105a490bc": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/270.1492152139399",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "ece15090-8774-48fa-a486-b6c964043056": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/j",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "f447df19-0046-4d0d-9d32-5c68997d59a7": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/w",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "f7542a20-4b9b-4a62-99ae-0885eb83de5d": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/-8",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "fa7c9084-aa9b-4355-b5aa-e7b62f2f7eea": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/7853",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "fcbc2049-e022-4261-a7c2-753981dc1a0e": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/-1134.0365936329617",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "ff716a36-e487-41d1-8c82-633e9d5ee65f": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/2569.979652906013",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 404,
+            "codeDescription": "Not Found",
+            "content": "Not Found",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ]
+  },
+  "414": {
+    "0cff8efe-1ba8-4358-a3eb-2dc29d243775": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/zaZswmJkhAIkIw7f8zFjSlvbv78Ua61Vlgz2JToGRZYo2nXIlKG7ck8ZjoHjudSe95WVwQVDdMuLA7mVRIek7okrHGaaElLXfFzX7zp2buylQGpzQueCmMmi3usHQPXqAwGJNexRcUQyBqTDqbv5PM5bLlylv3S0esWclfYoAahFXvtcgjmJw8r1fGIOzGWjGKWkzbP1vYObDctXhJdg7fk6tnfEdnnUkKo9953I5NjT0amWVIhqo8nwQPIO14gb44wyQAgpsJkT8xJNXNGSb63RmMbynIpfXpIbIWWuhLtrnyQyOTYJ9FHO8R4jARTZqtzyfyNToMUjajQ4ytMtcpLCvyiVxQJ3XiBaUo8nFEZK2tglcRQUWhdOauKOM68ttbhBNogQPFimq05c64Xo7YicxJb7PGEgUTbYv5vnmuekDIIibj3iQIL6pRGwymg5NkXlPKXz7SBhqiGXUNArXPPIXKqxts3SMBEgDKvF94e6XYXmiNZga64qZs0aLnNbOgBexjuDONG0ziQw5yav7DZwLemgyuIOoqbhx3lzaKAuyqzlS54waVCHOYGAickj6JbtzZzHqueWETJfqtWv7XQGQvg1C7TJAQpvtY6gbvQBV8PPiKMmbQ9Om1tvYX52aoKo0TU6R7CiG6MtgihSuA8uOvxABhNIg89rvWFJVUqEY21XObwRpdKV9TBbQ3GIftKXuZKImRiA216m4Dk368wn5S5T9TY5A5z7HNavratpgp1nR9aSilt42fWfw92gJAP1I53kdmFR0TOLOyPZ1SPeuCtmxZq6aASUaheJfyrgxBJveuRaGb1mHfHX4W3aXd19SLTf1foqQyxFU00rdfhUfUaQpNVOebx4CqDYmh4ABtp1XpS4z8fZ0prqiYRWNqfqWbHtruKkj0UwpK5WBNwRGbP2Ejsl0TsshB8U6e54Yh18TFv2LufbRsitC0DhZPH3zydRM6azBzcYcNtAZmFqLHPfNPe80XWF4jU8dO8iI3qnSX6OdYrIS8IiFIUlId9bHkrypqtE7mkc4WZjBPGTm3KLKBakDfKlQzOqhPZnc1UVXz6YU64JdKEbtYM5UlSc1s8cUg1YFInwjyiNEwv768wfk1vj7nIzixWH1agANzrY0OiTLTTIxZ56snlQ7oBHzIwK8V7AjmoVnI5Ao38eZ8swlnVBtw49tqqW4lguZ06AccYxkrg4AFmGp61SITfw2Xtxia6lXlCHlriaw0nAyFncu8JCsSjMEeFuaBmgQIyR2wG3qBEwIW2zrVRqBpGmeqfsut5Vq4DaDfr7G9BuopVK1D13ePevhNhfTQ04SZrCHyCDGcjV1mgo2B8EhVhR9UYAdn1WJmDYg3eSb1tIcP9sZjcPqSeitGohgwdHbGtcbKSlJfCYlC3qWeqW1szulu0J0JPInEvot578Hrws71WGET3S6L0LIYB0p8TmQrgiA6oHBkRsc0VcCtOtRc4OyYTtfNA1jZ0mpMrEHyhrYXgQ2L7KDyKO9ju3QtIdjc0ixuReakJverqTSbZgyAbgTQW83sOOoV4KWr0usILCZUG2yy8ti1QtYQCG6HgBs7ByVVeQ5Jr5eEmIy2eCrg0OvGBducg0Wsb2ep0JBW4J5eGQ0DMrTJ9GlXBi7Ekmp5YcRuBUss5WZU7UUsR6JSkCGTGo9Dh0w6bVQScFFsfMw9oyOijf0WhrPddlWpUkNPNkCpuu4lyWeW4M5CW9EC7RFyS8FCFcZSMRYAJoIOImrcAJvPxDmHnnANFoJRnh1vIEFtjRQ6E0F9ksVAI2nebM6oFAEZ2KD4BsDPoUxdR248c833aPm3rdKQHzeSaJgCKpUp1yQBtfLdDzspE2XtKNSMdiWqJdKrcaoFUbFuLRfp1PkHwjzGO2q9wOyBQTebvtB6soAuzGhUNUBkU23ShsQcrxXbqNatTCUpSjNWdru2ez9f7eHBQrD1k3fknHtDdsahOICbVgRz2gvc6Mvj3whDwYdV3dQTU1COKBiHGvT2FxFTsZORKeO1P0jCS6fmopOz5PR41bAOS4mE3lcAkcyNN1rr4dKiVhZs5NVmPOyIH09YEgN8nilfFm232HBPzIdIInlB39Ruu5qLSr5p9RGJ31ctaARyIkmupSWtZvZRFVWn3vd99PcaWQ07MYwzMtO2B3VqetKKkQtxgSpm3uYdFORCkH2szPvOzkDdeAvXdvLJMJ7nFeVI7hHqA5oizqVSq0odkJVSjyYNVjXkbDONElJDaqxT88Jv1X7p9KNo5iQ5Xn809X6nnoDl4ZvpimqtRdIYoNq3Fw5Fxlgtb130DvrirtFlGEiJ4UHpSo0rmWnrRxy419IxKz7qZWrWQXGiD74tObSKyqfoAAjRalrkY6Du0UO5eKq7e24d2F3D8tlN8pQqxMVE5OcMcoHzQzYIKMFHajtolQBkOksmQFaRlqgKIp9yiXFCLDAcXISdDvGRpTRe1Mq3cJ0S4E4cZlO9E0Q0aEOS6lGMy4FeNUREC0RRYgR1T6yUVUFD5ntk0ZwyWNA6GfwvjMIR4nrNTQdWpe7h6nm4T7cQArAXC56LhiHZ9Sa4KhR6qJMLuI5IkJUe1Dnne0Yz9naZVlteIGN00vAjKyRswOjoIPhzCzeQRpHZTatn1RUaUilCLp1T7iDwyg4hdbX1ulrAMqTT56U6Wxbn6PYdWrsBZR9aBMBy3FjyyrgZR8QE5M23Env2zynVa1knrAKUDPcMKe8LDnG0Rft5gM1QNcroqPtbdzAItX536xB2k3YtaGmlxzURXWyvxGDJ4wIlJKPBivrl5R66qsEzAf51KxLHxTpwZSmuGjTMwulmJH0XTJoB3WU2Zp48KJZX3D1BBELbo0c35C34xWmykt8Nuf059dXsmEs5jwkSEE3KF1K3NSGhK2U7p1kacmnWF2wjrlV6HIIRZZBFCkeYBkcbAJ4VzKbkBKQ5wyirlZMWeDOnHcOLNcHwo9GRE3kERkiEH2NouZkttLSjA1O10GrtG4rWpodyYzMftGarYgWNolPJvYH5vBZtVWOL1k71va93N8jsykk1FzzRRyguslK7Jdi58xCqQ4KRa1IcuTmXMN34tiRUrz0kg6anbCRnhFnJAqYqIc2lO9nRe5ORcxKpUJn1OpvPNAPdofQSRNuFAiYirU1gVo4g9rpZuks5IEIgJSal5EqLyd7vCwYwuB83d5LiuP5WvEVKHdkinRHDIkkM8lHmd8WYOew9DS7Sl4TocuApxCn3N7MlesI1Y5VFwjaWLqhbCp1eECPmKpynZFbD0g0PUTbzZRUMxZi0ZDKSbjXrzVQdyoBywWDNmtCLAWwosD0Un73NF1PLcG0A6xAXAmMfgMHhzb10fwpOFI1JJToU5M4ttJdGgK6bubvvaiMEQwSNVsEetFZ5TryU35xuUF0BjyISx8jymk147Icco7u6xcWTKIRkvyhMIj1fxmVleYwUS1vXGYrgN4tIJfMWtavzLld3IAWfQZyy5jNEFNJPpVBpjU52W78HTfbgM6D4mRNitSGRFZKJZ1O9N2GYwAQ402O49jruDZ2NdyQ1i1XXO9TB8G8JWRbh2dBH1nu0AUiSE7AxtmNjtF0nj5SxetleuxT8qonlSJkAyEU0YEU96G0jEDCJ6uzZFH4aBXGvgQLiaGIVLcRuRPXrBACvenzoJvNnJJ6U2GIcEBeAED9fGtuB32ksLQLqQDC4q0QQvtQJeiRbEgQsMwZc8RaeD3vaXkoVK2YbMWJWRG1QpJ3O2fovKmfSDl8bQ3UCoOj6HyC7hSippPNrGYdAvV1Yy3UH4euUO72OAA6qpafZtx6p2v06G3tqVT5C4c7nQ51JVAOkiXHZekTGiRHppN9vnNQPAYrZ57GnPbUr2c6AtK91BEhKlfDdwHYtPsutAeH3zLIIdbs2bJiajQbCUOy3InmZnvUJxmcANWgyj1zFULaVdKH10OChs0xWymE43Jm9yvrpcyy2SH7mG8bkjkEM9w6mfOZMuF4t4MokLNJpzRBeOl3wGUJiG8Df3Nu6nRsnnJUu5IDMHV41cXlTdlwlOLM6dHhszVTGWyuB2UDxAsGa6np2fEokmly16OsvpvYuVEaABQpslWcYIPyRPPX8GaojFmOWRpG7OzbZODY5kAMbD1qKQXZPUfo2KpxBxeFxdZke8Zo21mVfYxp5zMy2Z4JZC9KiHSqWQTKDJCICovHnJcmpcbDLO4yKhqd3VR4U7XjxyHVPAQ6eitkYZmdBlL6CJNg8iuKFbsPudTfmk9JCTK5nrGpPwcEhUSTmDlRaY8YRLCJFwHhes7M5SVFLbgaBckg6soYLuq3kczRQfAISRBUEhihQbn90FfxnpF2hNijGXrM4JwsUPOONE8gdE4A4AGT5FA6zMIKdOM31OJUmbQyzjmIz7ItubXaUeiprhzddfseNH0cNi8ko62ZacbG5jtEI6rvQxtImv8fmMrFRjknSL9vEl7ROlYZii1HU6WjkRN1StLL78FCOFBlkHzFTkqWtv3awk854FJLTW1LeSzFU4PM9bSgIpwZu3M3NLI4agn37krDonlYiL1nAbhAMm4J9EKPNJMpTULvwrcH2H8JcLbv91ylein0v159tVPjWMgAsDolaOstNSz8joWzjWe2uVxHs0wg5WtAzlXUXlwQgVvav4wtgxfaNXy6FDD3FzsFLB3bBfw08uNocbLJZUmeUoXIYkw3hFA6lOkCwlTBT2h57CcqgkrIf6CpbKX1MHby9kZNPDyWSGaBpfGy9s1jHwbgJ1bmYNQHpEc1acHfuUAPq7eMmzsa8QXaQOleQzw41mUbraPlEsoUoMK4lhTwWsf4V89leoqWQnQx60gIk17TVlw9wYE1704wiV2AxO7hYXRXJZK26dM8wbyKp4asYplsmT1o11yy2rQ6JpHJDmbZaQrsdJmiHxtpAU7FulTmkKEdaaqZYs6AKUhl0qUBu6Nero6NnzhaHzvZW1P50zTmeaBqwRcQxcEUjS3n5pxQkAOtfVSnwnG1PVNyqfRvcw3NAdUIjOWm6I9pNGjhf37cBKIKPnaS937rVPdCnTqIJJ4gRDh5vMqhZgS8odvg9gkc9LeaAqZWpaqjonPA4YDDF8AAj3XPWxZmaPUJHHcI1bpGyQjLFWNQr4wMu0TJ54wquprgVx1as71983N7jCJWKm1FNa9b9MDND6YaAtWtv6IuoammU7xdb922SFuvEmA6GGEF3OT5VRZzLq2YDO7tJ2FemfwdTkadcZcx0Zra0O4QUMPMhpS5jltI2j7DdGvy3bsHvEQCfIdvUpolbJlTehMMrj0MDiuMjI1zHzhHf3552pLUARNec33SGX4UQcpuCsX9yXtWqvmHt3i3nnQQjLwLAEgf0iZtQzEprjXa2WpmZAnH51HITucGgrtHcoa19RbhVDRv5sKJqr750SJtg5Wp2KftoVZMB0zjO43ZBDNH4Q0MdepK23KqKpGE54dYLLB3WivpnmPwpu0j1LDk9ZMHLyblugVI02KOngT2n0AK23YZRZYqJdm6lzmozfTnjCDz860JiQpIjQn6VIgmBSD3IqmeY3Z3ZEyK5m7Sibj2sXRmuphuRFHCNIjguRXG1PYN2tpNNIpUOCIsy7iELFCgXdwyk3ZbcdokDhc93evmiIAtEDcezRYyb1bqKDqLkVccuX04z4xFmNq2t4IxOoEBpbiXbumfF2A6qXbkTcDEXNUekJF46ZWqJFPrBoUbZZg0lOdrJ6NlcYqCRRlF8uKAb6w9DHsdWqYN4vuPF6zYprKIpddwvACumoE664sto1S6ibyeDK9BTUQIO0mcSjUA6OtjcfBS9TGJKdKej3sPtmAJ5JjaGfufdWHzN0b5TMLZL0vlMT70LYSLRiuJnrca9dhPIhHNfUlgYBhQnHgQNufPs16edcaa8sUNRutmbIjMmmrgBYfPcprvVbBxrjnJ04xdrSwzm1OBDdC2LPvBPEqjtxLkZnLOTYQixf7sJ1O5C0LuyRgOGzfOck9c5Evj3lPDjile9o6qFkNsbiAefwLoMPT97uI5XV2EwBTAf2h6XD8jsfkAeSBzzsZkShTwjWeWvme2e0oLHPyCyLRt28JP0TWbE3MThgipORh5U3HJkyO8UlY4l53Wb14g4ZmnzNREAsfAkhvF7FTePApWvlV4eTIZqT4nVyYrXnNJmaD5O4Tx3PFNlHC4typ3z5d0P8tuIsNXKkR4ZQBfOuddCiFD7mSCddphPxMhoNbxs3u39pjmGikyehezMvIGUfpUkW0RDGAhAqLylcHpaJ5PcYex2pDGQB1aNzPjSShWZUeorX0bI8zV3TTaxlaSKYmtPI0zTcwEo5R94n1SfgfPhtleqj56hm5uqYyWYeIuSFB01Z3mu4Hd8zBQ9IDogfceBLGMi402LAQ0ddgfQaWLKzpdXaEfiZBtUgrGwDLjQqDXs7AO22bm8tyQMRUJsTFswyyTVi8dT6EFzy39y8kWd4rdLZKA8DrqBWuJDQ5B6mkHcEIknuY1bB9PHHitAfGbLYxT3xhrM0m8b2J9V35XnCFj5siqhk7sgiSg1ApfONqkdlDbeTA8qNjKoq9aStULjp68iNzrYiQejbh9U61d0ujWfvSNWZPaGwKMy0klM6kOVv1MGjEC8ISX3mmXqldFGm6iskw34hsbNLTCjr6uURYHwZt3LsiDtnef58StcZA2DGkRBaB9nGKRi7pZGPhyskduTbLRfYQQ3LkJyvVaTavdAoPASlgnJG6i201dOd6jAvfDKigcu3kEGz4wu9fUMMGzoKxNULIeBAsxyKRSOc1Un40lfeZdWACsP9KBEHGtSDtESPC9fDv75C80AMYoNiUSvLMHEl7ZIlg06NbvGodP3kz5hpc7ugzz3lvmOiGD3XAcPr0vkF914PfwZkP5FzfWshuue47w1wxh2bpMFXSy7MERukUr1drVipVGX1FhRsUgHrajEd85jec1kJrz8TZMMy2RLfYZKtHpSKHFg5gwvJVpuKWG5EBEndKWFxzjiZdpuWZ1RZI0BE6xzgP3xVVWvcSLVcZbABAHSX9rzCN3XNkg4YxOrVB36RDY8wymXnV6NjIizjARoxjm93UjLJL6hsDkQranG3JAZYvS3M5HQFSjmszE9LWQAOZmqWujF4d3LzMbzFL453u2qf7Gh0dVxSkS7qiGDOqO6ah6vyv3YrRhCUFGCPddLCDZCHYtRt9YDQqfxV7us87PkVJii1wJURBrnwR6wzZ3cypL5JNJrTLfMkWT4Nd1U0zMG7OBekqC3Rg9olxvZUvlDpd2z2TAOYXYBNWNKiVnDkRFVOnsAbdiA2geyGcHDmnDWPUQdXckFdVL8YQus7G9nW3dMJKQo30fIZ3pkQOB4g19d75UV4WcXDwlQT72ed0zlGdwPxvY8ZvC4KbtCAXRTIOdvbYeoir6SPYjmUVOwiKNb6MhC0pQdewlWDl4Skp7kdy2VakDIOoNnlk7RvVJDcNsCxnOQUJUiib17yiwLDKbOb7Wri5jum36NPAHm21DKC2qdk6OcflPYR1LIL2CuzxY75rx0uGudm41aG8zpzr8gARNRBlhhblStIoaxsQPIbWPraVs7AhHd0IL0a3vAtt4IgrkUkZJv0YnG6abHWHUCdrtkcQkwYg24hDI0scFlCU1vs0USxCPfyL3u9HvgFNLtj69uMNqreJiHAkP3LQ3q2rFQR3iGOwN34w3RveJt59zKunF72SOqnWHNXpsIuGAXYtIXQ46SWnyEhHxf2ILmBsWeGZQkyrHzbBIMmiqfyPtNHrPX8FtDYODeXJrGIk9Wsq7AtYkjFcY0N9KtgzxCtMEoAyqIcnAPgUP7EoZopsUasR0sOBBv0qLT2FrVades0p5SR8E6fqXOTlGtdVshIDiPW5LOFoTZnIr7y73ObaBFWOAg1hgsn9hUJUl8o77aLHGvxjjXfRyXv9OAeufZ276eDeSaiDhcYVbESQV0NFobovb6BjktqgMqQi5SyDM7XGrQuAiIowejlbRgf9IUJ7ELkXhu5upAnDcdIqbz9n6xSTDZ1lK8JDxABmmluoVsP63S5K8k2QJyK9UE6YmVg4k7zplVfg4NLWKwD2bvUhFiqUQrymd558ogXKWA7JVsnRT4wptlml34Ra64nxtHDPN9SuMwPDUOKps8f9obgXpQf72EW8lAgiwEVXOnnnqIKw4xruKTZKd5ZehPuZWmM6jpSLwXfZ8F4sFAJv91c7DSxfVFqhXnp5L19akPMa99gLO9aylIKNOxihi9Qv6eIUw2OUiHw821vIGUXTco3Uuf7NRAJtC9eaY4cRakf0jb0XdpzCgsT3Mq4yhVLcvqXoqyh3rgiHTwpBUzxVTPtA655xUOZZS5haeuqrzRMwzE3aPozoLTtybOgprZLRdzPclo4Jvta5eeEHktgxBhHZWzzgzLRUEvX6BqniWblzoE2PC8aBKNaee7suhedIrO4eyrct6aU2CLlySJdW0dSPDUg8junD0EFJM1ysfWZe1sisCD4RAEga5slvNqZzVb0LRHBEnoY8MR57O8rNQHQF78H3vYjDyKmRSEnVYL5ffyXtLLtGFM4EoCmFoeKcIGAgXpyzzAXhwtQ3ABqDlRD1IbVDSl5EMKRLbL26OBVWaFHCvlWsdbRaUNT0KDxts4n4BaSR9fN7V7hnQhb6USyEqBj9TyOkbMrry98WI0s5VrVBpxyh4LPbhLM1tnw85cQI9KGRBF2vvpy2gCJiwOy84ZnikZbO4MiW0AKTenyFE8vKIpriRQg2HPwSUj24YNudf0J48beabyYVLR21gNtrwhUgcnIHCNt2K2JZP8taeGdW65blEkiFahKt82EKlIsRn9x84b3X7Igvyi13eVctLMvXcEGOVthaziqxrQ4Xoq2TPVgzBSOdM5EHTWZZCFpnb9390TABIHLpPR25kdu0fWMDONBR5GeD2p42uiddcpWRFEQ0vaT9dPIBnjoZqG4MPZ85r66zHbMW8tvDROAzQmKtb9TrZneQnwp3ISpCDWav5Fu747oS3kf78J3rzijFReJbhI7fPxEAQVZtnflRF0FYqEiRG0fiSUg8vjq9nttn1EcSmk8fHLH66JfcYFutRsVzewV1QseCdt0NQyP00iynJgMQC9i3Qiq9jTNAtp7pihN9Mn0YnaJhprh98f8CxvD67YRb3WgFFi4KvsxPJlF98OdWxI2s3fCAXmnFV5gTBJzZFvkckAfSETtF35NWI5ir3AvmIdnPuctqyturJVL42fbrf4hsOygmyua2VD4PyFrBxrRuZ80rIReNsgG1ywjXvS4rDBjdVzKjDw9pc3MeXCaeSw5fQITSbkdpD5orbDU52iZhAaOajY2wlwQgOEdJMWq8orQpvsyYNYdrEwbDsdHv1DyLR7BEvUFM9L4FtXeEwoSJH3ntp6zANh4xDoOLM649ilahEUTp2iCOw2pv97Qv7Ffr5EZwDBA6cffclmoSIrcuiVuN0wUfPLBuFZp7wOQuNmMuW344gzAJCZptlZdOjAGN8HroQgAT2vOuuXAKeBOZMxsq6LuoJKFwfAzgK1MgkVmnCd7U1CyirD2A5XZYe46lF7TPinL27EBnEc0yPAwaqiboEKNJixAeaockcudcSS0bY4y7HKuYzjKFwlYml49nh6lxl8Lm7EuElEpYjs2s09RITDzObscQfDKzL3hxO4V3peu1tLcEQsYuUjeWsdSCmSjjlCn3lGcJfPp6Tven0XIE7SA2ZDy1ESUs9ZyOCbZgfYLS83Z5DGhOytI4stNZNKTuIP351XYn99PrBbf2tC5aLvSC9WbRlSAnDA8JFPNkgjIPCkFejOs8SC4e43e6UhyG7x2LNn53R7cNZNbV6vLjaEK7tv5KFICqTMEApQjLYjI7OTJpPrZKxYR946DkDgRYQGVY5Dmth3XbfNMYQOlD7paQR77vuRfaSDAa2bWBpOoOiOEhLLkefqcmbRm73m5icnGlCx3X6cwFxArjexVz2zZgRk62bm5M",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 414,
+            "codeDescription": "URI Too Long",
+            "content": "Error: URI Too Long",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ],
+    "361537c0-0900-438b-bd75-fccd839ac6f9": [
+      {
+        "request": {
+          "RequestData": {
+            "method": "GET",
+            "path": "/api/v2/pokemon/4825514934641373108237984980175839267062969347874584034435717421811831254790008130946509378614484458401697394614427932109628584629728314678775280759789852111873503235696889018087913928809588537373456954395130854802929816464765785041206460643898981186425259505768977933092158337113238169090483422656602410203100773461889778733996360441604159948133695968867481871038484106840338364231092949100983531709436469180527713185370229342239614882319915270168916935403274077701078992389084666371242881166596029244262848800290349711179632219308947267723374319329564331223065039144760170222935304339793355720224782407776796169444087891368338767305049921101230337321159618433243383998201823590747392829068865818961379244299389729404781225609052416434263313150889428714232108021346758414176007301881434977914546928759978768224688616891928551486314778221475211359652598710392603122638907476387184033697982901178729193856309039082656905900863709622175541340216601136453970210318733659018147413533210159986716424308803666573566832402011815827170383035313996810506163537885417000253095681162790459912232241164604461459721364371155223196114395366002777033935096227574139320132055814360164061482082357675942878068263567584106930102307785345435597889185441846661083032713461644274602745920403600773024807607834032111253976134549929229556148062697596812130546340837881915796610709135105888205997342661117187378128324357784886131693483129492352561935726056249163722711124980251009080008840246391470199605788463854427289303934514314301125969497204963801902058894493078914158646963941960987277010767232707010207083792764813164141893456194697934855989752128805221743221567758182103580150104749785860866704038195375085597281105206211302994401805175485515587180993242119401026496985288372343775548449300571194275257769936269924942530258325942303771069556551721542979158284583002317125692099698006552602595438851017232003109761208399766398128848071010679840764697793739797607763148387349233414297254951491176898000883035714532934782707989555935480590533576157124016776344725005181051066903710082587272053325480501880259123767718953296046168024682729829669550259231473363302511215346995043350448615132844117288316215805888644514761903527559233637647736064209996614794010519763116854849106448534602499242913161054190658050641903237000276300751689730868523646810468696872300784443439717463168548548242254518785837917633739728261294790896432219984442216240891545600838451847329794246646164052740529980055353904260819248084431342476863954639423813471048288390090899315084573430796930243998898501381616246709006375491334614733862129622132152957731999418123162659126094382867412065513675967868031437135059704930605040287835323986557645089354929358272926454511123035596871166495361408003070198645671001730589707806331637624720523697530185841107700565579112099562633857566960745670328681930349867406098745509482799407238318062138688984684359286216130493551403570334605764732508910778467308574095497487233794166108566520409035145216896616065897474376872812163441974665054173678266552039643924512189610589928856238869782991861578475572708206600737578809492833087041172283228872139339628271152089286054578043838413445683289781036566433348027581098867987631099934160712962866292542377789262649884439342783389533469551222998768084831373907369271149675005928742578060848040353439596775093899529799796168168899379054573752980228868027167466344835025919541960732244617871636255327562288641485103834296551380521612428221122574147992136917057139525740788648094637315386646999312786451287320492774198465716506402803771081816991148072676179064420531021268400671010691164117606141284413542514775733410988945410618664823570348626182696913589992919337632196118238547872622173273799919294317872591635510014560155683705838955073336384231174514597050104691170477841140875472645284517008609023427953245499894627196134572324342822678513008202172990756201079512054145406105470256487111748765342746963835930374276614179732362969949471204998351652391903122645258928342860562992087927712578249754854331083188808461951401234368622449050398287501612450982924394192629310065177005236240736405689917956742363621298558875753580019446769241125078093915196113950663573309732541579598930394121652554607474356824012593525221752893355292348923059432415590787697912520728804090324616754710434106770550319611463129388425542213162900335095903193769508777127084900571634623561959754016986454353429411443095183109099917711595725231097392867248268758288461009333755033185503250127689452201776890489059876655699621855154244044118865101113918582502116833736111914462290943415676692868989754602206012255042725746876176755093234359201632621794236978688068818804412382175473991298147751384700873592057447745989707423499259937338692886282691400347029504659702898540783055280845462980425096524541082193003365812011185545669956689405331811426384164530900419354891973435598532501293051321736171880495115248868184208364749631949025456428769072877867998989569622161171696134369310415344889141805630506239192907184420720615659447232425122051865028355540571510608457987982459478730654611105212243061551333331639553688930235323431891246880169369200870773374165955523968218211278704937476466574381785139330750832934944013877290518024941150400869182281200867552005041689299803105400493293978407046830862839984796486502244131947736190633601566198745124619897818659403209807748974631219781478931326356974133796387707417926039728740369378607096232886165812149155929999190319743371604870164424836674021799227712026974359527715248254170083354137696453249416061946653070377863231019954897453546012770219424612007172691564460922271627217258665534091509042840974862013914540434165588881302495996476374603289476651056146195537283500579502068115641917688732550754010669018690362617578744243182491660938904754339454312177863656028664871707759226291618540066674216532239491039788308333993212343907615788051301782268909984351373963592853790776813797178346517142041224771845583143563417676008139127811481129428004012159861408691892077795253500669784617560783911129010028345948941833525612448432104132315272571227858390424706595148637069853257365229143726423248396234373589395068111555713333895773651886615032319845602981886006990006569827393549296241362534800781686928682940795296995008176194237081367320271012266053347062198200800212390238675019353380888592366109194720726205943117103306597676736986195978220098566227531219090582618384149046702181972112038204467833653118334776759274365149885048544468739139248620202604518588236680265852421098147280762225035766888451680124097625567393908877556669273966040124413818182576378023936515936662435550886022346077365979544419788632371343396927398358029791944221498175622884848242816321481350771358637627608227748544339221950788758820810910897311678210654794164996318085429255253941349291776858898715067047957458305744300525771402386692417872169816899059822397663360312296027881796605196327405588077244647204382281099744336791788910466586791654521011076627036730560091516933428727591166027634815288739439075839210484944291482769959728103562212874982339944383041090806717749560134110488709451220165241025394937102592539512179766288794869920124733950360390404625939715601766056213794036093815137956645707845060165703603876375606182255336633081578073811049830315654452850963008114060468173487415751783872085792404218022059125837686327620075563194241488636323151410307104793384965346474512736673038501551140976545846470588105963711698088515192087310670240463074641194734488336156454401153004514333844652713713083614399363286824185817330023113798707613724695272387849722275483386153725722308175129591362838049610747146440842611218709959698929859371678909824295772305093921546209981980999399470460459738185941457989324927178027504920807876352019726604487332232493468374425156827465622925149716828434703774309144058629462449653846528551770559632831321571023844553810432735776572120697987363720695429245104053331753905522093780763799420417682943986661763962134268747303594000831976899183540629778524376637851219271668303895174069321216153346358698359324278685667972170137685409943585475655140272287161058041415801426275357546697003995648837039097650151133056885672730393063177593000695064478094967904277631206562500123542144205614178452200285967021738732806132339097790555721142828773274823656775007573611227897755704926359925371218315243690705099440319392322428343665234796840154230532490544411764202472130050346529156391213876407760851543587926937340963063511125019892478891088700500714956326528348690659196483351997555965799804463244074008130834689440141262550618917082263765058348242479334156855344423086682068951220653702520023903126577190191198439544104810093946726206992714496518188124591413048044358143086168073726740670161619271789517323244122982966642617738085203506718630847701894086476750202627117386816406628489070796130829356785297194575032462113197001804450793330670219483952683968757455135380947024679148866807026002778371113344411029741658087369569927980048247746671540269528392763027291708956984947890882241460822979641720270363528230065296969978013549145120499493033863298628156647075902700620817142375807634072398537992319312285059961063847725445180413407814046360582474316912910738022339337567246947112251690168027211639942309116603373555220991236226810190668766496622884981381371522137467444996522133240261891454732001571386418424473660919534516975345242462242845471361352380706786527867742759424145134105489913587373729281141474292601514270947119166689898810317993423348517805144491026331813613886333824058496266649033876372895081581525029497676844224180037612946740844430304683035984478681974783691733506952209608316931624006101673299552187442241530822591041082152431546356360161908030446988301368480204835721074275211771336973406037697978472456289530564076462747880330746467694667076047736737811835546490031247041746390258340578712038177700938998663552270814511961928516754721255190639112215903322077178036794693380115982701704109766433181373565832",
+            "query": "",
+            "body": ""
+          }
+        },
+        "response": {
+          "ResponseData": {
+            "code": 414,
+            "codeDescription": "URI Too Long",
+            "content": "Error: URI Too Long",
+            "isFailure": true,
+            "isBug": false
+          }
+        }
+      }
+    ]
+  }
+}

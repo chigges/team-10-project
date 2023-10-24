@@ -1,0 +1,36 @@
+[
+  {
+    "consumer": {
+      "id": {
+        "RequestId": {
+          "endpoint": "/pokemon/{idOrName}",
+          "method": "Get"
+        },
+        "ResourceReference": {
+          "PathResource": {
+            "name": "idOrName",
+            "pathToParameter": [
+              "pokemon"
+            ],
+            "responsePath": {
+              "path": []
+            }
+          }
+        },
+        "ContainerName": "pokemon",
+        "PathContainerName": "pokemon",
+        "CandidateTypeNames": [
+          "pokemon"
+        ],
+        "AccessPathParts": {
+          "path": []
+        },
+        "ResourceName": "idOrName",
+        "ProducerParameterName": "name",
+        "IsNestedBodyResource": false,
+        "PrimitiveType": "Int"
+      },
+      "parameterKind": "Path"
+    }
+  }
+]

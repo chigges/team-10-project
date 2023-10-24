@@ -1,0 +1,12 @@
+Restler Information: 0 : Starting task Compile...
+    DateTime=2023-10-24T19:05:47.3803330Z
+Restler Information: 0 : Launching 'dotnet "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../compiler/Restler.CompilerExe.dll" "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/config.json"'
+    DateTime=2023-10-24T19:05:48.9403020Z
+Restler Information: 0 : Process execution terminated in 00:00:03.7018865 with exit code 0x0: 'dotnet "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../compiler/Restler.CompilerExe.dll" "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/config.json"'
+    DateTime=2023-10-24T19:05:52.6553510Z
+Restler Information: 0 : (11741) dotnet "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../compiler/Restler.CompilerExe.dll" "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/config.json" exited with code: 0
+    DateTime=2023-10-24T19:05:52.6782790Z
+Restler Information: 0 : Task Compile succeeded.
+    DateTime=2023-10-24T19:05:52.7340770Z
+Restler Information: 0 : Collecting logs...
+    DateTime=2023-10-24T19:05:52.8530260Z
