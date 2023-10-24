@@ -1,0 +1,23 @@
+{
+  "SwaggerSpecFilePath": [
+    "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/restler-test/pokeapi.yaml"
+  ],
+  "GrammarOutputDirectoryPath": "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile",
+  "CustomDictionaryFilePath": "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/defaultDict.json",
+  "IncludeOptionalParameters": true,
+  "UseHeaderExamples": true,
+  "UsePathExamples": false,
+  "UseQueryExamples": true,
+  "UseBodyExamples": true,
+  "UseAllExamplePayloads": false,
+  "DiscoverExamples": false,
+  "ExamplesDirectory": "",
+  "DataFuzzing": true,
+  "ReadOnlyFuzz": false,
+  "ResolveQueryDependencies": true,
+  "ResolveBodyDependencies": true,
+  "ResolveHeaderDependencies": false,
+  "UseRefreshableToken": true,
+  "AllowGetProducers": false,
+  "TrackFuzzedParameterNames": false
+}

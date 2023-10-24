@@ -1,0 +1,74 @@
+Random seed: 12345
+Setting fuzzing schemes: directed-smoke-test
+2023-10-24 15:08:05.597: Going to fuzz a set with 2 requests
+2023-10-24 15:08:05.597: Request-0: Value Combinations: 2
+2023-10-24 15:08:05.597: Request-1: Value Combinations: 2
+2023-10-24 15:08:05.597: Avg. Value Combinations per Request: 2
+2023-10-24 15:08:05.597: Median Value Combinations per Request: 2.0
+2023-10-24 15:08:05.597: Min Value Combinations per Request: 2
+2023-10-24 15:08:05.597: Max Value Combinations per Request: 2
+2023-10-24 15:08:05.597: Total dependencies: 0
+
+2023-10-24 15:08:05.602: Generation: 1 / Sequences Collection Size: 2 
+(After directed-smoke-test Extend)
+
+Rendering request 0 from scratch
+
+2023-10-24 15:08:05.982: Request 0
+2023-10-24 15:08:05.983: Endpoint - /pokemon/{idOrName}
+2023-10-24 15:08:05.983: Hex Def - 68da971679008d9273ce4bbcb33f7faa1522c900
+2023-10-24 15:08:05.983: Sequence length that satisfies dependencies: 1
+2023-10-24 15:08:05.983: Rendering VALID
+		- restler_static_string: 'GET '
+		- restler_static_string: '/api/v2'
+		- restler_static_string: '/'
+		- restler_static_string: 'pokemon'
+		- restler_static_string: '/'
+		- restler_fuzzable_int: '1'
+		- restler_static_string: ' HTTP/1.1\r\n'
+		- restler_static_string: 'Accept: application/json\r\n'
+		- restler_static_string: 'Host: pokeapi.co\r\n'
+		+ restler_refreshable_authentication_token: ['token_auth_method', 'token_refresh_interval']
+		- restler_static_string: '\r\n'
+
+Rendering request 1 from scratch
+
+2023-10-24 15:08:06.032: Request 1
+2023-10-24 15:08:06.032: Endpoint - /pokemon
+2023-10-24 15:08:06.032: Hex Def - b093ad80f75a0b14181970c3262f13d41f570641
+2023-10-24 15:08:06.032: Sequence length that satisfies dependencies: 1
+2023-10-24 15:08:06.033: Rendering VALID
+		- restler_static_string: 'GET '
+		- restler_static_string: '/api/v2'
+		- restler_static_string: '/'
+		- restler_static_string: 'pokemon'
+		- restler_static_string: ' HTTP/1.1\r\n'
+		- restler_static_string: 'Accept: application/json\r\n'
+		- restler_static_string: 'Host: pokeapi.co\r\n'
+		+ restler_refreshable_authentication_token: ['token_auth_method', 'token_refresh_interval']
+		- restler_static_string: '\r\n'
+
+2023-10-24 15:08:06.034: Generation: 1 / Sequences Collection Size: 2 
+(After directed-smoke-test Render)
+
+2023-10-24 15:08:06.034: Final Swagger spec coverage: 2 / 2
+2023-10-24 15:08:06.034: Rendered requests: 2 / 2
+2023-10-24 15:08:06.034: Rendered requests with "valid" status codes: 2 / 2
+2023-10-24 15:08:06.034: Num fully valid requests (no resource creation failures): 2
+2023-10-24 15:08:06.034: Num requests not rendered due to invalid sequence re-renders: 0
+2023-10-24 15:08:06.034: Num invalid requests caused by failed resource creations: 0
+2023-10-24 15:08:06.034: Total Creations of Dyn Objects: 0
+2023-10-24 15:08:06.034: Total Requests Sent: {'gc': 0, 'main_driver': 2}
+2023-10-24 15:08:06.034: Bug Buckets: {}
+
+Testing completed -- below are the final stats:
+
+2023-10-24 15:08:06.048: Final Swagger spec coverage: 2 / 2
+2023-10-24 15:08:06.048: Rendered requests: 2 / 2
+2023-10-24 15:08:06.048: Rendered requests with "valid" status codes: 2 / 2
+2023-10-24 15:08:06.048: Num fully valid requests (no resource creation failures): 2
+2023-10-24 15:08:06.048: Num requests not rendered due to invalid sequence re-renders: 0
+2023-10-24 15:08:06.048: Num invalid requests caused by failed resource creations: 0
+2023-10-24 15:08:06.048: Total Creations of Dyn Objects: 0
+2023-10-24 15:08:06.048: Total Requests Sent: {'gc': 0, 'main_driver': 2}
+2023-10-24 15:08:06.048: Bug Buckets: {}

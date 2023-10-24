@@ -1,0 +1,6 @@
+Testing request: /api/v2/pokemon/1 GET
+Found 1 fuzzable blocks.
+Budget: 100 values per parameter.
+Fuzzing request block 5, type: restler_fuzzable_int
+Tested 100 combinations for request /api/v2/pokemon/1 GET, combination 1
+Testing request: /api/v2/pokemon GET

@@ -1,0 +1,68 @@
+[10/24/2023 3:05:50 PM] Generating grammar...
+[10/24/2023 3:05:51 PM] Getting requests...
+[10/24/2023 3:05:51 PM] Getting dependencies...
+[10/24/2023 3:05:51 PM] Getting path consumers...
+[10/24/2023 3:05:51 PM] Getting query consumers...
+[10/24/2023 3:05:51 PM] Getting header consumers...
+[10/24/2023 3:05:51 PM] Getting body consumers...
+[10/24/2023 3:05:51 PM] Getting producers...
+[10/24/2023 3:05:52 PM] Done processing producers
+[10/24/2023 3:05:52 PM] Compute dependencies
+[10/24/2023 3:05:52 PM] Second pass dependencies for request { endpoint = "/pokemon"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Second pass dependencies for request { endpoint = "/pokemon"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Done dependencies for request { endpoint = "/pokemon"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Done dependencies for request { endpoint = "/pokemon"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Second pass dependencies for request { endpoint = "/pokemon/{idOrName}"
+  xMsPath = None
+  method = Get }[10/24/2023 3:05:52 PM] Second pass dependencies for request { endpoint = "/pokemon/{idOrName}"
+  xMsPath = None
+  method = Get }
+
+[10/24/2023 3:05:52 PM] Done dependencies for request { endpoint = "/pokemon/{idOrName}"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Done dependencies for request { endpoint = "/pokemon/{idOrName}"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Second pass dependencies for request { endpoint = "/pokemon/{idOrName}"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Done dependencies for request { endpoint = "/pokemon/{idOrName}"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Second pass dependencies for request { endpoint = "/pokemon"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Done dependencies for request { endpoint = "/pokemon"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Second pass dependencies for request { endpoint = "/pokemon"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Done dependencies for request { endpoint = "/pokemon"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Second pass dependencies for request { endpoint = "/pokemon/{idOrName}"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Done dependencies for request { endpoint = "/pokemon/{idOrName}"
+  xMsPath = None
+  method = Get }
+[10/24/2023 3:05:52 PM] Assigning equality constraints...
+[10/24/2023 3:05:52 PM] Getting ordering constraints...
+[10/24/2023 3:05:52 PM] Dependency analysis completed.
+[10/24/2023 3:05:52 PM] Generating request primitives...
+Writing new dictionary to /Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/dict.json
+[10/24/2023 3:05:52 PM] Generating python grammar...
+[10/24/2023 3:05:52 PM] Get requests
+[10/24/2023 3:05:52 PM] Done get requests
+[10/24/2023 3:05:52 PM] Done generating python grammar.
+Workflow completed.  See /Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile for REST-ler grammar.
