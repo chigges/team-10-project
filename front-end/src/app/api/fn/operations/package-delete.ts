@@ -17,10 +17,6 @@ export interface PackageDelete$Params {
   id: PackageId;
   'X-Authorization': AuthenticationToken;
 
-/**
- * Package ID
- */
-  id: PackageId;
 }
 
 export function packageDelete(http: HttpClient, rootUrl: string, params: PackageDelete$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
@@ -28,7 +24,6 @@ export function packageDelete(http: HttpClient, rootUrl: string, params: Package
   if (params) {
     rb.path('id', params.id, {});
     rb.header('X-Authorization', params['X-Authorization'], {});
-    rb.path('id', params.id, {});
   }
 
   return http.request(

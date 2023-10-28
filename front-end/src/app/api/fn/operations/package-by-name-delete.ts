@@ -12,7 +12,6 @@ import { PackageName } from '../../models/package-name';
 export interface PackageByNameDelete$Params {
   name: PackageName;
   'X-Authorization': AuthenticationToken;
-  name: PackageName;
 }
 
 export function packageByNameDelete(http: HttpClient, rootUrl: string, params: PackageByNameDelete$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
@@ -20,7 +19,6 @@ export function packageByNameDelete(http: HttpClient, rootUrl: string, params: P
   if (params) {
     rb.path('name', params.name, {});
     rb.header('X-Authorization', params['X-Authorization'], {});
-    rb.path('name', params.name, {});
   }
 
   return http.request(

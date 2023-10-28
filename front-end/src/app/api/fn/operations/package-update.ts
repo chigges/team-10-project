@@ -17,7 +17,6 @@ export interface PackageUpdate$Params {
  */
   id: PackageId;
   'X-Authorization': AuthenticationToken;
-  id: PackageId;
       body: Package
 }
 
@@ -26,7 +25,6 @@ export function packageUpdate(http: HttpClient, rootUrl: string, params: Package
   if (params) {
     rb.path('id', params.id, {});
     rb.header('X-Authorization', params['X-Authorization'], {});
-    rb.path('id', params.id, {});
     rb.body(params.body, 'application/json');
   }
 

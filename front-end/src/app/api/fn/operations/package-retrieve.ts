@@ -18,10 +18,6 @@ export interface PackageRetrieve$Params {
   id: PackageId;
   'X-Authorization': AuthenticationToken;
 
-/**
- * ID of package to fetch
- */
-  id: PackageId;
 }
 
 export function packageRetrieve(http: HttpClient, rootUrl: string, params: PackageRetrieve$Params, context?: HttpContext): Observable<StrictHttpResponse<Package>> {
@@ -29,7 +25,6 @@ export function packageRetrieve(http: HttpClient, rootUrl: string, params: Packa
   if (params) {
     rb.path('id', params.id, {});
     rb.header('X-Authorization', params['X-Authorization'], {});
-    rb.path('id', params.id, {});
   }
 
   return http.request(

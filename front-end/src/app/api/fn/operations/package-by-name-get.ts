@@ -13,14 +13,12 @@ import { PackageName } from '../../models/package-name';
 export interface PackageByNameGet$Params {
   name: PackageName;
   'X-Authorization': AuthenticationToken;
-  'X-Authorization': AuthenticationToken;
 }
 
 export function packageByNameGet(http: HttpClient, rootUrl: string, params: PackageByNameGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<PackageHistoryEntry>>> {
   const rb = new RequestBuilder(rootUrl, packageByNameGet.PATH, 'get');
   if (params) {
     rb.path('name', params.name, {});
-    rb.header('X-Authorization', params['X-Authorization'], {});
     rb.header('X-Authorization', params['X-Authorization'], {});
   }
 
