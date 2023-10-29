@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import URLParser from "./URLParser";
 import { runCLI } from "jest";
-import { BusFactor, Responsiveness, Correctness, License, RampUp, PullRequests } from "./metrics";
+import { BusFactor, Responsiveness, Correctness, License, RampUp, PullRequests, DependencyPins } from "./metrics";
 import { log } from "./logger";
 
 export function setupCLI() {
@@ -77,7 +77,8 @@ export function setupCLI() {
 				BUS_FACTOR_SCORE: number;
 				RESPONSIVE_MAINTAINER_SCORE: number;
 				LICENSE_SCORE: number;
-				PULL_REQUESTS_SCORE: number; 
+				PULL_REQUESTS_SCORE: number;
+				PINNED_DEPENDENCIES_SCORE: number;
 			};
 			const urlParser = new URLParser(file);
 			const repoInfoList = await urlParser.getGithubRepoInfo();
@@ -100,7 +101,10 @@ export function setupCLI() {
 				const licenseMetricScore = await licenseMetric.evaluate();
 
 				const pullrequestsMetric = new PullRequests(repoInfo.owner, repoInfo.repo);
-				const pullrequestsMetricScore = await pullrequestsMetric.evaluate();  
+				const pullrequestsMetricScore = await pullrequestsMetric.evaluate(); 
+				
+				const pinnedDependenciesMetric = new DependencyPins(repoInfo.owner, repoInfo.repo);
+				const pinnedDependenciesMetricScore = await pinnedDependenciesMetric.evaluate();
 
 				/*
 				console.log("Ramp Up Score: " + rampupMetricScore);
@@ -109,14 +113,15 @@ export function setupCLI() {
 				console.log("Responsiveness Score: " + responsivenessMetricScore);
 				console.log("License Score: " + licenseMetricScore);
 				*/
-				console.log("Pull Request Score:" + pullrequestsMetricScore); 
+				// console.log("Pull Request Score:" + pullrequestsMetricScore);
 
 				const netScore =
 					(rampupMetricScore * 0.2 +
 						correctnessMetricScore * 0.1 +
-						busFactorMetricScore * 0.3 +
-						responsivenessMetricScore * 0.3 +
-						pullrequestsMetricScore * 0.1 ) *
+						busFactorMetricScore * 0.25 +
+						responsivenessMetricScore * 0.25 +
+						pullrequestsMetricScore * 0.1 + 
+						pinnedDependenciesMetricScore * 0.1) *
 					licenseMetricScore;
 
 				log.debug("Net Score: " + netScore);
@@ -129,7 +134,8 @@ export function setupCLI() {
 					BUS_FACTOR_SCORE: busFactorMetricScore,
 					RESPONSIVE_MAINTAINER_SCORE: responsivenessMetricScore,
 					LICENSE_SCORE: licenseMetricScore,
-					PULL_REQUESTS_SCORE: pullrequestsMetricScore, 
+					PULL_REQUESTS_SCORE: pullrequestsMetricScore,
+					PINNED_DEPENDENCIES_SCORE: pinnedDependenciesMetricScore,
 				};
 
 				RepoMetricInfoList.push(currentRepoInfoScores);

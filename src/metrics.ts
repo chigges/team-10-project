@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 const { graphql } = require("@octokit/graphql");
 import { GraphqlResponseError } from "@octokit/graphql";
 
-import fs from "fs";
+import fs, { unwatchFile } from "fs";
 import http from "isomorphic-git/http/node";
 import { clone } from "isomorphic-git";
 import path from "path";
@@ -636,12 +636,12 @@ export class PullRequests extends BaseMetric {
 			let totalChanges = 0;
 
 			for (const pr of pullRequests.data) {
-			  // Fetch the PR's commits
-			  const stats = await this.octokit.rest.pulls.get({
-				owner: this.owner,
-				repo: this.repo,
-				pull_number: pr.number,
-			  });
+				// Fetch the PR's commits
+				const stats = await this.octokit.rest.pulls.get({
+					owner: this.owner,
+					repo: this.repo,
+					pull_number: pr.number,
+				});
 		
 				totalChanges += stats.data.additions + stats.data.deletions;
 			}
@@ -690,4 +690,61 @@ export class PullRequests extends BaseMetric {
 			return 0; // Handle errors as needed
 		}
     }
+}
+
+// A subclass of BaseMetric.
+export class DependencyPins extends BaseMetric {
+	name = "DependencyPins";
+	description = "Measures the fraction of dependencies that are pinned to a specific version.";
+
+	async evaluate(): Promise<number> {
+		try {
+			// Fetch the package.json file
+			const packageJson = await this.octokit.rest.repos.getContent({
+				owner: this.owner,
+				repo: this.repo,
+				path: "package.json",
+			});
+
+			// Parse the JSON
+			if (packageJson.data === undefined || packageJson.data.content === undefined) {
+				return 1;
+			}
+			// Note: packageJson.data has attribute content?: string | undefined
+			const packageJsonContent = Buffer.from(packageJson.data.content, "base64").toString(
+				"utf8",
+			);
+			const packageJsonParsed = JSON.parse(packageJsonContent);
+
+			// Get total number of dependencies and check for 0/undefined
+			const numDependencies = (packageJsonParsed.dependencies) ? Object.keys(packageJsonParsed.dependencies)?.length : undefined;
+			if (numDependencies === undefined || numDependencies === 0) {  // return 0 on undefined?
+				return 1;
+			}
+
+			// Calculate the number of dependencies that are pinned
+			const pinnedDependencies = this.numPinnedDeps(packageJsonParsed.dependencies);
+
+			// Calculate the fraction of dependencies that are pinned
+			const fractionPinned = pinnedDependencies / numDependencies;
+
+			return Math.min(fractionPinned, 1);
+		} catch (error) {
+			console.error("Error calculating DependencyPins:", error);
+			return 0;
+		}
+	}
+
+	private numPinnedDeps(dependencies: string[]): number {
+		let pinnedDeps = 0;
+
+		for (const dependency in dependencies) {
+			const version = dependencies[dependency];
+			if (/^(?:\d+\.\d+\.\d+|\d+\.\d+(\.[\d+\*Xx])?|~\d+\.\d+(\.\d+)?|\^0\.\d+(\.\d+)?|\d+\.\d+(\.[\*Xx])?)$/.test(version)) {
+				pinnedDeps++;
+			}
+		}
+
+		return pinnedDeps;
+	}
 }
