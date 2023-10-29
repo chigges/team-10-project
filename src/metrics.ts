@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 const { graphql } = require("@octokit/graphql");
 import { GraphqlResponseError } from "@octokit/graphql";
 
-import fs from "fs";
+import fs, { unwatchFile } from "fs";
 import http from "isomorphic-git/http/node";
 import { clone } from "isomorphic-git";
 import path from "path";
@@ -707,7 +707,7 @@ export class DependencyPins extends BaseMetric {
 			});
 
 			// Parse the JSON
-			if (packageJson.data.content === undefined) {
+			if (packageJson.data === undefined || packageJson.data.content === undefined) {
 				return 1;
 			}
 			// Note: packageJson.data has attribute content?: string | undefined
@@ -728,10 +728,10 @@ export class DependencyPins extends BaseMetric {
 			// Calculate the fraction of dependencies that are pinned
 			const fractionPinned = pinnedDependencies / numDependencies;
 
-			return 1 - fractionPinned;
+			return Math.min(fractionPinned, 1);
 		} catch (error) {
 			console.error("Error calculating DependencyPins:", error);
-			throw new Error("Failed to evaluate DependencyPins metric");
+			return 0;
 		}
 	}
 
@@ -740,7 +740,7 @@ export class DependencyPins extends BaseMetric {
 
 		for (const dependency in dependencies) {
 			const version = dependencies[dependency];
-			if (version.startsWith("^") || version.startsWith("~")) {
+			if (/^(?:\d+\.\d+\.\d+|\d+\.\d+(\.[\d+\*Xx])?|~\d+\.\d+(\.\d+)?|\^0\.\d+(\.\d+)?|\d+\.\d+(\.[\*Xx])?)$/.test(version)) {
 				pinnedDeps++;
 			}
 		}

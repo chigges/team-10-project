@@ -1,5 +1,5 @@
 import "dotenv/config"; // loads .env file into process.env. NOTE: this should be the first line
-import { BusFactor, Responsiveness, Correctness, License, RampUp } from "../src/metrics";
+import { BusFactor, Responsiveness, Correctness, License, RampUp, DependencyPins } from "../src/metrics";
 
 describe("BusFactor", () => {
 	it("should return a bus factor", async () => {
@@ -122,6 +122,25 @@ describe("Correctness", () => {
 		const score = await correctnessMetric.evaluate();
 		expect(score).toBeDefined();
 		expect(correctnessMetric.name).toBe("Correctness");
+		expect(score).toEqual(0);
+	});
+});
+
+describe("DependencyPins", () => {
+	it("should return a dependency pin metric score", async () => {
+		const pinnedDependenciesMetric = new DependencyPins("neovim", "neovim");
+		const score = await pinnedDependenciesMetric.evaluate();
+		expect(score).toBeDefined();
+		expect(pinnedDependenciesMetric.name).toBe("DependencyPins");
+		expect(score).toBeGreaterThanOrEqual(0);
+		expect(score).toBeLessThanOrEqual(1);
+	});
+
+	it("should not find a repo to return dependency pin metric", async () => {
+		const pinnedDependenciesMetric = new DependencyPins("neovm", "neovim");
+		const score = await pinnedDependenciesMetric.evaluate();
+		expect(score).toBeDefined();
+		expect(pinnedDependenciesMetric.name).toBe("DependencyPins");
 		expect(score).toEqual(0);
 	});
 });
