@@ -1,0 +1,14 @@
+{
+  "/pokemon/{idOrName}": {
+    "GET": {
+      "Path": [
+        {
+          "producer_endpoint": "",
+          "producer_method": "",
+          "producer_resource_name": "",
+          "consumer_param": "idOrName"
+        }
+      ]
+    }
+  }
+}

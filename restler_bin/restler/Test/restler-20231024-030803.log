@@ -1,0 +1,36 @@
+Restler Information: 0 : Starting task Test...
+    DateTime=2023-10-24T19:08:03.9893040Z
+Restler Information: 0 : Launching 'python --version'
+    DateTime=2023-10-24T19:08:04.7279270Z
+Restler Information: 0 : Launching 'python3 --version'
+    DateTime=2023-10-24T19:08:04.7279800Z
+Restler Information: 0 : Process execution terminated in 00:00:00.0686612 with exit code 0x0: 'python3 --version'
+    DateTime=2023-10-24T19:08:04.8236830Z
+Restler Information: 0 : Process execution terminated in 00:00:00.0686574 with exit code 0x0: 'python --version'
+    DateTime=2023-10-24T19:08:04.8237460Z
+Restler Information: 0 : (11762) python3 --version exited with code: 0
+    DateTime=2023-10-24T19:08:04.8348800Z
+Restler Information: 0 : (11761) python --version exited with code: 0
+    DateTime=2023-10-24T19:08:04.8349160Z
+Restler Information: 0 : Launching 'python3 -B "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../engine/restler.py" --restler_grammar "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/grammar.py" --custom_mutations "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/dict.json" --set_version 9.2.2       --settings "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/engine_settings.json"     --include_user_agent --no_tokens_in_logs t --garbage_collection_interval 30 --fuzzing_mode directed-smoke-test'
+    DateTime=2023-10-24T19:08:04.8700510Z
+Restler Information: 0 : Process execution terminated in 00:00:01.2170119 with exit code 0x0: 'python3 -B "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../engine/restler.py" --restler_grammar "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/grammar.py" --custom_mutations "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/dict.json" --set_version 9.2.2       --settings "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/engine_settings.json"     --include_user_agent --no_tokens_in_logs t --garbage_collection_interval 30 --fuzzing_mode directed-smoke-test'
+    DateTime=2023-10-24T19:08:06.0873020Z
+Restler Information: 0 : (11763) python3 -B "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../engine/restler.py" --restler_grammar "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/grammar.py" --custom_mutations "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/dict.json" --set_version 9.2.2       --settings "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/engine_settings.json"     --include_user_agent --no_tokens_in_logs t --garbage_collection_interval 30 --fuzzing_mode directed-smoke-test exited with code: 0
+    DateTime=2023-10-24T19:08:06.0874050Z
+Restler Information: 0 : Launching 'dotnet "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../resultsAnalyzer/Restler.ResultsAnalyzer.dll" analyze "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Test" --output_dir "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Test/ResponseBuckets" --dictionary_file "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/dict.json" --max_instances_per_bucket 10'
+    DateTime=2023-10-24T19:08:06.1148150Z
+Restler Information: 0 : Process execution terminated in 00:00:01.3869703 with exit code 0x0: 'dotnet "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../resultsAnalyzer/Restler.ResultsAnalyzer.dll" analyze "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Test" --output_dir "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Test/ResponseBuckets" --dictionary_file "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/dict.json" --max_instances_per_bucket 10'
+    DateTime=2023-10-24T19:08:07.5020240Z
+Restler Information: 0 : (11765) dotnet "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../resultsAnalyzer/Restler.ResultsAnalyzer.dll" analyze "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Test" --output_dir "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Test/ResponseBuckets" --dictionary_file "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/dict.json" --max_instances_per_bucket 10 exited with code: 0
+    DateTime=2023-10-24T19:08:07.5022060Z
+Restler Information: 0 : Request coverage (successful / total): 2 / 2
+    DateTime=2023-10-24T19:08:08.2227070Z
+Restler Information: 0 : Attempted requests: 2 / 2
+    DateTime=2023-10-24T19:08:08.2228420Z
+Restler Information: 0 : No bugs were found.
+    DateTime=2023-10-24T19:08:08.2748090Z
+Restler Information: 0 : Task Test succeeded.
+    DateTime=2023-10-24T19:08:08.3131410Z
+Restler Information: 0 : Collecting logs...
+    DateTime=2023-10-24T19:08:08.3859020Z

@@ -1,0 +1,36 @@
+Restler Information: 0 : Starting task FuzzLean...
+    DateTime=2023-10-24T19:08:57.2803850Z
+Restler Information: 0 : Launching 'python --version'
+    DateTime=2023-10-24T19:08:58.1671100Z
+Restler Information: 0 : Launching 'python3 --version'
+    DateTime=2023-10-24T19:08:58.1672350Z
+Restler Information: 0 : Process execution terminated in 00:00:00.0506231 with exit code 0x0: 'python --version'
+    DateTime=2023-10-24T19:08:58.2472890Z
+Restler Information: 0 : Process execution terminated in 00:00:00.0505161 with exit code 0x0: 'python3 --version'
+    DateTime=2023-10-24T19:08:58.2473330Z
+Restler Information: 0 : (11780) python --version exited with code: 0
+    DateTime=2023-10-24T19:08:58.2591000Z
+Restler Information: 0 : (11781) python3 --version exited with code: 0
+    DateTime=2023-10-24T19:08:58.2591440Z
+Restler Information: 0 : Launching 'python3 -B "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../engine/restler.py" --restler_grammar "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/grammar.py" --custom_mutations "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/dict.json" --set_version 9.2.2       --settings "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/engine_settings.json" --enable_checkers * --disable_checkers namespacerule    --include_user_agent --no_tokens_in_logs t --garbage_collection_interval 30 --fuzzing_mode directed-smoke-test'
+    DateTime=2023-10-24T19:08:58.2917230Z
+Restler Information: 0 : Process execution terminated in 00:00:38.2681450 with exit code 0x0: 'python3 -B "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../engine/restler.py" --restler_grammar "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/grammar.py" --custom_mutations "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/dict.json" --set_version 9.2.2       --settings "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/engine_settings.json" --enable_checkers * --disable_checkers namespacerule    --include_user_agent --no_tokens_in_logs t --garbage_collection_interval 30 --fuzzing_mode directed-smoke-test'
+    DateTime=2023-10-24T19:09:36.5606670Z
+Restler Information: 0 : (11782) python3 -B "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../engine/restler.py" --restler_grammar "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/grammar.py" --custom_mutations "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/dict.json" --set_version 9.2.2       --settings "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/engine_settings.json" --enable_checkers * --disable_checkers namespacerule    --include_user_agent --no_tokens_in_logs t --garbage_collection_interval 30 --fuzzing_mode directed-smoke-test exited with code: 0
+    DateTime=2023-10-24T19:09:36.5707780Z
+Restler Information: 0 : Launching 'dotnet "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../resultsAnalyzer/Restler.ResultsAnalyzer.dll" analyze "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/FuzzLean" --output_dir "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/FuzzLean/ResponseBuckets" --dictionary_file "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/dict.json" --max_instances_per_bucket 10'
+    DateTime=2023-10-24T19:09:36.5978220Z
+Restler Information: 0 : Process execution terminated in 00:00:02.4701382 with exit code 0x0: 'dotnet "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../resultsAnalyzer/Restler.ResultsAnalyzer.dll" analyze "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/FuzzLean" --output_dir "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/FuzzLean/ResponseBuckets" --dictionary_file "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/dict.json" --max_instances_per_bucket 10'
+    DateTime=2023-10-24T19:09:39.0681910Z
+Restler Information: 0 : (11786) dotnet "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/../resultsAnalyzer/Restler.ResultsAnalyzer.dll" analyze "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/FuzzLean" --output_dir "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/FuzzLean/ResponseBuckets" --dictionary_file "/Users/carolinegilbert/Desktop/2023-24/FALL_23/ECE461/461-project-9-phase2/restler_bin/restler/Compile/dict.json" --max_instances_per_bucket 10 exited with code: 0
+    DateTime=2023-10-24T19:09:39.0783600Z
+Restler Information: 0 : Request coverage (successful / total): 2 / 2
+    DateTime=2023-10-24T19:09:40.2482420Z
+Restler Information: 0 : Attempted requests: 2 / 2
+    DateTime=2023-10-24T19:09:40.2483140Z
+Restler Information: 0 : No bugs were found.
+    DateTime=2023-10-24T19:09:40.2532870Z
+Restler Information: 0 : Task FuzzLean succeeded.
+    DateTime=2023-10-24T19:09:40.2733380Z
+Restler Information: 0 : Collecting logs...
+    DateTime=2023-10-24T19:09:40.3380860Z
