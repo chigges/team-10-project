@@ -399,3 +399,5 @@ export class ApiService extends BaseService {
   }
 
 }
+
+export { packagesList };
