@@ -22,7 +22,7 @@ export interface PackagesList$Params {
 }
 
 export function packagesList(http: HttpClient, rootUrl: string, params: PackagesList$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<PackageMetadata>>> {
-  const rb = new RequestBuilder(rootUrl, packagesList.PATH, 'post');
+  const rb = new RequestBuilder(rootUrl, packagesList.PATH, 'POST');
   if (params) {
     rb.header('X-Authorization', params['X-Authorization'], {});
     rb.query('offset', params.offset, {});
