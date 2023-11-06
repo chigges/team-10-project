@@ -707,28 +707,33 @@ export class DependencyPins extends BaseMetric {
 			});
 
 			// Parse the JSON
-			if (packageJson.data === undefined || packageJson.data.content === undefined) {
+			if (Array.isArray(packageJson.data)) {
+				const content = packageJson.data[0].content;
+				if (content === undefined) {
+					return 1;
+				}
+				// Note: packageJson.data has attribute content?: string | undefined
+				const packageJsonContent = Buffer.from(content, "base64").toString(
+					"utf8",
+				);
+				const packageJsonParsed = JSON.parse(packageJsonContent);
+
+				// Get total number of dependencies and check for 0/undefined
+				const numDependencies = (packageJsonParsed.dependencies) ? Object.keys(packageJsonParsed.dependencies)?.length : undefined;
+				if (numDependencies === undefined || numDependencies === 0) {  // return 0 on undefined?
+					return 1;
+				}
+
+				// Calculate the number of dependencies that are pinned
+				const pinnedDependencies = this.numPinnedDeps(packageJsonParsed.dependencies);
+
+				// Calculate the fraction of dependencies that are pinned
+				const fractionPinned = pinnedDependencies / numDependencies;
+
+				return Math.min(fractionPinned, 1);
+			} else {
 				return 1;
 			}
-			// Note: packageJson.data has attribute content?: string | undefined
-			const packageJsonContent = Buffer.from(packageJson.data.content, "base64").toString(
-				"utf8",
-			);
-			const packageJsonParsed = JSON.parse(packageJsonContent);
-
-			// Get total number of dependencies and check for 0/undefined
-			const numDependencies = (packageJsonParsed.dependencies) ? Object.keys(packageJsonParsed.dependencies)?.length : undefined;
-			if (numDependencies === undefined || numDependencies === 0) {  // return 0 on undefined?
-				return 1;
-			}
-
-			// Calculate the number of dependencies that are pinned
-			const pinnedDependencies = this.numPinnedDeps(packageJsonParsed.dependencies);
-
-			// Calculate the fraction of dependencies that are pinned
-			const fractionPinned = pinnedDependencies / numDependencies;
-
-			return Math.min(fractionPinned, 1);
 		} catch (error) {
 			console.error("Error calculating DependencyPins:", error);
 			return 0;
