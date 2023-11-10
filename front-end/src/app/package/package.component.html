@@ -1,0 +1,36 @@
+<!-- package.component.html -->
+
+<div class="package-container">
+    <h2>Package Operations</h2>
+  
+    <label for="packageId">Package ID:</label>
+    <input type="text" id="packageId" [(ngModel)]="packageId" placeholder="Enter Package ID">
+  
+    <label for="packageContent">Package Content (Zip File):</label>
+    <input type="file" id="packageContent" (change)="handleFileInput($event)" accept=".zip">
+  
+    <label for="packageURL">Package URL:</label>
+    <input type="text" id="packageURL" [(ngModel)]="packageData.data.URL" placeholder="Enter Package URL">
+  
+    <label for="packageJSProgram">Package JS Program:</label>
+    <input type="text" id="packageJSProgram" [(ngModel)]="packageData.data.JSProgram" placeholder="Enter Package JS Program">
+  
+    <!-- Add additional input fields for other properties in packageData if needed -->
+  
+    <button type="button" (click)="getPackage()">Get Package</button>
+    <button type="button" (click)="updatePackage()">Update Package</button>
+    <button type="button" (click)="deletePackage()">Delete Package</button>
+  
+    <div *ngIf="packageData">
+      <h3>Package Details</h3>
+      <pre>{{ packageData | json }}</pre>
+    </div>
+  
+    <div *ngIf="updateMessage" class="message">
+      <p>{{ updateMessage }}</p>
+    </div>
+  
+    <div *ngIf="deleteMessage" class="message">
+      <p>{{ deleteMessage }}</p>
+    </div>
+</div>

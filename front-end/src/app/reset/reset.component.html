@@ -1,0 +1,13 @@
+<!-- reset.component.html -->
+
+<div class="reset-container">
+    <h2>Reset Application</h2>
+    <p>This will reset the registry to a system default state.</p>
+    <button type="button" (click)="onSubmit()">Reset</button>
+  
+    <!-- Display the reset message with a distinct style -->
+    <div *ngIf="resetMessage" class="reset-message">
+      {{ resetMessage }}
+    </div>
+  </div>
+  

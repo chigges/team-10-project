@@ -24,7 +24,7 @@ export class PackagesComponent {
       Version: this.packageVersion,
     };
 
-    const offset: EnumerateOffset = '3';
+    const offset: EnumerateOffset = '';
 
     this.apiService.packagesList(
       { 'X-Authorization': this.authHeader, offset, body: [query] }
