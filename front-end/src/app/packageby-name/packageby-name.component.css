@@ -1,0 +1,50 @@
+/* packageby-name.component.css */
+
+.package-by-name-container {
+    width: 66%; /* 2/3 of the page width */
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding and border in the box sizing */
+    text-align: center; /* Center the content */
+  }
+  
+  label[for="packageName"] {
+    display: block;
+    text-align: left; /* Align label text to the left */
+    margin-top: 10px; /* Adjust top margin for spacing */
+  }
+  
+  #packageName {
+    width: calc(100% - 16px); /* Adjusted width to consider padding */
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box; /* Include padding and border in the box sizing */
+  }
+  
+  button {
+    width: calc(100% - 16px); /* Adjusted width to consider padding */
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block; /* Make button display inline */
+    margin-bottom: 10px; /* Add margin below the button */
+  }
+  
+  button:hover {
+    background-color: #45a049; /* Darker color on hover */
+  }
+  
+  .history-entry {
+    text-align: left; /* Align history entry text to the left */
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  

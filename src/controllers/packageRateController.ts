@@ -23,14 +23,14 @@ export const getPackageRating = (req: Request, res: Response) => {
     const packageRating: PackageRating =
       // Populate the package rating data here
       {
-        "BusFactor": 0,
-        "Correctness": 0,
+        "BusFactor": 0.23,
+        "Correctness": 0.23,
         "RampUp": 0,
-        "ResponsiveMaintainer": 0,
+        "ResponsiveMaintainer": 0.34,
         "LicenseScore": 0,
-        "GoodPinningPractice": 0,
+        "GoodPinningPractice": 0.23,
         "PullRequest": 0,
-        "NetScore": 0
+        "NetScore": 0.78
       };
     res.status(200).json(packageRating);
   } catch (error) {

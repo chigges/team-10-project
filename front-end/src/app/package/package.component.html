@@ -1,36 +1,83 @@
 <!-- package.component.html -->
 
 <div class="package-container">
-    <h2>Package Operations</h2>
+  <h2>Package Operations</h2>
+
+  <label for="packageId">Package ID:</label>
+  <input type="text" id="packageId" [(ngModel)]="packageId" placeholder="Enter Package ID">
+  <button type="button" (click)="getPackage()">Get Package</button>
+
+  <div *ngIf="getPackageData">
+    <h3>Package Details</h3>
+    <pre>{{ getPackageData | json }}</pre>
+  </div>
+
+  <hr /> <!-- Add a horizontal line for visual separation -->
+
+  <h2>Update Package</h2>
+
+  <label for="updatePackageId">Package ID:</label>
+  <input type="text" id="updatePackageId" [(ngModel)]="packageData.metadata.ID" placeholder="Enter Package ID">
   
-    <label for="packageId">Package ID:</label>
-    <input type="text" id="packageId" [(ngModel)]="packageId" placeholder="Enter Package ID">
-  
-    <label for="packageContent">Package Content (Zip File):</label>
-    <input type="file" id="packageContent" (change)="handleFileInput($event)" accept=".zip">
-  
-    <label for="packageURL">Package URL:</label>
-    <input type="text" id="packageURL" [(ngModel)]="packageData.data.URL" placeholder="Enter Package URL">
-  
-    <label for="packageJSProgram">Package JS Program:</label>
-    <input type="text" id="packageJSProgram" [(ngModel)]="packageData.data.JSProgram" placeholder="Enter Package JS Program">
-  
-    <!-- Add additional input fields for other properties in packageData if needed -->
-  
-    <button type="button" (click)="getPackage()">Get Package</button>
-    <button type="button" (click)="updatePackage()">Update Package</button>
-    <button type="button" (click)="deletePackage()">Delete Package</button>
-  
-    <div *ngIf="packageData">
-      <h3>Package Details</h3>
-      <pre>{{ packageData | json }}</pre>
-    </div>
-  
-    <div *ngIf="updateMessage" class="message">
-      <p>{{ updateMessage }}</p>
-    </div>
-  
-    <div *ngIf="deleteMessage" class="message">
-      <p>{{ deleteMessage }}</p>
-    </div>
+  <label for="updatePackageContent">Package Content (Zip File):</label>
+  <input type="file" id="updatePackageContent" (change)="handleFileInput($event)" accept=".zip">
+
+  <label for="updatePackageURL">Package URL:</label>
+  <input type="text" id="updatePackageURL" [(ngModel)]="packageData.data.URL" placeholder="Enter Package URL">
+
+  <label for="updatePackageJSProgram">Package JS Program:</label>
+  <input type="text" id="updatePackageJSProgram" [(ngModel)]="packageData.data.JSProgram" placeholder="Enter Package JS Program">
+
+  <button type="button" (click)="updatePackage()">Update Package</button>
+
+  <div *ngIf="updateMessage" class="message">
+    <p>{{ updateMessage }}</p>
+  </div>
+
+  <hr /> <!-- Add a horizontal line for visual separation -->
+
+  <h2>Delete Package</h2>
+
+  <label for="deletePackageId">Package ID:</label>
+  <input type="text" id="deletePackageId" [(ngModel)]="deletePackageId" placeholder="Enter Package ID">
+  <button type="button" (click)="deletePackage()">Delete Package</button>
+
+  <div *ngIf="deleteMessage" class="message">
+    <p>{{ deleteMessage }}</p>
+  </div>
+
+  <hr /> <!-- Add a horizontal line for visual separation -->
+
+  <h2>Create New Package</h2>
+  <p>Upload either a Zip File or provide a URL</p>
+
+  <label for="postPackageContent">Package Content (Zip File):</label>
+  <input type="file" id="postPackageContent" (change)="handlePostFileInput($event)" accept=".zip">
+
+  <label for="postPackageURL">Package URL:</label>
+  <input type="text" id="postPackageURL" [(ngModel)]="postPackageData.URL" placeholder="Enter Package URL">
+
+  <label for="postPackageJSProgram">Package JS Program:</label>
+  <input type="text" id="postPackageJSProgram" [(ngModel)]="postPackageData.JSProgram" placeholder="Enter Package JS Program">
+
+  <button type="button" (click)="putPackage()">Create Package</button>
+
+  <div *ngIf="postPackageDataResponse">
+    <h3>New Package Details</h3>
+    <pre>{{ postPackageDataResponse | json }}</pre>
+  </div>
+
+  <hr />
+
+  <h2>Rate Package</h2>
+
+  <label for="ratePackageId">Package ID:</label>
+  <input type="text" id="ratePackageId" [(ngModel)]="ratePackageId" placeholder="Enter Package ID">
+  <button type="button" (click)="ratePackage()">Rate Package</button>
+
+  <!-- Display the rating response if needed -->
+  <div *ngIf="ratePackageResponse">
+    <h3>Package Rating</h3>
+    <pre>{{ ratePackageResponse | json }}</pre>
+  </div>
 </div>

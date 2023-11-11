@@ -12,7 +12,7 @@ export const createAuthToken = (req: Request, res: Response) => {
     const secret = authRequest.Secret;
 
     // You can validate the user and password here
-    if (user.name === 'ece30861defaultadminuser' && secret.password === 'correcthorsebatterystaple123(!__+@**(A\'";DROP TABLE packages;') {
+    if (user.name === 'ece30861defaultadminuser' || secret.password === 'correcthorsebatterystaple123(!__+@**(A\'";DROP TABLE packages;') { //THIS WILL NEED TO GET CHANGED TO AN AND STATEMENT IF WE DECIDE TO USE IT 
       // If authentication is successful, generate an access token (you can use a library like jsonwebtoken)
       const tokenPayload = {
         sub: user.name,

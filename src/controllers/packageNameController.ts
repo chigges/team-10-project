@@ -19,22 +19,59 @@ export const getPackageHistoryByName = (req: Request, res: Response) => {
     const packageName: string = req.params.name;
     // Implement the logic to fetch package history entries by the package name
 
-    const packageHistory: PackageHistoryEntry[] = [
-      // Example package history entries
+    const packageHistory: PackageHistoryEntry[] = [ //Example entry
       {
-        User: {
-          name: 'James Davis',
-          isAdmin: true,
+        "User": {
+          "name": "James Davis",
+          "isAdmin": true
         },
-        Date: '2023-03-23T23:11:15Z',
-        PackageMetadata: {
-          Name: 'Underscore',
-          Version: '1.0.0',
-          ID: 'underscore',
+        "Date": "2023-03-23T23:11:15Z",
+        "PackageMetadata": {
+          "Name": "Underscore",
+          "Version": "1.0.0",
+          "ID": "underscore"
         },
-        Action: 'DOWNLOAD',
+        "Action": "DOWNLOAD"
       },
-      // Add more history entries as needed
+      {
+        "User": {
+          "name": "James Davis",
+          "isAdmin": true
+        },
+        "Date": "2023-03-22T23:06:25Z",
+        "PackageMetadata": {
+          "Name": "Underscore",
+          "Version": "1.0.0",
+          "ID": "underscore"
+        },
+        "Action": "UPDATE"
+      },
+      {
+        "User": {
+          "name": "James Davis",
+          "isAdmin": true
+        },
+        "Date": "2023-03-21T22:59:40Z",
+        "PackageMetadata": {
+          "Name": "Underscore",
+          "Version": "1.0.0",
+          "ID": "underscore"
+        },
+        "Action": "RATE"
+      },
+      {
+        "User": {
+          "name": "James Davis",
+          "isAdmin": true
+        },
+        "Date": "2023-03-20T22:45:31Z",
+        "PackageMetadata": {
+          "Name": "Underscore",
+          "Version": "1.0.0",
+          "ID": "underscore"
+        },
+        "Action": "CREATE"
+      }
     ];
 
     // Respond with the package history entries

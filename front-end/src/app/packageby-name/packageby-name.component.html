@@ -1,0 +1,32 @@
+<!-- packageby-name.component.html -->
+
+<div class="package-by-name-container">
+    <h2>Package by Name</h2>
+  
+    <label for="packageName">Package Name:</label>
+    <input type="text" id="packageName" [(ngModel)]="packageName" placeholder="Enter Package Name">
+  
+    <button type="button" (click)="getPackageHistory()">Get Package History</button>
+  
+    <div *ngIf="packageHistory.length > 0">
+      <h3>Package History:</h3>
+      <div *ngFor="let entry of packageHistory" class="history-entry">
+        <p>User: {{ entry.User.name }}</p>
+        <p>Date: {{ entry.Date | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+        <p>Action: {{ entry.Action }}</p>
+        <p>Package Metadata:</p>
+        <ul>
+          <li>Name: {{ entry.PackageMetadata.Name }}</li>
+          <li>Version: {{ entry.PackageMetadata.Version }}</li>
+          <li>ID: {{ entry.PackageMetadata.ID }}</li>
+        </ul>
+      </div>
+    </div>
+  
+    <button type="button" (click)="deletePackage()">Delete Package</button>
+  
+    <div *ngIf="deletePackageResponse" class="message">
+      <p>{{ deletePackageResponse }}</p>
+    </div>
+  </div>
+  
