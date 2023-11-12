@@ -1,0 +1,76 @@
+/* package.component.css */
+
+.package-container {
+    width: 66%; /* 2/3 of the page width */
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding and border in the box sizing */
+    text-align: center; /* Center the content */
+  }
+  
+  label[for="packageContent"] {
+    display: block;
+    text-align: left; /* Align label text to the left */
+    margin-top: 10px; /* Adjust top margin for spacing */
+  }
+  
+  #packageContent {
+    display: block;
+    margin: 0 auto 15px; /* Center the file input and add space below */
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  input {
+    width: calc(100% - 16px); /* Adjusted width to consider padding */
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box; /* Include padding and border in the box sizing */
+  }
+  
+  /* Updated styles for buttons */
+  button {
+    width: calc(33.33% - 5px); /* Adjusted width to create equal space between buttons */
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block; /* Make buttons display inline */
+    margin-bottom: 10px; /* Add margin below each button */
+  }
+  
+  /* Add more margin to create more space between buttons */
+  button + button {
+    margin-left: 5px; /* Adjusted margin between buttons */
+  }
+  
+  pre {
+    text-align: left;
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .message {
+    width: calc(100% - 16px); /* Adjusted width to consider padding */
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
