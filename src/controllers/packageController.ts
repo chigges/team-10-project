@@ -1,5 +1,16 @@
 import { Request, Response } from 'express';
-import { Package, AuthenticationToken, PackageId, PackageData } from '../types'; 
+import { Package, AuthenticationToken, PackageId, PackageData } from '../types';
+import { DynamoDBClient, PutItemCommand, GetItemCommand, PutItemCommandOutput, GetItemCommandOutput, PutItemCommandInput, DeleteItemCommand } from "@aws-sdk/client-dynamodb";
+import { Credentials } from 'aws-sdk';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+
+// Set up AWS credentials programmatically
+const credentials = new Credentials({
+  accessKeyId: 'placeholder',
+  secretAccessKey: 'placeholder',
+});
+
+const client = new DynamoDBClient({ region: "us-east-1", credentials: credentials });
 
 // Controller function for handling the GET request to /package/{id}
 export const getPackageById = (req: Request, res: Response) => {
@@ -94,6 +105,23 @@ export const deletePackage = (req: Request, res: Response) => {
     // Check for permission to delete the package (you can add more logic here)
 
     // Perform the package deletion (replace this with your logic)
+    const params = {
+      TableName: "packages",
+      Key: {
+        id: { N: packageId },
+      },
+    };
+    
+    const command = new DeleteItemCommand(params);
+    client.send(command)
+      .then((response) => {
+        console.log("GetItem succeeded:", response.$metadata);  // change to logging
+      })
+      .catch((error) => {
+        console.error("Error getting item:", error);  // change to logging
+      });
+
+    // TODO: upload package content to S3 bucket and make reference in database
 
     // Respond with a success message
     res.status(200).json({ message: 'Package is deleted' });
@@ -128,6 +156,23 @@ export const createPackage = (req: Request, res: Response) => {
     // Check for permission to create a package (you can add more logic here)
 
     // Create the package (replace this with your logic)
+    const params: PutItemCommandInput = {
+      TableName: "packages",
+      Item: {
+        // Key: { S: packageData.metadata.ID },
+        id: { N: "0" },
+        Value: { S: JSON.stringify(packageData) },
+      },
+    };
+
+    const command = new PutItemCommand(params);
+    client.send(command)
+      .then((response) => {
+        console.log("GetItem succeeded:", response.$metadata);  // change to logging
+      })
+      .catch((error) => {
+        console.error("Error getting item:", error);  // change to logging
+      });
 
     // Respond with a success message and the created package data
     const createdPackage = [ /* Replace with your package creation logic */ 
