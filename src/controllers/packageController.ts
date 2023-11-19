@@ -3,9 +3,7 @@ import { Package, AuthenticationToken, PackageId, PackageName, PackageData } fro
 import { log } from '../logger';
 import { DynamoDBClient, PutItemCommand, GetItemCommand, PutItemCommandInput, DeleteItemCommand } from "@aws-sdk/client-dynamodb";
 // import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { v5 as uuidv5 } from 'uuid';
-import URLParser from '../URLParser';
-import { BusFactor, Responsiveness, Correctness, License, RampUp, PullRequests, DependencyPins } from "../metrics";
+import { generatePackageId, metricCalcFromUrl, PackageInfo } from './controllerHelpers';
 
 const client = new DynamoDBClient({ region: "us-east-1" });
 
@@ -71,7 +69,7 @@ export async function getPackageById (req: Request, res: Response) {
 }
 
 // Controller function for handling the PUT request to update a package by ID
-export const updatePackage = (req: Request, res: Response) => {
+export async function updatePackage(req: Request, res: Response) {
   try {
     const packageId: PackageId = req.params.id; // Extract the package ID from the URL
     const packageName: PackageName = req.params.name;
@@ -83,15 +81,16 @@ export const updatePackage = (req: Request, res: Response) => {
       : req.headers['x-authorization']; // Use the value directly if it's a string or undefined
 
     if (!authorizationHeader) {
-    return res.status(400).json({ error: 'Authentication token missing or invalid' });
+      return res.status(400).json({ error: 'Authentication token missing or invalid' });
+    }
+
+    // Check if name and version match id
+    if (generatePackageId(packageName, packageVersion) !== packageId) {
+      return res.status(400).json({ error: 'Package name and version do not match package ID' });
     }
 
     // Get the Package from the request body
-    //const package1: Package = req.body as Package;
-
-    //const name = package1.metadata.Name;
-    //const version = package1.metadata.Version; 
-    //const id = package1.metadata.ID;
+    const updatedPackageData: PackageData = req.body as PackageData;
 
     // Validate request body for the package data (replace with your own validation logic)
 
@@ -104,26 +103,32 @@ export const updatePackage = (req: Request, res: Response) => {
         version: { S: packageVersion },
       },
     };
-
+    let exists: boolean = false;
     const command = new GetItemCommand(params);
-    client.send(command)
+    await client.send(command)
       .then((response) => {
         log.info("GetItem succeeded:", response.$metadata);
+        if (response.Item) {
+          exists = true;
+        }
       })
       .catch((error) => {
         log.error("Error getting item:", error);
         throw(error);
       });
+    if (!exists) {
+      return res.status(404).json({ error: 'Package does not already exist' });
+    }
 
-    // Update the package data (replace with your own logic)
+    // TODO: Update the package data in S3 bucket + database metadata
 
     // Respond with a success message
     res.status(200).json({ message: 'Package updated successfully' });
   } catch (error) {
-      log.error('Error handling PUT /package/:id:', error);
-      res.status(500).json({ error: 'Internal Server Error' }); // Handle any errors
+    log.error('Error handling PUT /package/:id:', error);
+    res.status(500).json({ error: 'Internal Server Error' }); // Handle any errors
   }
-};
+}
 
 // Controller function for handling the DELETE request to /package/:id
 export async function deletePackage(req: Request, res: Response) {
@@ -167,86 +172,6 @@ export async function deletePackage(req: Request, res: Response) {
   }
 }
 
-const generatePackageId = (name: string, version: string): PackageId => {
-  const namespace = '1b671a64-40d5-491e-99b0-da01ff1f3341';
-  const uuid = uuidv5(name + version, namespace);
-  // create a 64-bit integer from the uuid
-  return BigInt.asUintN(64, BigInt(`0x${uuid.replace(/-/g, '')}`)).toString();
-}
-
-type PackageInfo = {
-  ID: string;
-  NAME: string;
-  VERSION: string;
-	URL: string;
-	NET_SCORE: number;
-	RAMP_UP_SCORE: number;
-	CORRECTNESS_SCORE: number;
-	BUS_FACTOR_SCORE: number;
-	RESPONSIVE_MAINTAINER_SCORE: number;
-	LICENSE_SCORE: number;
-	PULL_REQUESTS_SCORE: number;
-	PINNED_DEPENDENCIES_SCORE: number;
-};
-
-async function metricCalcFromUrl(url: string): Promise<PackageInfo | null> {
-	const urlParser = new URLParser("");
-	const repoInfo = await urlParser.getGithubRepoInfoFromUrl(url);
-  log.info("repoInfo:", repoInfo);
-	if (repoInfo == null) {
-		return null;
-	}
-
-	//Ramp Up Score
-	const rampupMetric = new RampUp(repoInfo.owner, repoInfo.repo);
-	const rampupMetricScore = await rampupMetric.evaluate();
-	//Correctness Score
-	const correctnessMetric = new Correctness(repoInfo.owner, repoInfo.repo);
-	const correctnessMetricScore = await correctnessMetric.evaluate();
-	//Bus Factor Score
-	const busFactorMetric = new BusFactor(repoInfo.owner, repoInfo.repo);
-	const busFactorMetricScore = await busFactorMetric.evaluate();
-	//Responsiveness Score
-	const responsivenessMetric = new Responsiveness(repoInfo.owner, repoInfo.repo);
-	const responsivenessMetricScore = await responsivenessMetric.evaluate();
-	//License Score
-	const licenseMetric = new License(repoInfo.owner, repoInfo.repo);
-	const licenseMetricScore = await licenseMetric.evaluate();
-  // Pull Requests Score
-	const pullrequestsMetric = new PullRequests(repoInfo.owner, repoInfo.repo);
-	const pullrequestsMetricScore = await pullrequestsMetric.evaluate(); 
-	// Pinned Dependencies Score
-	const pinnedDependenciesMetric = new DependencyPins(repoInfo.owner, repoInfo.repo);
-	const pinnedDependenciesMetricScore = await pinnedDependenciesMetric.evaluate();
-
-	const netScore =
-		(rampupMetricScore * 0.2 +
-		correctnessMetricScore * 0.1 +
-		busFactorMetricScore * 0.25 +
-		responsivenessMetricScore * 0.25 +
-		pullrequestsMetricScore * 0.1 + 
-		pinnedDependenciesMetricScore * 0.1) *
-		licenseMetricScore;
-
-	const currentRepoInfoScores: PackageInfo = {
-    ID: "",
-    NAME: repoInfo.repo,
-    VERSION: "1.0.0",
-		URL: repoInfo.url,
-		NET_SCORE: netScore,
-		RAMP_UP_SCORE: rampupMetricScore,
-		CORRECTNESS_SCORE: correctnessMetricScore,
-		BUS_FACTOR_SCORE: busFactorMetricScore,
-		RESPONSIVE_MAINTAINER_SCORE: responsivenessMetricScore,
-		LICENSE_SCORE: licenseMetricScore,
-		PULL_REQUESTS_SCORE: pullrequestsMetricScore,
-		PINNED_DEPENDENCIES_SCORE: pinnedDependenciesMetricScore,
-	};
-  // log.info("currentRepoInfoScores:", currentRepoInfoScores);
-
-	return currentRepoInfoScores;
-}
-
 // Controller function for handling the POST request to /package
 export async function createPackage(req: Request, res: Response) {
   try {
@@ -267,7 +192,6 @@ export async function createPackage(req: Request, res: Response) {
     }
 
     // Check for permission to create a package (you can add more logic here)
-
 
     // Check that package creation request is valid (only Content or URL is set)
     // If request is valid, rate package (valid if rating >= 0.5)
@@ -343,17 +267,17 @@ export async function createPackage(req: Request, res: Response) {
     // TODO: upload package content to S3 bucket and make reference in database
 
     // Respond with a success message and the created package data
-    const createdPackage = [ /* Replace with your package creation logic */ 
+    const createdPackage = [
     {
-        "metadata": {
-          "Name": info.NAME,
-          "Version": info.VERSION,
-          "ID": id
-        },
-        "data": {
-          "Content": "",
-          // "JSProgram": "if (process.argv.length === 7) {\nconsole.log('Success')\nprocess.exit(0)\n} else {\nconsole.log('Failed')\nprocess.exit(1)\n}\n"
-        }
+      "metadata": {
+        "Name": info.NAME,
+        "Version": info.VERSION,
+        "ID": id
+      },
+      "data": {
+        "Content": "",
+        // "JSProgram": "if (process.argv.length === 7) {\nconsole.log('Success')\nprocess.exit(0)\n} else {\nconsole.log('Failed')\nprocess.exit(1)\n}\n"
+      }
     }];
     res.status(201).json(createdPackage);
   } catch (error) {
