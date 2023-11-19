@@ -38,6 +38,28 @@ class URLParser {
 		return githubRepoInfo;
 	}
 
+	async getGithubRepoInfoFromUrl(url: string): Promise<GithubRepoInfo | null> {
+		let githubLink = url;
+		if (url.includes("npmjs.com")) {
+			const link = await this.getGithubRepoFromNpm(url);
+			if (link != null) {
+				githubLink = link;
+			} else {
+				return null;
+			}
+		}
+		if (githubLink.includes("github.com")) {
+			const regex = /github\.com\/([^/]+\/[^/]+)/;
+			const match = url.match(regex);
+			if (match != null) {
+				const owner = match[1].split("/")[0];
+				const repo = match[1].split("/")[1];
+				return { url, owner, repo };
+			}
+		}
+		return null;
+	}
+
 	async getOnlyGithubUrls(): Promise<string[]> {
 		const allUrls = this.getUrls();
 		const npmUrls = allUrls.filter((url) => url.includes("npmjs.com"));
