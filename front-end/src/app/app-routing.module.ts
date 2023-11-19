@@ -7,12 +7,7 @@ import { PackageComponent } from './package/package.component';
 import { HomeComponent } from './home/home.component';
 import { RegistrationComponent } from './registration/registration.component';
 
-const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'register', component: RegistrationComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-];
+const routes: Routes = [];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
