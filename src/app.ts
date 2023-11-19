@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 9000;
 const cors = require('cors');
 
-app.use(express.json()); // Middleware to parse JSON request bodies
+app.use(express.json({ limit: '50mb' })); // Middleware to parse JSON request bodies
 
 app.use(cors());
 
