@@ -9,6 +9,7 @@ import { getPackageRating } from './controllers/packageRateController';
 import { createAuthToken } from './controllers/authenticationController';
 import { getPackageHistoryByName } from './controllers/packageNameController';
 import { deletePackageByName } from './controllers/packageNameController';
+import { postPackageByRegEx } from './controllers/packageRegexController';
 
 const router = express.Router();
 
@@ -41,5 +42,7 @@ router.get('/package/byName/:name', getPackageHistoryByName);
 
 // Define the route for handling the DELETE request to /package/byName/{name}
 router.delete('/package/byName/:name', deletePackageByName);
+
+router.post('/package/byRegEx', postPackageByRegEx);
 
 export default router;

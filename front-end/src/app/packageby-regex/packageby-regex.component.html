@@ -1,0 +1,18 @@
+<!-- packageby-regex.component.html -->
+
+<div class="package-search-container">
+    <h2>Package by RegEx</h2>
+    <label for="regexInput">Enter Regular Expression:</label>
+    <input id="regexInput" [(ngModel)]="packageregex.RegEx" placeholder="Regular Expression">
+    <button (click)="getPackageRegEx()">Search Packages</button>
+  
+    <div *ngIf="packages.length > 0" class="package-list">
+      <h2>Packages Matching the Regular Expression:</h2>
+      <ul>
+        <li *ngFor="let package of packages">
+          {{ package.Name }} - {{ package.Version }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  

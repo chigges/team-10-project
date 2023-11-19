@@ -13,6 +13,8 @@ import { PackageComponent } from './package/package.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { PackagebyNameComponent } from './packageby-name/packageby-name.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { PackagebyRegexComponent } from './packageby-regex/packageby-regex.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { PackagebyNameComponent } from './packageby-name/packageby-name.componen
     LoginComponent,
     HomeComponent,
     PackagebyNameComponent,
+    RegistrationComponent,
+    PackagebyRegexComponent,
   ],
   imports: [
     BrowserModule,
