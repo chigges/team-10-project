@@ -8,9 +8,18 @@
   <button type="button" (click)="getPackage()">Get Package</button>
 
   <div *ngIf="getPackageData">
-    <h3>Package Details</h3>
-    <pre>{{ getPackageData | json }}</pre>
+ <!-- Display the rest of the data as JSON (excluding 'Content') -->
+    <pre>{{ getPackageData | filterOutContentField | json }}</pre>
+    
+  <!-- Display a download link if Content is available -->
+  <ng-container *ngIf="getPackageData.data.Content">
+    <div class="download-box">
+      <a href="#" (click)="downloadZip()">Download ZIP</a>
+    </div>
+  </ng-container>
+
   </div>
+  
 
   <hr /> <!-- Add a horizontal line for visual separation -->
 
@@ -64,7 +73,7 @@
 
   <div *ngIf="postPackageDataResponse">
     <h3>New Package Details</h3>
-    <pre>{{ postPackageDataResponse | json }}</pre>
+    <pre>{{ postPackageDataResponse | filterOutContentField | json }}</pre>
   </div>
 
   <hr />
