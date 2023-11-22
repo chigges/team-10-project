@@ -117,8 +117,9 @@ export class PackageComponent {
   }
 
   updatePackage() {
+    this.updateMessage = '';
     this.apiService.packageUpdate(
-      { id: this.packageId, 'X-Authorization': this.authHeader, body: this.packageData }
+      { id: this.packageData.metadata.ID, 'X-Authorization': this.authHeader, body: this.packageData }
     ).subscribe(
       response => {
         this.updateMessage = 'Package update successful';
@@ -129,13 +130,10 @@ export class PackageComponent {
         console.log('Error updating package:', error);
       }
     );
-
-    setTimeout(() => {
-      this.updateMessage = '';
-    }, 2000);
   }
 
   deletePackage() {
+    this.deleteMessage = '';
     this.apiService.packageDelete(
       { id: this.deletePackageId, 'X-Authorization': this.authHeader }
     ).subscribe(
@@ -148,10 +146,6 @@ export class PackageComponent {
         console.log('Error deleting package:', error);
       }
     );
-
-    setTimeout(() => {
-      this.deleteMessage = '';
-    }, 2000);
   }
 
   putPackage() {

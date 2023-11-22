@@ -157,7 +157,7 @@ export const getPackages = async (req: Request, res: Response) => {
           const endVersion = `${major + 1}.0.0`
           const params = {
             TableName: 'packages', // Replace with your DynamoDB table name
-            FilterExpression: '#n = :name' + (Version ? ' AND #v BETWEEN :startVersion AND :endVersion' : ''),
+            FilterExpression: '#n = :name' + (Version ? ' AND #v >= :startVersion AND #v < :endVersion' : ''),
             ExpressionAttributeNames: {
               '#n': 'name',   // Attribute name for 'Name'
               ...(Version ? { '#v': 'version' } : {}),  // Add 'Version' attribute name if a version is provided
@@ -189,7 +189,7 @@ export const getPackages = async (req: Request, res: Response) => {
           const endVersion = `${major}.${(minor + 1)}.0`
           const params = {
             TableName: 'packages', // Replace with your DynamoDB table name
-            FilterExpression: '#n = :name' + (Version ? ' AND #v BETWEEN :startVersion AND :endVersion' : ''),
+            FilterExpression: '#n = :name' + (Version ? ' AND #v >= :startVersion AND #v < :endVersion' : ''),
             ExpressionAttributeNames: {
               '#n': 'name',   // Attribute name for 'Name'
               ...(Version ? { '#v': 'version' } : {}),  // Add 'Version' attribute name if a version is provided
