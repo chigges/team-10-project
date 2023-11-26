@@ -17,7 +17,7 @@ export class AwsService {
   signUp(username: string, password: string): void {
     // Perform the signUp operation
     const params = {
-      ClientId: '4kvhq7ljum27nae9sesn61qgr2',
+      ClientId: '',
       Username: username,
       Password: password,
     };

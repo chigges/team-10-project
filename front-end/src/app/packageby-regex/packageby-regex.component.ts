@@ -15,10 +15,13 @@ export class PackagebyRegexComponent {
     'RegEx': ''
   };
   packages: PackageMetadata[] = [];
+  noMatchesFound: boolean = false; 
 
   constructor(private apiService: ApiService) {}
 
   getPackageRegEx() {
+    this.packages = [];
+    this.noMatchesFound = false; 
     this.apiService.packageByRegExGet( 
       { 'X-Authorization': this.authHeader, body: this.packageregex }
     ).subscribe(
@@ -27,6 +30,10 @@ export class PackagebyRegexComponent {
         console.log('Get package regex successful', response);
       },
       error => {
+        if(error.status === 404) {
+          this.noMatchesFound = true; //Set flag for 404 response; 
+          console.log('No matches found');
+        }
         console.log('Get package regex unsuccessful', error);
       }
     )

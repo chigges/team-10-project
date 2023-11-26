@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { PackagebyNameComponent } from './packageby-name/packageby-name.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { PackagebyRegexComponent } from './packageby-regex/packageby-regex.component';
+import { FilterOutContentFieldPipe } from './filter-out-content.pipe';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { PackagebyRegexComponent } from './packageby-regex/packageby-regex.compo
     PackagebyNameComponent,
     RegistrationComponent,
     PackagebyRegexComponent,
+    FilterOutContentFieldPipe,
   ],
   imports: [
     BrowserModule,
