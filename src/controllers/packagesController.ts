@@ -2,7 +2,6 @@ import { DynamoDBClient, QueryCommand, ScanCommand } from '@aws-sdk/client-dynam
 import { Request, Response } from 'express';
 import { PackageQuery, EnumerateOffset, PackageMetadata, AuthenticationToken } from '../types'; // Adjust the path as needed
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
-import semver from 'semver';
 
 const dynamoDb = new DynamoDBClient({ region: "us-east-1" });
 
@@ -39,6 +38,8 @@ export const getPackages = async (req: Request, res: Response) => {
         return res.status(400).json({ error: 'Invalid offset value.' });
       }
     }
+
+    res.header('offset', offset?.toString());
 
     // If Name is "*", fetch all packages without applying KeyConditionExpression
     if (Name === '*') {

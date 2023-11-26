@@ -31,7 +31,7 @@ export const resetRegistry = async (req: Request, res: Response) => {
 
     // Delete all objects from S3 bucket
     // Uncomment the line below once the issue with S3 bucket access is resolved
-    // await deleteAllObjectsFromS3Bucket('pckstore');
+    await deleteAllObjectsFromS3Bucket('pckstore');
 
     console.log('S3 objects deleted successfully');
 
@@ -80,7 +80,6 @@ async function deleteAllObjectsFromS3Bucket(bucketName: string): Promise<void> {
     console.log(`Deleting all objects from S3 bucket: ${bucketName}`);
     const listParams = {
       Bucket: bucketName,
-      Prefix: 'packages/',
     };
 
     const listResult = await s3.send(new ListObjectsCommand(listParams));
