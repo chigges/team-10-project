@@ -23,7 +23,7 @@ export class PackagesComponent {
       Name: this.packageName,
       Version: this.packageVersion,
     };
-
+    console.log('package name: %s', query.Name);
     const offset: EnumerateOffset = '';
 
     this.apiService.packagesList(

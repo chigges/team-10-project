@@ -17,6 +17,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.json()); // Middleware to parse JSON request bodies
 app.use('/', routes); // Use your defined routes
 
 app.listen(port, () => {

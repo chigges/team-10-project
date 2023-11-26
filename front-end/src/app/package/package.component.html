@@ -8,33 +8,49 @@
   <button type="button" (click)="getPackage()">Get Package</button>
 
   <div *ngIf="getPackageData">
-    <h3>Package Details</h3>
-    <pre>{{ getPackageData | json }}</pre>
+ <!-- Display the rest of the data as JSON (excluding 'Content') -->
+    <pre>{{ getPackageData | filterOutContentField | json }}</pre>
+    
+  <!-- Display a download link if Content is available -->
+  <ng-container *ngIf="getPackageData.data.Content">
+    <div class="download-box">
+      <a href="#" (click)="downloadZip()">Download ZIP</a>
+    </div>
+  </ng-container>
+
   </div>
+  
 
   <hr /> <!-- Add a horizontal line for visual separation -->
 
   <h2>Update Package</h2>
 
+  <label for="updatePackageName">Package Name:</label>
+  <input type="text" id="updatePackageName" [(ngModel)]="packageData.metadata.Name" placeholder="Enter Package Name">
+  
+  <label for="updatePackageVersion">Package Version:</label>
+  <input type="text" id="updatePackageVersion" [(ngModel)]="packageData.metadata.Version" placeholder="Enter Package Version">
+  
   <label for="updatePackageId">Package ID:</label>
   <input type="text" id="updatePackageId" [(ngModel)]="packageData.metadata.ID" placeholder="Enter Package ID">
   
   <label for="updatePackageContent">Package Content (Zip File):</label>
   <input type="file" id="updatePackageContent" (change)="handleFileInput($event)" accept=".zip">
-
+  
   <label for="updatePackageURL">Package URL:</label>
   <input type="text" id="updatePackageURL" [(ngModel)]="packageData.data.URL" placeholder="Enter Package URL">
-
+  
   <label for="updatePackageJSProgram">Package JS Program:</label>
   <input type="text" id="updatePackageJSProgram" [(ngModel)]="packageData.data.JSProgram" placeholder="Enter Package JS Program">
-
+  
   <button type="button" (click)="updatePackage()">Update Package</button>
-
+  
   <div *ngIf="updateMessage" class="message">
     <p>{{ updateMessage }}</p>
   </div>
-
+  
   <hr /> <!-- Add a horizontal line for visual separation -->
+  
 
   <h2>Delete Package</h2>
 
@@ -64,7 +80,7 @@
 
   <div *ngIf="postPackageDataResponse">
     <h3>New Package Details</h3>
-    <pre>{{ postPackageDataResponse | json }}</pre>
+    <pre>{{ postPackageDataResponse | filterOutContentField | json }}</pre>
   </div>
 
   <hr />
