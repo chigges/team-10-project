@@ -34,7 +34,7 @@ export interface PackageMetadata {
     /**
      * Unique ID for use with the /package/{id} endpoint.
      */
-    ID: PackageId;
+    ID?: PackageId;
   
     /**
      * Package name
