@@ -4,6 +4,9 @@
 
 log_file="selenium-test.log"
 
+# Install dependencies
+npm install
+
 # Compile typescript
 echo "Compiling typescript..."
 tsc
