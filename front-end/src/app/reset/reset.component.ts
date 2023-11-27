@@ -1,3 +1,8 @@
+/*
+ * File: reset.component.ts
+ * Author: Madi Arnold
+ * Description: The component for the /reset endpoint for the front-end 
+ */
 import { Component } from '@angular/core';
 import { ApiService } from '../api/services';
 import { AuthenticationToken } from '../api/models';
@@ -8,7 +13,7 @@ import { AuthenticationToken } from '../api/models';
   styleUrls: ['./reset.component.css']
 })
 export class ResetComponent {
-  resetMessage: string = '';
+  resetMessage = '';
   authHeader: AuthenticationToken = 'YOUR_AUTH_TOKEN_HERE';
 
   constructor(private apiService: ApiService) {}

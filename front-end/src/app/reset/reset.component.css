@@ -19,7 +19,7 @@
   }
   
   .reset-container button {
-    background-color: #4caf50;
+    background-color: #1d20b9;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -28,7 +28,7 @@
   }
   
   .reset-container button:hover {
-    background-color: #45a049;
+    background-color: #16188D;
   }
   
   .reset-message {
