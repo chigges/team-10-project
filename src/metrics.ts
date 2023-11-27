@@ -132,7 +132,7 @@ export class Responsiveness extends BaseMetric {
 
 			// Calculate the average time to close
 			const averageTimeToClose =
-				closedPRs.reduce((total, issue) => {
+				closedPRs.reduce((total: number, issue: any) => {
 					if (issue.closed_at == null) {
 						log.error("A closed PR does not have a closed date: ", issue.title);
 						return 0;

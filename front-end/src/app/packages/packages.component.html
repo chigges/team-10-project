@@ -8,7 +8,7 @@
   <label for="packageVersion">Package Version:</label>
   <input id="packageVersion" [(ngModel)]="packageVersion" placeholder="Enter Package Version" aria-label="Package Version Input">
   
-  <button type="button" (click)="onSubmit()">Fetch Packages</button>
+  <button id="fetchButton" type="button" (click)="onSubmit()">Fetch Packages</button>
 </div>
 
 <div *ngIf="packages.length > 0" class="package-list-container">
