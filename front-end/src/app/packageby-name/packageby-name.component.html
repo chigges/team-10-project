@@ -6,7 +6,7 @@
     <label for="packageName">Package Name:</label>
     <input type="text" id="packageName" [(ngModel)]="packageName" placeholder="Enter Package Name" aria-label="Package Name Input">
   
-    <button type="button" (click)="getPackageHistory()">Get Package History</button>
+    <button id ="historyButton" type="button" (click)="getPackageHistory()">Get Package History</button>
   
     <div *ngIf="packageHistory.length > 0">
       <h3>Package History:</h3>
@@ -23,7 +23,7 @@
       </div>
     </div>
   
-    <button type="button" (click)="deletePackage()">Delete Package</button>
+    <button id="deleteByNameButton" type="button" (click)="deletePackage()">Delete Package</button>
   
     <div *ngIf="deletePackageResponse" class="message">
       <p>{{ deletePackageResponse }}</p>

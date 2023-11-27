@@ -1,0 +1,29 @@
+2023-11-27T05:25:07.077Z - Starting setup()...
+2023-11-27T05:25:11.417Z - SUCCESS setup() complete. Navigated to http://localhost:4200/home
+
+2023-11-27T05:25:11.420Z - Starting homeTest...
+2023-11-27T05:25:11.753Z - SUCCESS Home page title: FrontEnd
+2023-11-27T05:25:11.850Z - SUCCESS homeTest completed.
+
+2023-11-27T05:25:11.851Z - Starting fetchPackageTest...
+2023-11-27T05:25:17.750Z - ERROR during fetchPackageTest: TimeoutError: Waiting for element to be located By(css selector, .package-list-container)
+Wait timed out after 5117ms
+
+2023-11-27T05:25:17.750Z - Starting resetTest...
+2023-11-27T05:25:20.268Z - ERROR during resetTest: Error: reset failed
+
+2023-11-27T05:25:20.269Z - Starting packageByNameTest...
+2023-11-27T05:25:20.769Z - SUCCESS Package history button message: User: James Davis
+Date: 2023-03-23 19:11:15
+Action: DOWNLOAD
+Package Metadata:
+Name: Underscore
+Version: 1.0.0
+ID: underscore
+2023-11-27T05:25:20.901Z - SUCCESS Package deletion button message: Package deletion successful
+2023-11-27T05:25:23.902Z - SUCCESS packageByNameTest completed.
+
+2023-11-27T05:25:23.903Z - Starting packageByRegexTest...
+2023-11-27T05:25:29.351Z - ERROR during packageByRegexTest: TimeoutError: Waiting for element to be located By(css selector, .package-list)
+Wait timed out after 5128ms
+
