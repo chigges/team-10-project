@@ -38,7 +38,7 @@ input {
 
 button {
   width: calc(33.33% - 5px);
-  background-color: #4caf50;
+  background-color: #1d20b9;
   color: white;
   padding: 10px 0;
   border: none;
@@ -50,7 +50,7 @@ button {
 }
 
 button:hover {
-  background-color: #45a049; /* Darken the color on hover */
+  background-color: #16188D; /* Darken the color on hover */
 }
 
 button + button {
@@ -78,6 +78,6 @@ pre {
 .download-box {
   display: inline-block;
   padding: 10px;
-  background-color: #4caf50;
+  background-color: #1d20b9;
   border-radius: 5px;
 }

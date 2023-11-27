@@ -1,3 +1,8 @@
+/*
+ * File: packageRegexController.ts
+ * Author: Madi Arnold
+ * Description: The /package/byRegEx endpoint logic
+ */
 import { Request, Response } from 'express';
 import { AuthenticationToken, PackageMetadata, PackageRegEx } from '../types'; 
 import { DynamoDBClient, ScanCommand } from '@aws-sdk/client-dynamodb';

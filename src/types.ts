@@ -1,6 +1,10 @@
+/*
+ * File: types.ts
+ * Author: Madi Arnold
+ * Description: The types that we need according to the API spec
+ */
+
 /*types that we need according to the API spec*/
-
-
 
 export interface User {
 

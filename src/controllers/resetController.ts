@@ -1,3 +1,9 @@
+/*
+ * File: resetController.ts
+ * Author: Madi Arnold
+ * Description: The /reset endpoint logic
+ */
+
 import { Request, Response } from 'express';
 import { AuthenticationToken } from '../types';
 import { DynamoDBClient, DeleteItemCommand, ScanCommand } from '@aws-sdk/client-dynamodb';
