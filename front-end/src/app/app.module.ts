@@ -10,10 +10,8 @@ import { ApiService } from './api/services';
 import { PackagesComponent } from './packages/packages.component';
 import { ResetComponent } from './reset/reset.component';
 import { PackageComponent } from './package/package.component';
-import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { PackagebyNameComponent } from './packageby-name/packageby-name.component';
-import { RegistrationComponent } from './registration/registration.component';
 import { PackagebyRegexComponent } from './packageby-regex/packageby-regex.component';
 import { FilterOutContentFieldPipe } from './filter-out-content.pipe';
 
@@ -23,10 +21,8 @@ import { FilterOutContentFieldPipe } from './filter-out-content.pipe';
     PackagesComponent,
     ResetComponent,
     PackageComponent,
-    LoginComponent,
     HomeComponent,
     PackagebyNameComponent,
-    RegistrationComponent,
     PackagebyRegexComponent,
     FilterOutContentFieldPipe,
   ],

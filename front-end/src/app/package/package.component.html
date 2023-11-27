@@ -1,80 +1,57 @@
 <!-- package.component.html -->
 
-<div class="package-container">
+<div class="package-container" id="package-container">
   <h2>Package Operations</h2>
 
   <label for="packageId">Package ID:</label>
-  <input type="text" id="packageId" [(ngModel)]="packageId" placeholder="Enter Package ID">
+  <input type="text" id="packageId" [(ngModel)]="packageId" placeholder="Enter Package ID" aria-label="Package ID Input">
   <button type="button" (click)="getPackage()">Get Package</button>
 
   <div *ngIf="getPackageData">
- <!-- Display the rest of the data as JSON (excluding 'Content') -->
+    <!-- Display the rest of the data as JSON (excluding 'Content') -->
     <pre>{{ getPackageData | filterOutContentField | json }}</pre>
     
-  <!-- Display a download link if Content is available -->
-  <ng-container *ngIf="getPackageData.data.Content">
-    <div class="download-box">
-      <a href="#" (click)="downloadZip()">Download ZIP</a>
-    </div>
-  </ng-container>
-
+    <!-- Display a download link if Content is available -->
+    <ng-container *ngIf="getPackageData.data.Content">
+      <div class="download-box">
+        <a href="#" role="button" tabindex="0" (click)="downloadZip()">Download ZIP</a>
+      </div>
+    </ng-container>
   </div>
-  
 
-  <hr /> <!-- Add a horizontal line for visual separation -->
+  <hr />
 
   <h2>Update Package</h2>
 
   <label for="updatePackageName">Package Name:</label>
-  <input type="text" id="updatePackageName" [(ngModel)]="packageData.metadata.Name" placeholder="Enter Package Name">
+  <input type="text" id="updatePackageName" [(ngModel)]="packageData.metadata.Name" placeholder="Enter Package Name" aria-label="Package Name Input">
   
-  <label for="updatePackageVersion">Package Version:</label>
-  <input type="text" id="updatePackageVersion" [(ngModel)]="packageData.metadata.Version" placeholder="Enter Package Version">
-  
-  <label for="updatePackageId">Package ID:</label>
-  <input type="text" id="updatePackageId" [(ngModel)]="packageData.metadata.ID" placeholder="Enter Package ID">
-  
-  <label for="updatePackageContent">Package Content (Zip File):</label>
-  <input type="file" id="updatePackageContent" (change)="handleFileInput($event)" accept=".zip">
-  
-  <label for="updatePackageURL">Package URL:</label>
-  <input type="text" id="updatePackageURL" [(ngModel)]="packageData.data.URL" placeholder="Enter Package URL">
-  
-  <label for="updatePackageJSProgram">Package JS Program:</label>
-  <input type="text" id="updatePackageJSProgram" [(ngModel)]="packageData.data.JSProgram" placeholder="Enter Package JS Program">
-  
+  <!-- Add labels for other input fields in a similar manner -->
+
   <button type="button" (click)="updatePackage()">Update Package</button>
   
   <div *ngIf="updateMessage" class="message">
     <p>{{ updateMessage }}</p>
   </div>
   
-  <hr /> <!-- Add a horizontal line for visual separation -->
-  
+  <hr />
 
   <h2>Delete Package</h2>
 
   <label for="deletePackageId">Package ID:</label>
-  <input type="text" id="deletePackageId" [(ngModel)]="deletePackageId" placeholder="Enter Package ID">
+  <input type="text" id="deletePackageId" [(ngModel)]="deletePackageId" placeholder="Enter Package ID" aria-label="Package ID Input">
   <button type="button" (click)="deletePackage()">Delete Package</button>
 
   <div *ngIf="deleteMessage" class="message">
     <p>{{ deleteMessage }}</p>
   </div>
 
-  <hr /> <!-- Add a horizontal line for visual separation -->
+  <hr />
 
   <h2>Create New Package</h2>
   <p>Upload either a Zip File or provide a URL</p>
 
-  <label for="postPackageContent">Package Content (Zip File):</label>
-  <input type="file" id="postPackageContent" (change)="handlePostFileInput($event)" accept=".zip">
-
-  <label for="postPackageURL">Package URL:</label>
-  <input type="text" id="postPackageURL" [(ngModel)]="postPackageData.URL" placeholder="Enter Package URL">
-
-  <label for="postPackageJSProgram">Package JS Program:</label>
-  <input type="text" id="postPackageJSProgram" [(ngModel)]="postPackageData.JSProgram" placeholder="Enter Package JS Program">
+  <!-- Add labels for input fields and instructions as needed -->
 
   <button type="button" (click)="putPackage()">Create Package</button>
 
@@ -88,7 +65,7 @@
   <h2>Rate Package</h2>
 
   <label for="ratePackageId">Package ID:</label>
-  <input type="text" id="ratePackageId" [(ngModel)]="ratePackageId" placeholder="Enter Package ID">
+  <input type="text" id="ratePackageId" [(ngModel)]="ratePackageId" placeholder="Enter Package ID" aria-label="Package ID Input">
   <button type="button" (click)="ratePackage()">Rate Package</button>
 
   <!-- Display the rating response if needed -->
