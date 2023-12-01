@@ -23,4 +23,11 @@ log.attachTransport((logObj) => {
 		process.exit(1);
 	}
 	appendFileSync(process.env.LOG_FILE, JSON.stringify(logObj) + "\n");
+	// Log to file in format: [2021-03-31T21:00:00.000Z] [INFO] Logger: Hello World
+	// appendFileSync(
+	// 	process.env.LOG_FILE,
+	// 	`[${logObj.date.toISOString()}] [${logObj.logLevel.toUpperCase()}] ${logObj.name}: ${logObj.argumentsArray.join(
+	// 		" "
+	// 	)}\n`
+	// );
 });

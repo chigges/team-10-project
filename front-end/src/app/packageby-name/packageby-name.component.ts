@@ -29,6 +29,7 @@ export class PackagebyNameComponent {
         console.log('Get package history successful', response);
       },
       error => {
+        this.packageHistory = [];
         console.log('Error retrieving pacakge:', error);
       }
     )

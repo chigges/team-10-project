@@ -116,6 +116,18 @@ export class PackageComponent {
         console.log('Package retrieval successful', response);
       },
       error => {
+        this.getPackageData = {
+          data: {
+            Content: '',
+            URL: '',
+            JSProgram: ''
+          },
+          metadata: {
+            Name: '',
+            Version: '',
+            ID: ''
+          }
+        };
         console.log('Error retrieving package:', error);
       }
     );
@@ -176,6 +188,16 @@ export class PackageComponent {
         console.log('Package rating successful', response);
       },
       error => {
+        this.ratePackageResponse = {
+          BusFactor: 0,
+          Correctness: 0,
+          GoodPinningPractice: 0,
+          LicenseScore: 0,
+          NetScore: 0,
+          PullRequest: 0,
+          RampUp: 0,
+          ResponsiveMaintainer: 0
+        };
         console.log('Error rating package:', error);
       }
     )
