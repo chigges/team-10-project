@@ -1,3 +1,8 @@
+/*
+ * File: pacakgeby-name.component.ts
+ * Author: Madi Arnold
+ * Description: The logic for the package/byName endpoint for the front-end
+ */
 import { Component } from '@angular/core';
 import { ApiService } from '../api/services';
 import { AuthenticationToken, PackageHistoryEntry, PackageName } from '../api/models';
@@ -11,7 +16,7 @@ export class PackagebyNameComponent {
   authHeader: AuthenticationToken = 'YOUR_AUTH_TOKEN_HERE';
   packageName: PackageName = ''; //Input from user; 
   packageHistory: PackageHistoryEntry[] = []; //Response from the backend
-  deletePackageResponse: string = '';
+  deletePackageResponse = '';
 
   constructor(private apiService: ApiService) {}
 

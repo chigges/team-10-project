@@ -1,3 +1,9 @@
+/*
+* File: packagesController.ts
+* Author: Madi Arnold
+* Description: The /packages endpoint logic
+*/
+
 import { ScanCommand } from '@aws-sdk/client-dynamodb';
 import { Request, Response } from 'express';
 import { PackageQuery, EnumerateOffset, PackageMetadata, AuthenticationToken } from '../types'; // Adjust the path as needed
@@ -220,7 +226,7 @@ export const getPackages = async (req: Request, res: Response) => {
       }
   } catch (error) {
     console.error('Error handling /packages:', error);
-    res.status(500).json({ error: 'Internal Server Error' }); // Handle any errors with a 500 status
+    res.status(413).json({ error: 'Internal Server Error' }); // Handle any errors with a 500 status
   }
 };
 

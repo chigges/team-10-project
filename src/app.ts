@@ -1,3 +1,9 @@
+/*
+ * File: app.ts
+ * Author: Madi Arnold
+ * Description: The main file for our backend that gets up the port and enables CORS for all routes 
+ */
+
 import express from 'express';
 import routes from './routes';
 

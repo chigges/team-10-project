@@ -1,3 +1,8 @@
+/*
+ * File: packages.component.ts
+ * Author: Madi Arnold
+ * Description: The component for the /packages endpoint for the front-end 
+ */
 import { Component } from '@angular/core';
 import { ApiService } from '../api/services';
 import { PackageQuery } from '../api/models';
@@ -13,8 +18,8 @@ import { PackageMetadata } from '../api/models';
 export class PackagesComponent {
   packages: PackageMetadata[] = []; 
   authHeader: AuthenticationToken = 'YOUR_AUTH_TOKEN_HERE';
-  packageName: string = ''; //User input for Package Name
-  packageVersion: string = ''; //User input for Package Version
+  packageName = ''; //User input for Package Name
+  packageVersion = ''; //User input for Package Version
 
   constructor(private apiService: ApiService) {}
 

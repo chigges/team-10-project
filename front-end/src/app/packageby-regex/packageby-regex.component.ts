@@ -1,3 +1,8 @@
+/*
+ * File: packageby-regex.component.ts
+ * Author: Madi Arnold
+ * Description: The packageby-regex component for the /package/byRegEx endpoint for the front-end
+ */
 import { Component } from '@angular/core';
 import { ApiService } from '../api/services';
 import { AuthenticationToken } from '../api/models';
@@ -15,7 +20,7 @@ export class PackagebyRegexComponent {
     'RegEx': ''
   };
   packages: PackageMetadata[] = [];
-  noMatchesFound: boolean = false; 
+  noMatchesFound = false; 
 
   constructor(private apiService: ApiService) {}
 

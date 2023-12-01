@@ -3,7 +3,7 @@
 <div class="package-search-container">
   <h2>Package by RegEx</h2>
   <label for="regexInput">Enter Regular Expression:</label>
-  <input id="regexInput" [(ngModel)]="packageregex.RegEx" placeholder="Regular Expression">
+  <input id="regexInput" [(ngModel)]="packageregex.RegEx" placeholder="Regular Expression" aria-label="Regular Expression Input">
   <button (click)="getPackageRegEx()">Search Packages</button>
 
   <!-- Display message when no matches are found -->

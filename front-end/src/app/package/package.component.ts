@@ -1,3 +1,8 @@
+/*
+ * File: package.component.ts
+ * Author: Madi Arnold
+ * Description: The package component for the /package endpoint with the logic for the front-end 
+ */
 import { Component } from '@angular/core';
 import { ApiService } from '../api/services';
 import { AuthenticationToken } from '../api/models';
@@ -39,8 +44,8 @@ export class PackageComponent {
       ID: ''
     }
   };
-  updateMessage: string = '';
-  deleteMessage: string = '';
+  updateMessage = '';
+  deleteMessage = '';
   postPackageData: PackageData = { //User Input for putPackage
     Content: '',
     URL: '',

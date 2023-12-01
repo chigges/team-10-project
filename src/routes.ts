@@ -1,3 +1,9 @@
+/*
+ * File: routes.ts
+ * Author: Madi Arnold
+ * Description: The routes for all of the endpoints and what functions the logic is in for each of them
+ */
+
 import express from 'express';
 import { getPackages } from './controllers/packagesController'; 
 import { resetRegistry } from './controllers/resetController';
