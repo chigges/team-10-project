@@ -31,7 +31,11 @@ class URLParser {
 			const match = url.match(regex);
 			if (match != null) {
 				const owner = match[1].split("/")[0];
-				const repo = match[1].split("/")[1];
+				let repo = match[1].split("/")[1];
+				// remove .git from repo name
+				if (repo.endsWith(".git")) {
+					repo = repo.slice(0, -4);
+				}
 				githubRepoInfo.push({ url, owner, repo });
 			}
 		});
@@ -53,7 +57,11 @@ class URLParser {
 			const match = url.match(regex);
 			if (match != null) {
 				const owner = match[1].split("/")[0];
-				const repo = match[1].split("/")[1];
+				let repo = match[1].split("/")[1];
+				// remove .git from repo name
+				if (repo.endsWith(".git")) {
+					repo = repo.slice(0, -4);
+				}
 				return { url, owner, repo };
 			}
 		}

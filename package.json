@@ -40,6 +40,7 @@
 		"dotenv": "^16.3.1",
 		"express": "^4.18.2",
 		"isomorphic-git": "^1.24.5",
+		"ng": "^0.0.0",
 		"node-fetch": "^2.7.0",
 		"octokit": "^3.1.1",
 		"tmp": "^0.2.1",

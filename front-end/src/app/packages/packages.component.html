@@ -17,7 +17,8 @@
     <li *ngFor="let package of packages" class="package-item">
       <div class="package-box">
         <span class="package-name">{{ package.Name }}</span><br>
-        <span class="package-version"> Version: {{ package.Version }}</span>
+        <span class="package-version"> Version: {{ package.Version }}</span><br>
+        <span class="package-id"> ID: {{ package.ID }}</span>
       </div>
     </li>
   </ul>

@@ -1,9 +1,8 @@
-import { DynamoDBClient, QueryCommand, ScanCommand } from '@aws-sdk/client-dynamodb';
+import { ScanCommand } from '@aws-sdk/client-dynamodb';
 import { Request, Response } from 'express';
 import { PackageQuery, EnumerateOffset, PackageMetadata, AuthenticationToken } from '../types'; // Adjust the path as needed
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
-
-const dynamoDb = new DynamoDBClient({ region: "us-east-1" });
+import { dbclient } from './controllerHelpers';
 
 // Controller function for handling the POST request to /packages
 export const getPackages = async (req: Request, res: Response) => {
@@ -43,7 +42,7 @@ export const getPackages = async (req: Request, res: Response) => {
 
     // If Name is "*", fetch all packages without applying KeyConditionExpression
     if (Name === '*') {
-      const allPackagesResult = await dynamoDb.send(new ScanCommand({
+      const allPackagesResult = await dbclient.send(new ScanCommand({
         TableName: 'packages', // Replace with your DynamoDB table name
         // Any additional conditions or parameters as needed
       }));
@@ -51,9 +50,9 @@ export const getPackages = async (req: Request, res: Response) => {
       // Convert DynamoDB items to PackageMetadata
       const allPackages: PackageMetadata[] = allPackagesResult.Items
         ? allPackagesResult.Items.map((item) => { const unmarshalledItem = unmarshall(item);
-          const valueObject = unmarshalledItem.value || {};
+          // const valueObject = unmarshalledItem.value || {};
           return {
-            ID: valueObject.ID, 
+            ID: unmarshalledItem.id?.toString() || "",
             Name: unmarshalledItem.name,
             Version: unmarshalledItem.version,
           }; })
@@ -75,14 +74,14 @@ export const getPackages = async (req: Request, res: Response) => {
           ...(Version ? { ':version': Version } : {}),
         }),
       };
-      const result = await dynamoDb.send(new ScanCommand(params));
+      const result = await dbclient.send(new ScanCommand(params));
       // Convert DynamoDB items to PackageMetadata
       console.log('Result', result);
       const filteredPackages: PackageMetadata[] = result.Items
         ? result.Items.map((item) => {const unmarshalledItem = unmarshall(item); 
-          const valueObject = unmarshalledItem.value || {};
+          // const valueObject = unmarshalledItem.value || {};
           return {
-            ID: valueObject.ID,
+            ID: unmarshalledItem.id?.toString() || "",
             Name: unmarshalledItem.name, 
             Version: unmarshalledItem.version,
           }; })
@@ -108,14 +107,14 @@ export const getPackages = async (req: Request, res: Response) => {
               ...(Version ? { ':version': Version } : {}),
             }),
           };
-          const result = await dynamoDb.send(new ScanCommand(params));
+          const result = await dbclient.send(new ScanCommand(params));
           // Convert DynamoDB items to PackageMetadata
           console.log('Result', result);
           const filteredPackages: PackageMetadata[] = result.Items
             ? result.Items.map((item) => {const unmarshalledItem = unmarshall(item); 
-              const valueObject = unmarshalledItem.value || {};
+              // const valueObject = unmarshalledItem.value || {};
               return {
-                ID: valueObject.ID,
+                ID: unmarshalledItem.id?.toString() || "",
                 Name: unmarshalledItem.name, 
                 Version: unmarshalledItem.version,
               }; })
@@ -136,14 +135,14 @@ export const getPackages = async (req: Request, res: Response) => {
               ...(Version ? { ':startVersion': boundedRange[1], ':endVersion': boundedRange[2] } : {}),
             }),
           };
-          const result = await dynamoDb.send(new ScanCommand(params));
+          const result = await dbclient.send(new ScanCommand(params));
           // Convert DynamoDB items to PackageMetadata
           console.log('Result', result);
           const filteredPackages: PackageMetadata[] = result.Items
             ? result.Items.map((item) => {const unmarshalledItem = unmarshall(item); 
-              const valueObject = unmarshalledItem.value || {};
+              // const valueObject = unmarshalledItem.value || {};
               return {
-                ID: valueObject.ID,
+                ID: unmarshalledItem.id?.toString() || "",
                 Name: unmarshalledItem.name, 
                 Version: unmarshalledItem.version,
               }; })
@@ -168,14 +167,14 @@ export const getPackages = async (req: Request, res: Response) => {
               ...(Version ? { ':startVersion': startVersion, ':endVersion': endVersion } : {}),
             }),
           };
-          const result = await dynamoDb.send(new ScanCommand(params));
+          const result = await dbclient.send(new ScanCommand(params));
           // Convert DynamoDB items to PackageMetadata
           console.log('Result', result);
           const filteredPackages: PackageMetadata[] = result.Items
             ? result.Items.map((item) => {const unmarshalledItem = unmarshall(item); 
-              const valueObject = unmarshalledItem.value || {};
+              // const valueObject = unmarshalledItem.value || {};
               return {
-                ID: valueObject.ID,
+                ID: unmarshalledItem.id?.toString() || "",
                 Name: unmarshalledItem.name, 
                 Version: unmarshalledItem.version,
               }; })
@@ -200,14 +199,14 @@ export const getPackages = async (req: Request, res: Response) => {
               ...(Version ? { ':startVersion': startVersion, ':endVersion': endVersion } : {}),
             }),
           };
-          const result = await dynamoDb.send(new ScanCommand(params));
+          const result = await dbclient.send(new ScanCommand(params));
           // Convert DynamoDB items to PackageMetadata
           console.log('Result', result);
           const filteredPackages: PackageMetadata[] = result.Items
             ? result.Items.map((item) => {const unmarshalledItem = unmarshall(item); 
-              const valueObject = unmarshalledItem.value || {};
+              // const valueObject = unmarshalledItem.value || {};
               return {
-                ID: valueObject.ID,
+                ID: unmarshalledItem.id?.toString() || "",
                 Name: unmarshalledItem.name, 
                 Version: unmarshalledItem.version,
               }; })
