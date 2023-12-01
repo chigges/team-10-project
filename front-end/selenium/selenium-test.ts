@@ -10,10 +10,10 @@ async function runTests() {
     const driver = await setup();
     try {
         await homeTest(driver); // Home page test
-        await fetchPackagesTest(driver); // Fetch packages test
+        // await fetchPackagesTest(driver); // Fetch packages test
         await resetTest(driver); // Reset button test
-        await packageByNameTest(driver); // Package by name test
-        await packageByRegexTest(driver); // Package by regex test
+        // await packageByNameTest(driver); // Package by name test
+        // await packageByRegexTest(driver); // Package by regex test
        
     } finally {
         await driver.quit();

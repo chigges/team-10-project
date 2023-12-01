@@ -28,6 +28,7 @@ export class ResetComponent {
         // Handle the reset response as needed
         this.resetMessage = 'Application reset successful.';
         console.log('Application reset successful:', response);
+        
       },
       error => {
         // Handle reset error

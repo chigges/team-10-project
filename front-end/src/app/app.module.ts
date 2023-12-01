@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { PackagebyNameComponent } from './packageby-name/packageby-name.component';
 import { PackagebyRegexComponent } from './packageby-regex/packageby-regex.component';
 import { FilterOutContentFieldPipe } from './filter-out-content.pipe';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { FilterOutContentFieldPipe } from './filter-out-content.pipe';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    CommonModule,
   ],
   providers:  [
     ApiService,

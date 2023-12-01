@@ -9,6 +9,9 @@ import { PackageQuery } from '../api/models';
 import { AuthenticationToken } from '../api/models';
 import { EnumerateOffset } from '../api/models';
 import { PackageMetadata } from '../api/models';
+// import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-packages',

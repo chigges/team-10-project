@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ApiService } from '../api/services';
+import { PackageComponent } from '../package/package.component'; 
 
 @Component({
   selector: 'app-home',
@@ -6,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-
+  constructor(private apiService: ApiService) {}
 }
