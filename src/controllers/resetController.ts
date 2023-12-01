@@ -70,7 +70,7 @@ async function deleteAllItemsFromDynamoDB(tableName: string): Promise<void> {
             },
           };
           return dynamoDb.send(new DeleteItemCommand(deleteParams));
-        } else if (tableName === 'packaeHistory') {
+        } else if (tableName === 'packageHistory') {
           const deleteParams = {
             TableName: tableName,
             Key: {

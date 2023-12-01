@@ -4,7 +4,7 @@
  * Description: The /packages endpoint logic
  */
 
-import { DynamoDBClient, QueryCommand, ScanCommand } from '@aws-sdk/client-dynamodb';
+import { DynamoDBClient, ScanCommand } from '@aws-sdk/client-dynamodb';
 import { Request, Response } from 'express';
 import { PackageQuery, EnumerateOffset, PackageMetadata, AuthenticationToken } from '../types'; // Adjust the path as needed
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
@@ -66,9 +66,9 @@ export const getPackages = async (req: Request, res: Response) => {
           const allPackages: PackageMetadata[] = allPackagesResult.Items
             ? allPackagesResult.Items.map((item) => {
               const unmarshalledItem = unmarshall(item);
-              const valueObject = unmarshalledItem.value || {};
+              // const valueObject = unmarshalledItem.value || {};
               return {
-                ID: valueObject.ID,
+                ID: unmarshalledItem?.id.toString() || "",
                 Name: unmarshalledItem.name,
                 Version: unmarshalledItem.version,
               };
@@ -100,9 +100,9 @@ export const getPackages = async (req: Request, res: Response) => {
             filteredPackages = result.Items
               ? result.Items.map((item) => {
                 const unmarshalledItem = unmarshall(item);
-                const valueObject = unmarshalledItem.value || {};
+                // const valueObject = unmarshalledItem.value || {};
                 return {
-                  ID: valueObject.ID,
+                  ID: unmarshalledItem?.id.toString() || "",
                   Name: unmarshalledItem.name,
                   Version: unmarshalledItem.version,
                 };
@@ -134,9 +134,9 @@ export const getPackages = async (req: Request, res: Response) => {
               filteredPackages = result.Items
                 ? result.Items.map((item) => {
                   const unmarshalledItem = unmarshall(item);
-                  const valueObject = unmarshalledItem.value || {};
+                  // const valueObject = unmarshalledItem.value || {};
                   return {
-                    ID: valueObject.ID,
+                    ID: unmarshalledItem?.id.toString() || "",
                     Name: unmarshalledItem.name,
                     Version: unmarshalledItem.version,
                   };
@@ -162,9 +162,9 @@ export const getPackages = async (req: Request, res: Response) => {
               filteredPackages = result.Items
                 ? result.Items.map((item) => {
                   const unmarshalledItem = unmarshall(item);
-                  const valueObject = unmarshalledItem.value || {};
+                  // const valueObject = unmarshalledItem.value || {};
                   return {
-                    ID: valueObject.ID,
+                    ID: unmarshalledItem?.id.toString() || "",
                     Name: unmarshalledItem.name,
                     Version: unmarshalledItem.version,
                   };
@@ -194,9 +194,9 @@ export const getPackages = async (req: Request, res: Response) => {
               filteredPackages = result.Items
                 ? result.Items.map((item) => {
                   const unmarshalledItem = unmarshall(item);
-                  const valueObject = unmarshalledItem.value || {};
+                  // const valueObject = unmarshalledItem.value || {};
                   return {
-                    ID: valueObject.ID,
+                    ID: unmarshalledItem?.id.toString() || "",
                     Name: unmarshalledItem.name,
                     Version: unmarshalledItem.version,
                   };
@@ -226,9 +226,9 @@ export const getPackages = async (req: Request, res: Response) => {
               filteredPackages = result.Items
                 ? result.Items.map((item) => {
                   const unmarshalledItem = unmarshall(item);
-                  const valueObject = unmarshalledItem.value || {};
+                  // const valueObject = unmarshalledItem.value || {};
                   return {
-                    ID: valueObject.ID,
+                    ID: unmarshalledItem?.id.toString() || "",
                     Name: unmarshalledItem.name,
                     Version: unmarshalledItem.version,
                   };
