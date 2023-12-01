@@ -32,6 +32,7 @@ export const resetRegistry = async (req: Request, res: Response) => {
     // Perform the registry reset
     // Delete all items from DynamoDB table
     await deleteAllItemsFromDynamoDB('packages');
+    await deleteAllItemsFromDynamoDB('packageHistory');
 
     console.log('DynamoDB items deleted successfully');
 
@@ -59,15 +60,25 @@ async function deleteAllItemsFromDynamoDB(tableName: string): Promise<void> {
     const scanResult = await dynamoDb.send(new ScanCommand(scanParams));
 
     if (scanResult.Items) {
-      // Delete each item from DynamoDB
+      // Delete each item from DynamoDB (hard-coded if/else since keys differ)
       const deletePromises = scanResult.Items.map((item) => {
-        const deleteParams = {
-          TableName: tableName,
-          Key: {
-            id: item.id,
-          },
-        };
-        return dynamoDb.send(new DeleteItemCommand(deleteParams));
+        if (tableName === 'packages') {
+          const deleteParams = {
+            TableName: tableName,
+            Key: {
+              id: item.id,
+            },
+          };
+          return dynamoDb.send(new DeleteItemCommand(deleteParams));
+        } else if (tableName === 'packaeHistory') {
+          const deleteParams = {
+            TableName: tableName,
+            Key: {
+              name: item.name,
+            },
+          };
+          return dynamoDb.send(new DeleteItemCommand(deleteParams));
+        }
       });
 
       await Promise.all(deletePromises);

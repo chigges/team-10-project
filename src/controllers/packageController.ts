@@ -1,10 +1,17 @@
 import { Request, Response } from 'express';
-import { Package, AuthenticationToken, PackageId, PackageData } from '../types'; 
+import { Package, AuthenticationToken, PackageId, PackageName, PackageData, PackageHistoryEntry, PackageMetadata } from '../types';
+import { log } from '../logger';
+import { PutItemCommand, GetItemCommand, PutItemCommandInput, DeleteItemCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { generatePackageId, metricCalcFromUrl, PackageInfo, dbclient, s3client, defaultUser } from './controllerHelpers';
+import AdmZip = require("adm-zip");
 
 // Controller function for handling the GET request to /package/{id}
-export const getPackageById = (req: Request, res: Response) => {
+export async function getPackageById (req: Request, res: Response) {
   try {
     const packageId: PackageId = req.params.id; // Extract the package ID from the URL
+    let packageName = "";
+    let packageVersion = "";
 
     // Verify the X-Authorization header for authentication and permission
     const authorizationHeader: AuthenticationToken | undefined = Array.isArray(req.headers['x-authorization'])
@@ -17,35 +24,126 @@ export const getPackageById = (req: Request, res: Response) => {
 
     // Check for permission to retrieve the package (you can add more logic here)
 
+    // Check if id is defined
+    if (!packageId) {
+      return res.status(400).json({ error: 'Missing package ID' });
+    }
+
     // Retrieve the package with the specified ID from your data source (e.g., a database)
-    const package1: Package | undefined = {
-        metadata: {
-          "Name": "Underscore",
-          "Version": "1.0.0",
-          "ID": "underscore"
-        },
-        data: {
-          "Content": "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",
-          "JSProgram": "if (process.argv.length === 7) {\nconsole.log('Success')\nprocess.exit(0)\n} else {\nconsole.log('Failed')\nprocess.exit(1)\n}\n"
+    const params = {
+      TableName: "packages",
+      Key: {
+        id: { N: packageId },
+      },
+    };
+
+    let package1: Package | undefined = undefined;
+
+    const command = new GetItemCommand(params);
+    await dbclient.send(command)
+      .then((response) => {
+        log.info("GetItem succeeded:", response.$metadata);
+        if (response.Item) {
+          package1 = {
+            metadata: {
+              "Name": response.Item?.name?.S || "",
+              "Version": response.Item?.version?.S || "",
+              "ID": packageId
+            },
+            data: {
+              "Content": "",
+              "JSProgram": "",
+            }
+          }
+          packageName = response.Item?.name?.S || "";
+          packageVersion = response.Item?.version?.S || "";
         }
-      }/* Replace with your data retrieval logic */
+      })
+      .catch((error) => {
+        log.error("Error getting item:", error);
+      });
 
     if (!package1) {
       return res.status(404).json({ error: 'Package not found' });
     }
 
+    // Get package content from S3 bucket
+    let content: string | undefined = undefined;
+    const s3params = {
+      Bucket: "pckstore",
+      Key: "packages/" + packageId + ".zip",
+    };
+    await s3client.send(new GetObjectCommand(s3params))
+      .then(async (response) => {
+        log.info("GetObject succeeded, downloaded from S3:", response.$metadata);
+        await response.Body?.transformToString('base64').then((arrayBuffer) => {
+          content = arrayBuffer;
+          package1!.data!.Content = content;
+        });
+        log.info("Received content");
+      })
+      .catch((error) => {
+        log.error("Error downloading object from S3:", error);
+      });
+    
+    if (content == null) {
+      return res.status(404).json({ error: 'Package content not found' });
+    }
+
+    // Append new history entry to current history
+    const date = new Date();
+    const isoDate = date.toISOString();
+    // Package metadata
+    const metadata: PackageMetadata = {
+      ID: packageId,
+      Name: packageName,
+      Version: packageVersion,
+    };
+    // Create package history entry
+    const history: PackageHistoryEntry = {
+      Action: "DOWNLOAD",
+      Date: isoDate,
+      PackageMetadata: metadata,
+      User: defaultUser,
+    };
+    // Append to current history
+    const appendHistoryParams = {
+      TableName: "packageHistory",
+      Key: {
+        name: { S: packageName },
+      },
+      UpdateExpression: `SET #attrName = list_append(if_not_exists(#attrName, :empty_list), :newData)`,
+      ExpressionAttributeNames: {
+        '#attrName': "history",
+      },
+      ExpressionAttributeValues: {
+        ':empty_list': { L: [] },
+        ':newData': { L: [{ S: JSON.stringify(history) }] },
+      },
+    };
+    await dbclient.send(new UpdateItemCommand(appendHistoryParams))
+      .then(() => {
+        log.info("Successfully appended history entry to package:", packageName);
+      })
+      .catch((error) => {
+        log.error("Error appending history entry to package:", packageName, error);
+      });
+
     // Respond with the retrieved package
     res.status(200).json(package1);
   } catch (error) {
-    console.error('Error handling GET /package/{id}:', error);
+    log.error('Error handling GET /package/{id}:', error);
     res.status(500).json({ error: 'Internal Server Error' }); // Handle any errors
   }
-};
+}
 
 // Controller function for handling the PUT request to update a package by ID
-export const updatePackage = (req: Request, res: Response) => {
+export async function updatePackage(req: Request, res: Response) {
   try {
-    const packageId: PackageId = req.params.id; // Extract the package ID from the URL
+    const packageId: PackageId = req.body.metadata.ID; // Extract the package ID from the URL
+    const packageName: PackageName = req.body.metadata.Name;
+    const packageVersion = req.body.metadata.Version;
+    log.info(`updatePackage request id: ${packageId}, name: ${packageName}, version: ${packageVersion}`);
 
     // Verify the X-Authorization header for authentication and permission
     const authorizationHeader: AuthenticationToken | undefined = Array.isArray(req.headers['x-authorization'])
@@ -53,32 +151,200 @@ export const updatePackage = (req: Request, res: Response) => {
       : req.headers['x-authorization']; // Use the value directly if it's a string or undefined
 
     if (!authorizationHeader) {
-    return res.status(400).json({ error: 'Authentication token missing or invalid' });
+      return res.status(400).json({ error: 'Authentication token missing or invalid' });
+    }
+
+    // Check if id, name, and version are defined
+    if (!packageId || !packageName || !packageVersion) {
+      return res.status(400).json({ error: 'Missing package ID, name, or version' });
+    }
+
+    // Check if name and version match id
+    if (generatePackageId(packageName, packageVersion) !== packageId) {
+      return res.status(400).json({ error: 'Package name and version do not match package ID' });
     }
 
     // Get the Package from the request body
-    //const package1: Package = req.body as Package;
-
-    //const name = package1.metadata.Name;
-    //const version = package1.metadata.Version; 
-    //const id = package1.metadata.ID;
+    const updatedPackageData: PackageData = req.body.data as PackageData;
 
     // Validate request body for the package data (replace with your own validation logic)
 
-    // Check if the package with the given ID exists (you need to implement this logic)
+    // Check if the package with the given ID exists
+    const params = {
+      TableName: "packages",
+      Key: {
+        id: { N: packageId },
+      },
+    };
+    let exists: boolean = false;
+    const command = new GetItemCommand(params);
+    await dbclient.send(command)
+      .then((response) => {
+        log.info("GetItem succeeded:", response.$metadata);
+        if (response.Item) {
+          exists = true;
+        }
+      })
+      .catch((error) => {
+        log.error("Error getting item:", error);
+        throw(error);
+      });
+    if (!exists) {
+      return res.status(404).json({ error: 'Package does not already exist' });
+    }
 
-    // Update the package data (replace with your own logic)
+    // Update the package data in S3 bucket + database metadata
+    // Verify that only one of Content or URL is set and then update package info if valid
+    let info: PackageInfo | null;
+    if (!((updatedPackageData.Content == '') !== (updatedPackageData.URL == ''))) {
+      return res.status(400).json({ error: 'Invalid package update request: Bad set of Content and URL' });
+    } else if (updatedPackageData?.Content) {
+      log.info("updatePackage request via zip upload");
+      const zipBuffer = Buffer.from(atob(updatedPackageData.Content.split(",")[1]), 'binary');
+
+      // Extract package.json from zip file
+      const zip = new AdmZip(zipBuffer);
+      const zipEntries = zip.getEntries();
+      let packageJson: string | null = null;
+      let packageJsonContent;
+      zipEntries.forEach(entry => {
+        const entryPathParts = entry.entryName.split('/');
+        if (entryPathParts.length === 2 && entryPathParts[1] === 'package.json') {
+          packageJson = entry.getData().toString('utf8');
+        }
+      });
+      if (packageJson == null) {
+        return res.status(400).json({ error: 'Invalid package update request: No package.json found in zip' });
+      } else {
+        packageJsonContent = JSON.parse(packageJson);
+        log.info("repo url:", packageJsonContent?.repository?.url, "name:", packageJsonContent.name, "version:", packageJsonContent.version);
+        // Check for repository url, name, and version in package.json
+        if (!packageJsonContent?.repository?.url || !packageJsonContent.name || !packageJsonContent.version) {
+          return res.status(400).json({ error: 'Invalid package update request: package.json must contain repository url, package name, and version' });
+        }
+      }
+
+      // Update package info (no need to rate uploaded package at this point)
+      info = {
+        ID: packageId,
+        NAME: packageJsonContent.name,
+        OWNER: "",
+        VERSION: packageJsonContent.version,
+        URL: packageJsonContent?.repository?.url,
+        NET_SCORE: 0,
+        RAMP_UP_SCORE: 0,
+        CORRECTNESS_SCORE: 0,
+        BUS_FACTOR_SCORE: 0,
+        RESPONSIVE_MAINTAINER_SCORE: 0,
+        LICENSE_SCORE: 0,
+        PULL_REQUESTS_SCORE: 0,
+        PINNED_DEPENDENCIES_SCORE: 0,
+      };
+
+      // Upload package content to S3 bucket and make reference in database
+      const s3params = {
+        Bucket: "pckstore",
+        Key: "packages/" + packageId + ".zip",
+        Body: zipBuffer,
+      };
+      await s3client.send(new PutObjectCommand(s3params))
+        .then((response: { $metadata: unknown; }) => {
+          log.info("PutObject succeeded, uploaded to S3:", response.$metadata);
+        })
+        .catch((error: unknown) => {
+          log.error("Error storing object to S3:", error);
+          throw(error);
+        });
+    } else if (updatedPackageData?.URL) {
+      log.info("updatePackage request via public ingest:", updatedPackageData.URL);
+      info = await metricCalcFromUrl(updatedPackageData.URL);
+      log.info("ingest via URL info:", info);
+      if (info == null) {
+        return res.status(400).json({ error: 'Invalid package update request: Could not get GitHub url' });
+      } else if (info.NET_SCORE < 0.5) {
+        return res.status(424).json({ error: 'Invalid package update request: Package can not be uploaded due to disqualifying rating.' });
+      }
+      info.ID = packageId;
+
+      // Download package content from GitHub using info
+      const response = await fetch(`https://api.github.com/repos/${info.OWNER}/${info.NAME}/zipball/main`, {
+        headers: {
+          Authorization: process.env.GITHUB_TOKEN || "",
+          Accept: 'application/vnd.github.v3+json',
+        },
+      });
+      if (!response.ok) {
+        return res.status(400).json({ error: 'Invalid package update request: Could not get GitHub url' });
+      }
+      const zipBuffer = Buffer.from(await response.arrayBuffer());
+
+      // Upload package content to S3 bucket and make reference in database
+      const s3params = {
+        Bucket: "pckstore",
+        Key: "packages/" + packageId + ".zip",
+        Body: zipBuffer,
+      };
+      await s3client.send(new PutObjectCommand(s3params))
+        .then((response: { $metadata: unknown; }) => {
+          log.info("PutObject succeeded, uploaded to S3:", response.$metadata);
+        })
+        .catch((error: unknown) => {
+          log.error("Error storing object to S3:", error);
+          throw(error);
+        });
+    } else {
+      return res.status(400).json({ error: 'Invalid package update request: Bad set of Content and URL' });
+    }
+
+    // Append new history entry to current history
+    const date = new Date();
+    const isoDate = date.toISOString();
+    // Package metadata
+    const metadata: PackageMetadata = {
+      ID: packageId,
+      Name: packageName,
+      Version: packageVersion,
+    };
+    // Create package history entry
+    const history: PackageHistoryEntry = {
+      Action: "UPDATE",
+      Date: isoDate,
+      PackageMetadata: metadata,
+      User: defaultUser,
+    };
+    // Append to current history
+    const appendHistoryParams = {
+      TableName: "packageHistory",
+      Key: {
+        name: { S: packageName },
+      },
+      UpdateExpression: `SET #attrName = list_append(if_not_exists(#attrName, :empty_list), :newData)`,
+      ExpressionAttributeNames: {
+        '#attrName': "history",
+      },
+      ExpressionAttributeValues: {
+        ':empty_list': { L: [] },
+        ':newData': { L: [{ S: JSON.stringify(history) }] },
+      },
+    };
+    await dbclient.send(new UpdateItemCommand(appendHistoryParams))
+      .then(() => {
+        log.info("Successfully appended history entry to package:", packageName);
+      })
+      .catch((error) => {
+        log.error("Error appending history entry to package:", packageName, error);
+      });
 
     // Respond with a success message
     res.status(200).json({ message: 'Package updated successfully' });
   } catch (error) {
-      console.error('Error handling PUT /package/:id:', error);
-      res.status(500).json({ error: 'Internal Server Error' }); // Handle any errors
+    log.error('Error handling PUT /package/:id:', error);
+    res.status(500).json({ error: 'Internal Server Error' }); // Handle any errors
   }
-};
+}
 
 // Controller function for handling the DELETE request to /package/:id
-export const deletePackage = (req: Request, res: Response) => {
+export async function deletePackage(req: Request, res: Response) {
   try {
     const packageId: PackageId = req.params.id; // Extract the package ID from the URL
 
@@ -93,28 +359,54 @@ export const deletePackage = (req: Request, res: Response) => {
 
     // Check for permission to delete the package (you can add more logic here)
 
-    // Perform the package deletion (replace this with your logic)
+    // Perform the package deletion
+    const params = {
+      TableName: "packages",
+      Key: {
+        id: { N: packageId },
+      },
+    };
+    
+    const command = new DeleteItemCommand(params);
+    await dbclient.send(command)
+      .then((response) => {
+        log.info("GetItem succeeded:", response.$metadata);
+      })
+      .catch((error) => {
+        log.error("Error getting item:", error);
+        throw(error);
+      });
+
+    // Delete from S3 bucket
+    const s3params = {
+      Bucket: "pckstore",
+      Key: "packages/" + packageId + ".zip",
+    };
+    await s3client.send(new DeleteObjectCommand(s3params))
+      .then((response) => {
+        log.info("DeleteObject succeeded, deleted from S3:", response.$metadata);
+      })
+      .catch((error) => {
+        log.error("Error deleting object from S3:", error);
+      });
+
+    // TODO: Delete version from package history?
 
     // Respond with a success message
     res.status(200).json({ message: 'Package is deleted' });
   } catch (error) {
-    console.error('Error handling DELETE /package/:id:', error);
+    log.error('Error handling DELETE /package/:id:', error);
     res.status(500).json({ error: 'Internal Server Error' }); // Handle any errors
   }
-};
+}
 
 // Controller function for handling the POST request to /package
-export const createPackage = (req: Request, res: Response) => {
+export async function createPackage(req: Request, res: Response) {
   try {
     // Extract the package data from the request body
-    const packageData = req.body;
+    const packageData: PackageData = req.body as PackageData;
 
-    // Get the Package from the request body
-    //const package1: Package = req.body as Package;
-
-    //const name = package1.metadata.Name;
-    //const version = package1.metadata.Version; 
-    //const id = package1.metadata.ID;
+    let id: PackageId, s3path: string = "";
 
     // Verify the X-Authorization header for authentication
     const authorizationHeader: AuthenticationToken | undefined = Array.isArray(req.headers['x-authorization'])
@@ -127,24 +419,217 @@ export const createPackage = (req: Request, res: Response) => {
 
     // Check for permission to create a package (you can add more logic here)
 
-    // Create the package (replace this with your logic)
+    // Check that package creation request is valid (only Content or URL is set)
+    // If request is valid, rate package (valid if rating >= 0.5)
+    let info: PackageInfo | null;
+    if (!((packageData.Content == '') !== (packageData.URL == ''))) {
+      return res.status(400).json({ error: 'Invalid package creation request: Bad set of Content and URL' });
+    } else if (packageData?.Content) {
+      log.info("createPackage request via zip upload");
+      const zipBuffer = Buffer.from(atob(packageData.Content.split(",")[1]), 'binary');
+
+      // Extract package.json from zip file
+      const zip = new AdmZip(zipBuffer);
+      const zipEntries = zip.getEntries();
+      let packageJson: string | null = null;
+      let packageJsonContent;
+      zipEntries.forEach(entry => {
+        const entryPathParts = entry.entryName.split('/');
+        if (entryPathParts.length === 2 && entryPathParts[1] === 'package.json') {
+          packageJson = entry.getData().toString('utf8');
+        }
+      });
+      if (packageJson == null) {
+        return res.status(400).json({ error: 'Invalid package creation request: No package.json found in zip' });
+      } else {
+        packageJsonContent = JSON.parse(packageJson);
+        log.info("repo url:", packageJsonContent?.repository?.url, "name:", packageJsonContent.name, "version:", packageJsonContent.version);
+        // Check for repository url, name, and version in package.json
+        if (!packageJsonContent?.repository?.url || !packageJsonContent.name || !packageJsonContent.version) {
+          return res.status(400).json({ error: 'Invalid package creation request: package.json must contain repository url, package name, and version' });
+        }
+      }
+
+      // If valid, generate package ID from name and version
+      id = generatePackageId(packageJsonContent.name, packageJsonContent.version);
+      // Update package info (no need to rate uploaded package at this point)
+      info = {
+        ID: id,
+        NAME: packageJsonContent.name,
+        OWNER: "",
+        VERSION: packageJsonContent.version,
+        URL: packageJsonContent?.repository?.url,
+        NET_SCORE: 0,
+        RAMP_UP_SCORE: 0,
+        CORRECTNESS_SCORE: 0,
+        BUS_FACTOR_SCORE: 0,
+        RESPONSIVE_MAINTAINER_SCORE: 0,
+        LICENSE_SCORE: 0,
+        PULL_REQUESTS_SCORE: 0,
+        PINNED_DEPENDENCIES_SCORE: 0,
+      };
+
+      // Upload package content to S3 bucket and make reference in database
+      const s3params = {
+        Bucket: "pckstore",
+        Key: "packages/" + id + ".zip",
+        Body: zipBuffer,
+      };
+      await s3client.send(new PutObjectCommand(s3params))
+        .then((response: { $metadata: unknown; }) => {
+          log.info("PutObject succeeded, uploaded to S3:", response.$metadata);
+        })
+        .catch((error: unknown) => {
+          log.error("Error storing object to S3:", error);
+          throw(error);
+        });
+    } else if (packageData?.URL) {
+      log.info("createPackage request via public ingest:", packageData.URL);
+      info = await metricCalcFromUrl(packageData.URL);
+      log.info("ingest via URL info:", info);
+      if (info == null) {
+        return res.status(400).json({ error: 'Invalid package creation request: Could not get GitHub url' });
+      } else if (info.NET_SCORE < 0.5) {
+        return res.status(424).json({ error: 'Invalid package creation request: Package can not be uploaded due to disqualifying rating.' });
+      }
+      // If valid, generate package ID from name and version
+      id = generatePackageId(info.NAME, info.VERSION);
+      info.ID = id;
+
+      // Download package content from GitHub using info
+      const response = await fetch(`https://api.github.com/repos/${info.OWNER}/${info.NAME}/zipball/main`, {
+        headers: {
+          Authorization: process.env.GITHUB_TOKEN || "",
+          Accept: 'application/vnd.github.v3+json',
+        },
+      });
+      if (!response.ok) {
+        return res.status(400).json({ error: 'Invalid package creation request: Could not get GitHub url' });
+      }
+      const zipBuffer = Buffer.from(await response.arrayBuffer());
+
+      // Upload package content to S3 bucket and make reference in database
+      const s3params = {
+        Bucket: "pckstore",
+        Key: "packages/" + id + ".zip",
+        Body: zipBuffer,
+      };
+      await s3client.send(new PutObjectCommand(s3params))
+        .then((response: { $metadata: unknown; }) => {
+          log.info("PutObject succeeded, uploaded to S3:", response.$metadata);
+        })
+        .catch((error: unknown) => {
+          log.error("Error storing object to S3:", error);
+          throw(error);
+        });
+    } else {
+      return res.status(400).json({ error: 'Invalid package creation request: Bad set of Content and URL' });
+    }
+    log.info("new package's id:", info);
+    // set s3path with package id
+    s3path = "https://pckstore.s3.amazonaws.com" + "/packages/" + id + ".zip";
+
+    // Check if package exists already
+    const existsParams = {
+      TableName: "packages",
+      Key: {
+        id: { N: id },
+      },
+    };
+    let exists: boolean = false;
+    const existsCommand = new GetItemCommand(existsParams);
+    await dbclient.send(existsCommand)
+      .then((response) => {
+        log.info("GetItem for exists check succeeded:", response.$metadata);
+        if (response.Item) {
+          exists = true;
+        }
+      })
+      .catch((error) => {
+        log.error("Error checking for existence:", error);
+        throw(error);
+      });
+    if (exists) {
+      return res.status(409).json({ error: 'Invalid package creation request: Package already exists' });
+    }
+
+    // Date of activity using ISO-8601 Datetime standard in UTC format.
+    const date = new Date();
+    const isoDate = date.toISOString();
+
+    // Package metadata
+    const metadata: PackageMetadata = {
+      ID: id,
+      Name: info.NAME,
+      Version: info.VERSION,
+    };
+
+    // Create package history entry
+    const history: PackageHistoryEntry = {
+      Action: "CREATE",
+      Date: isoDate,
+      PackageMetadata: metadata,
+      User: defaultUser,
+    };
+
+    // Create package history entry in packageHistory table
+    const historyParams = {
+      TableName: "packageHistory",
+      Item: {
+        name: { S: info.NAME },
+        history: { L: [{ S: JSON.stringify(history) }] },
+      },
+    };
+
+    const historyCommand = new PutItemCommand(historyParams);
+    await dbclient.send(historyCommand)
+      .then((response) => {
+        log.info("PutItem for history succeeded:", response.$metadata);
+      })
+      .catch((error) => {
+        log.error("Error putting item for history:", error);
+        throw(error);
+      });
+
+    // Create the package
+    const params: PutItemCommandInput = {
+      TableName: "packages",
+      Item: {
+        id: { N: id },
+        name: { S: info.NAME },
+        version: { S: info.VERSION },
+        s3path: { S: s3path },
+        repoURL: { S: info.URL },
+        Value: { S: JSON.stringify(info) },
+      },
+    };
+
+    const command = new PutItemCommand(params);
+    await dbclient.send(command)
+      .then((response) => {
+        log.info("GetItem succeeded:", response.$metadata);
+      })
+      .catch((error) => {
+        log.error("Error getting item:", error);
+        throw(error);
+      });
 
     // Respond with a success message and the created package data
-    const createdPackage = /* Replace with your package creation logic */ 
+    const createdPackage = [
     {
-        "metadata": {
-          "Name": "Underscore",
-          "Version": "1.0.0",
-          "ID": "underscore"
-        },
-        "data": {
-          "Content": "UEsDBBQAAAAAAA9DQlMAAAAAAAAAAAAAAAALACAAZXhjZXB0aW9ucy9VVA0AB35PWGF+T1hhfk9YYXV4CwABBPcBAAAEFAAAAFBLAwQUAAgACACqMCJTAAAAAAAAAABNAQAAJAAgAGV4Y2VwdGlvbnMvQ29tbWNvdXJpZXJFeGNlcHRpb24uamF2YVVUDQAH4KEwYeGhMGHgoTBhdXgLAAEE9wEAAAQUAAAAdY7NCoMwDMfvfYoct0tfQAYDGbv7BrVmW9DaksQhDN99BSc65gKBwP/jl+R86+4IPgabN/g4MCFbHD0mpdhLYQyFFFl/PIyijpVuzqvYCiVlO5axwWKJdDHUsbVXVEXOTef5MmmoO/LgOycC5dp5WbCAo2LfCFRDrxRwFV7GQJ7E9HSKsMUCf/0w+2bSHuPwN3vMFPiMPkjsVoTTHmcyk3kDUEsHCOEX4+uiAAAATQEAAFBLAwQUAAgACACqMCJTAAAAAAAAAAB9AgAAKgAgAGV4Y2VwdGlvbnMvQ29tbWNvdXJpZXJFeGNlcHRpb25NYXBwZXIuamF2YVVUDQAH4KEwYeGhMGHgoTBhdXgLAAEE9wEAAAQUAAAAdVHNTsMwDL7nKXzcJOQXKKCJwYEDAiHxACY1U0bbRI7bVUJ7d7JCtrbbIkVx4u/HdgLZb9owWF9j2rX1rTgW5N5yUOebWBjj6uBFzzDCUUnUfZHViA8U+Z1jSBQurlFadZVTxxEz9CO9jDy21FGPrtmyVXwejmKa20WUmESF8cxujOBe8Sl38UIhsFzFvYnvXHkAmFWOTWg/K2fBVhQjrE9NzEQhaVZcc6MRZqnbS6x7+DEG0lr9tTfEk2mAzGYzoF87FkmFDbf/2jIN1OdwcckTuF9m28Ma/9XRDe6g4d0kt1gWJ5KwttJMi8M2lKRH/CMpLTLgJrnihjUn175Mgllxb/bmF1BLBwiV8DzjBgEAAH0CAABQSwMEFAAIAAgAD0NCUwAAAAAAAAAAGQMAACYAIABleGNlcHRpb25zL0dlbmVyaWNFeGNlcHRpb25NYXBwZXIuamF2YVVUDQAHfk9YYX9PWGF+T1hhdXgLAAEE9wEAAAQUAAAAjVNRa8IwEH7Prwg+VZA87a3bcJsyBhNHx9hzTE+Npk25XG3Z8L8v7ZbaKsICaS6977vvu6QtpNrLDXBlM+FnpmyJGlBAraAgbXMXM6azwiJdYBAcSSS9loqceJQOEnCFp0D8P0qAP9n0OqUkbTRpOME//JuerZ08yFrofAeKxEu7xMNc5QQ6XxRBXDjsI6AmMQ+NL2RRAF7FvaE96LQHMDZb2X2TA8yFM+ubnXhvnt7ptA3YNJBYUa6MVlwZ6Rx/hhxQqzNl7usayCAnx89St93+nn8zxv2Y/jbexoNz4nh2ai16eQBE76Td/ZkJNE42hFEnxKEeB61m9G+7k+B3PIdqkIvG8Ylk7EZ4XYvR6KGpGGpX0nHaoq3y0aQR6lEQqMR82IQoi1RSJzGTJD81bWfgFOq2YhTwE97/xsQ8SZZJIyE2QK9WSaO/IF2Ac/4fiMZB+MiO7AdQSwcIIu3xZlgBAAAZAwAAUEsBAhQDFAAAAAAAD0NCUwAAAAAAAAAAAAAAAAsAIAAAAAAAAAAAAO1BAAAAAGV4Y2VwdGlvbnMvVVQNAAd+T1hhfk9YYX5PWGF1eAsAAQT3AQAABBQAAABQSwECFAMUAAgACACqMCJT4Rfj66IAAABNAQAAJAAgAAAAAAAAAAAApIFJAAAAZXhjZXB0aW9ucy9Db21tY291cmllckV4Y2VwdGlvbi5qYXZhVVQNAAfgoTBh4aEwYeChMGF1eAsAAQT3AQAABBQAAABQSwECFAMUAAgACACqMCJTlfA84wYBAAB9AgAAKgAgAAAAAAAAAAAApIFdAQAAZXhjZXB0aW9ucy9Db21tY291cmllckV4Y2VwdGlvbk1hcHBlci5qYXZhVVQNAAfgoTBh4aEwYeChMGF1eAsAAQT3AQAABBQAAABQSwECFAMUAAgACAAPQ0JTIu3xZlgBAAAZAwAAJgAgAAAAAAAAAAAApIHbAgAAZXhjZXB0aW9ucy9HZW5lcmljRXhjZXB0aW9uTWFwcGVyLmphdmFVVA0AB35PWGF/T1hhfk9YYXV4CwABBPcBAAAEFAAAAFBLBQYAAAAABAAEALcBAACnBAAAAAA=",
-          "JSProgram": "if (process.argv.length === 7) {\nconsole.log('Success')\nprocess.exit(0)\n} else {\nconsole.log('Failed')\nprocess.exit(1)\n}\n"
-        }
-    };
+      "metadata": {
+        "Name": info.NAME,
+        "Version": info.VERSION,
+        "ID": id
+      },
+      "data": {
+        "Content": "",
+        // "JSProgram": "if (process.argv.length === 7) {\nconsole.log('Success')\nprocess.exit(0)\n} else {\nconsole.log('Failed')\nprocess.exit(1)\n}\n"
+      }
+    }];
     res.status(201).json(createdPackage);
   } catch (error) {
-    console.error('Error handling POST /package:', error);
+    log.error('Error handling POST /package:', error);
     res.status(500).json({ error: 'Internal Server Error' }); // Handle any errors
   }
-};
+}

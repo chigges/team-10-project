@@ -4,11 +4,10 @@
  * Description: The /package/byRegEx endpoint logic
  */
 import { Request, Response } from 'express';
-import { AuthenticationToken, PackageMetadata, PackageRegEx } from '../types'; 
-import { DynamoDBClient, ScanCommand } from '@aws-sdk/client-dynamodb';
-import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
-
-const dynamoDb = new DynamoDBClient({ region: 'us-east-1' });
+import { AuthenticationToken, PackageMetadata, PackageRegEx } from '../types';
+import { dbclient } from './controllerHelpers';
+import { ScanCommand } from '@aws-sdk/client-dynamodb';
+import { unmarshall } from '@aws-sdk/util-dynamodb';
 
 export const postPackageByRegEx = async (req: Request, res: Response) => {
   try {
@@ -43,7 +42,7 @@ export const postPackageByRegEx = async (req: Request, res: Response) => {
 
     console.log('Executing DynamoDB scan');
 
-    const scanResult = await dynamoDb.send(scanCommand);
+    const scanResult = await dbclient.send(scanCommand);
 
     console.log('DynamoDB scan result:', scanResult);
 
