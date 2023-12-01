@@ -1,11 +1,13 @@
-// Tests for Reset Component
+/*
+ * File: packages.component.spec.ts
+ * Author: Caroline Gilbert
+ * Description: Unit tests for the packages endpoint for the front-end
+ */
 import { TestBed, ComponentFixture, inject } from "@angular/core/testing";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { of, throwError } from 'rxjs';
 import { PackagesComponent } from './packages.component';
 import { ApiService } from "../api/services";
-import { StrictHttpResponse } from '../api/strict-http-response';
-import { HttpResponse } from '@angular/common/http';
 import { PackageQuery, AuthenticationToken, EnumerateOffset, PackageMetadata } from '../api/models';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';

@@ -1,4 +1,8 @@
-// Tests for Reset Component
+/*
+ * File: reset.component.spec.ts
+ * Author: Caroline Gilbert
+ * Description: Unit tests for the reset endpoint for the front-end
+ */
 import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { of, throwError } from 'rxjs';
