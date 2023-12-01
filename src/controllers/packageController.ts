@@ -390,6 +390,8 @@ export async function deletePackage(req: Request, res: Response) {
         log.error("Error deleting object from S3:", error);
       });
 
+    // TODO: Delete version from package history?
+
     // Respond with a success message
     res.status(200).json({ message: 'Package is deleted' });
   } catch (error) {
