@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../api/services';
-import { PackageComponent } from '../package/package.component'; 
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',

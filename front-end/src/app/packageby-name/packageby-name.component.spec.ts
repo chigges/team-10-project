@@ -8,8 +8,7 @@ import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { PackagebyNameComponent } from './packageby-name.component';
 import { ApiService } from '../api/services';
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { of, throwError } from 'rxjs';
-import { PackageQuery, AuthenticationToken, EnumerateOffset, PackageMetadata, PackageHistoryEntry } from '../api/models';
+import { PackageHistoryEntry } from '../api/models';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -118,6 +117,5 @@ describe('PackagebyNameComponent', () => {
       expect(component.packageHistory).toEqual([]);
     }
   ));
-
 
 });

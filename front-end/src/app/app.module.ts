@@ -16,6 +16,7 @@ import { PackagebyRegexComponent } from './packageby-regex/packageby-regex.compo
 import { FilterOutContentFieldPipe } from './filter-out-content.pipe';
 import { CommonModule } from '@angular/common';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,8 +26,7 @@ import { CommonModule } from '@angular/common';
     HomeComponent,
     PackagebyNameComponent,
     PackagebyRegexComponent,
-    FilterOutContentFieldPipe,
-  ],
+    FilterOutContentFieldPipe ],
   imports: [
     BrowserModule,
     AppRoutingModule,

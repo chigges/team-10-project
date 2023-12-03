@@ -80,4 +80,16 @@ pre {
   padding: 10px;
   background-color: #1d20b9;
   border-radius: 5px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+.download-box a {
+  color: white;
+  text-decoration: none;
+}
+
+.download-box a:hover {
+  color: #e8e8e8;
 }
