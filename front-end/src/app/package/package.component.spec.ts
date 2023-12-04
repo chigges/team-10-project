@@ -866,5 +866,222 @@ describe('PackageComponent', () => {
       httpTestingController.verify();
     }
   ));
+
+
+  //
+  // Create New Package Tests
+  //
+  // Positive Test Case: Create Package Successfully
+  it('should expect HTTP response to create package to be 200 for well-formed query with valid URL', inject(
+    [ApiService, HttpTestingController],
+    (service: ApiService, backend: HttpTestingController) => {
+      // Arrange
+      const mockPackageId = 'mock-valid-id';
+      const mockURL = 'http://valid-package-url.com';
+      const mockPackage: PackageData = {
+        Content: 'mock-content', URL: mockURL, JSProgram: '' };
+      
+      const mockResponse: Package = {
+        data: { Content: 'mock-content', URL: mockURL, JSProgram: '' }, 
+        metadata: { Name: 'mock-package', Version: '1.0.0', ID: mockPackageId }};
+
+      // Act
+      component.postPackageData = mockPackage;
+      component.putPackage();
+
+      // Assert
+      const req = httpTestingController.expectOne(`http://localhost:9000/package`);
+      expect(req.request.method).toBe('POST');
+      req.flush(mockResponse, { status: 200, statusText: 'OK' });
+      
+      expect(component.postPackageDataResponse).toEqual(mockResponse);
+      
+      backend.verify();
+    }
+  )); 
+  it('should expect HTTP response to create package to be 200 for well-formed query test 2', inject(
+    [ApiService, HttpTestingController],
+    (apiService: ApiService, httpTestingController: HttpTestingController) => {
+      // Arrange
+      const mockPackageId = 'mock-valid-id';
+      const mockURL = 'http://valid-package-url.com';
+      const mockPackage: PackageData = {
+        Content: 'mock-content', URL: mockURL, JSProgram: '' };
+      
+      const mockResponse: Package = {
+        data: { Content: 'mock-content', URL: mockURL, JSProgram: '' }, 
+        metadata: { Name: 'mock-package', Version: '1.0.0', ID: mockPackageId }};
+  
+      // Action
+      spyOn(apiService, 'packageCreate$Response').and.returnValue(of({ body: mockResponse, status: 200 } as any));
+  
+      component.postPackageData = mockPackage;
+      component.putPackage();
+  
+      // Assert
+      expect(apiService.packageCreate$Response).toHaveBeenCalled();
+      expect(apiService.packageCreate$Response).toHaveBeenCalledWith(
+        { body: mockPackage, 'X-Authorization': component.authHeader },
+        undefined
+      );
+      expect(component.postPackageDataResponse).toEqual(mockResponse);
+  
+      httpTestingController.verify();
+    }
+  ));
+
+  // Negative Test Case: Create Package Unsuccessfully (low quality URL)
+  it('should expect HTTP response to create package to be 424 for well-formed query with low-quality URL', inject(
+    [ApiService, HttpTestingController],
+    (service: ApiService, backend: HttpTestingController) => {
+      // Arrange
+      const mockURL = 'http://invalid-package-url.com';
+
+      const mockPackage: PackageData = {
+        Content: 'mock-content', URL: mockURL, JSProgram: '' };
+      const mockResponse: Package = {
+        data: { Content: '', URL: '', JSProgram: '' },
+        metadata: { Name: '', Version: '', ID: '' }};
+      
+      // Act
+      component.postPackageData = mockPackage;
+      
+      // Trigger the HTTP request with a query that will return too many packages
+      service.packageCreate({
+        'X-Authorization': component.authHeader,
+        body: mockPackage,
+      }).subscribe(
+        // The success callback should not be invoked for this test
+        () => fail('Should not have succeeded'),
+
+        // The error callback should be invoked with a 424 response
+        (error) => {
+          expect(error.status).toEqual(424);
+          expect(error.statusText).toEqual('Invalid Entry');
+        }
+      );
+
+      // Expect a single request to a specific URL with specific headers and body
+      const req = backend.expectOne({
+        url: `http://localhost:9000/package`,
+        method: 'POST',
+      });
+
+      // Respond to the request with a mock response and status 413
+      req.flush('Invalid Entry', { status: 424, statusText: 'Invalid Entry' });
+      expect(component.postPackageDataResponse).toEqual(mockResponse);
+
+      // Ensure there are no outstanding requests
+      backend.verify();
+    }
+  ));
+  it('should expect HTTP response to create package to be 424 for well-formed query with low-quality URL test 2', inject(
+    [ApiService, HttpTestingController],
+    (apiService: ApiService, httpTestingController: HttpTestingController) => {
+      // Arrange
+      const mockURL = 'http://invalid-package-url.com';
+
+      const mockPackage: PackageData = {
+        Content: 'mock-content', URL: mockURL, JSProgram: '' };
+      const mockResponse: Package = {
+        data: { Content: '', URL: '', JSProgram: '' },
+        metadata: { Name: '', Version: '', ID: '' }};
+      
+      // Act
+      component.postPackageData = mockPackage;
+  
+      // Action
+      spyOn(apiService, 'packageCreate$Response').and.returnValue(throwError({ status: 424 } as any));
+  
+      component.putPackage();
+  
+      // Assert
+      expect(apiService.packageCreate$Response).toHaveBeenCalled();
+      expect(apiService.packageCreate$Response).toHaveBeenCalledWith(
+        { body: mockPackage, 'X-Authorization': component.authHeader },
+        undefined
+      );
+      expect(component.postPackageDataResponse).toEqual(mockResponse);
+  
+      httpTestingController.verify();
+    }
+  ));
+
+  // Negative Test Case: Create Package Unsuccessfully (invalid URL)
+  it('should expect HTTP response to create package to be 400 for well-formed query with invalid URL', inject(
+    [ApiService, HttpTestingController],
+    (service: ApiService, backend: HttpTestingController) => {
+      // Arrange
+      const mockURL = '';
+
+      const mockPackage: PackageData = {
+        Content: 'mock-content', URL: mockURL, JSProgram: '' };
+      const mockResponse: Package = {
+        data: { Content: '', URL: '', JSProgram: '' },
+        metadata: { Name: '', Version: '', ID: '' }};
+      
+      // Act
+      component.postPackageData = mockPackage;
+      
+      // Trigger the HTTP request with a query that will return too many packages
+      service.packageCreate({
+        'X-Authorization': component.authHeader,
+        body: mockPackage,
+      }).subscribe(
+        // The success callback should not be invoked for this test
+        () => fail('Should not have succeeded'),
+
+        // The error callback should be invoked with a 400 response
+        (error) => {
+          expect(error.status).toEqual(400);
+          expect(error.statusText).toEqual('Bad Request');
+        }
+      );
+
+      // Expect a single request to a specific URL with specific headers and body
+      const req = backend.expectOne({
+        url: `http://localhost:9000/package`,
+        method: 'POST',
+      });
+
+      // Respond to the request with a mock response and status 413
+      req.flush('Bad Request', { status: 400, statusText: 'Bad Request' });
+      expect(component.postPackageDataResponse).toEqual(mockResponse);
+
+      // Ensure there are no outstanding requests
+      backend.verify();
+    }
+  ));
+  it('should expect HTTP response to create package to be 400 for well-formed query with invalid URL test 2', inject(
+    [ApiService, HttpTestingController],
+    (apiService: ApiService, httpTestingController: HttpTestingController) => {
+      // Arrange
+      const mockURL = '';
+
+      const mockPackage: PackageData = {
+        Content: 'mock-content', URL: mockURL, JSProgram: '' };
+      const mockResponse: Package = {
+        data: { Content: '', URL: '', JSProgram: '' },
+        metadata: { Name: '', Version: '', ID: '' }};
+      
+      // Act
+      component.postPackageData = mockPackage;
+  
+      // Action
+      spyOn(apiService, 'packageCreate$Response').and.returnValue(throwError({ status: 400 } as any));
+  
+      component.putPackage();
+  
+      // Assert
+      expect(apiService.packageCreate$Response).toHaveBeenCalled();
+      expect(apiService.packageCreate$Response).toHaveBeenCalledWith(
+        { body: mockPackage, 'X-Authorization': component.authHeader },
+        undefined
+      );
+      expect(component.postPackageDataResponse).toEqual(mockResponse);
+  
+      httpTestingController.verify();
+    }
+  ));
  
 });
