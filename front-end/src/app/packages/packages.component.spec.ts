@@ -5,10 +5,10 @@
  */
 import { TestBed, ComponentFixture, inject } from "@angular/core/testing";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { PackagesComponent } from './packages.component';
 import { ApiService } from "../api/services";
-import { PackageQuery, AuthenticationToken, EnumerateOffset, PackageMetadata } from '../api/models';
+import { PackageMetadata } from '../api/models';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
