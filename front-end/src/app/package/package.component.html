@@ -26,8 +26,21 @@
   <label for="updatePackageName">Package Name:</label>
   <input type="text" id="updatePackageName" [(ngModel)]="packageData.metadata.Name" placeholder="Enter Package Name" aria-label="Package Name Input">
   
-  <!-- Add labels for other input fields in a similar manner -->
-
+  <label for="updatePackageVersion">Package Version:</label>
+  <input type="text" id="updatePackageVersion" [(ngModel)]="packageData.metadata.Version" placeholder="Enter Package Version">
+  
+  <label for="updatePackageId">Package ID:</label>
+  <input type="text" id="updatePackageId" [(ngModel)]="packageData.metadata.ID" placeholder="Enter Package ID">
+  
+  <label for="updatePackageContent">Package Content (Zip File):</label>
+  <input type="file" id="updatePackageContent" (change)="handleFileInput($event)" accept=".zip">
+  
+  <label for="updatePackageURL">Package URL:</label>
+  <input type="text" id="updatePackageURL" [(ngModel)]="packageData.data.URL" placeholder="Enter Package URL">
+  
+  <label for="updatePackageJSProgram">Package JS Program:</label>
+  <input type="text" id="updatePackageJSProgram" [(ngModel)]="packageData.data.JSProgram" placeholder="Enter Package JS Program">
+  
   <button type="button" (click)="updatePackage()">Update Package</button>
   
   <div *ngIf="updateMessage" class="message">
@@ -51,7 +64,14 @@
   <h2>Create New Package</h2>
   <p>Upload either a Zip File or provide a URL</p>
 
-  <!-- Add labels for input fields and instructions as needed -->
+  <label for="postPackageContent">Package Content (Zip File):</label>
+  <input type="file" id="postPackageContent" (change)="handlePostFileInput($event)" accept=".zip">
+
+  <label for="postPackageURL">Package URL:</label>
+  <input type="text" id="postPackageURL" [(ngModel)]="postPackageData.URL" placeholder="Enter Package URL">
+
+  <label for="postPackageJSProgram">Package JS Program:</label>
+  <input type="text" id="postPackageJSProgram" [(ngModel)]="postPackageData.JSProgram" placeholder="Enter Package JS Program">
 
   <button type="button" (click)="putPackage()">Create Package</button>
 
